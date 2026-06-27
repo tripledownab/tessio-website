@@ -1,0 +1,14 @@
+/*
+ * global.css — Tailwind entry point for the tessio.eu apex site.
+ *
+ * Design tokens, base typography, and palette live in tessio-design.css
+ * (a future shared package — currently copy-pasted from tessio-verifier;
+ * extract to `@tripledownab/tessio-design` once both sites are live).
+ * Add site-specific overrides BELOW the imports.
+ */
+
+@import "tailwindcss";
+@import "./tessio-design.css";
+
+/* --- site-specific styles (tessio.eu) --- */
+/* nothing yet — site is using design tokens only */
