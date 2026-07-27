@@ -3,30 +3,31 @@ import Base from '../layouts/Base.astro';
 
 const verifierUrl = 'https://verifier.tessio.eu';
 const verifierRepo = 'https://github.com/tripledownab/tessio-verifier';
+const nugetUrl = 'https://www.nuget.org/packages/Tessio.Verifier.AspNetCore';
 const contactEmail = 'hello@tessio.eu';
 
 const pillars = [
   {
     title: 'Open-source verifier',
-    body: 'Tessio.Verifier — the .NET-native reference implementation. OpenID4VP 1.0, SD-JWT VC, demo mode included. Apache-2.0.',
+    body: 'Tessio.Verifier, the .NET-native implementation. OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), four run modes so you can build before wallets ship. On NuGet, Apache-2.0.',
     cta: { label: 'Go to verifier.tessio.eu', href: verifierUrl },
   },
   {
     title: 'Managed trust layer',
     body: 'WRPAC registration, 27-state trust-list aggregation, hosted dashboards. The hard parts of taking a verifier to production, run for you.',
-    cta: { label: 'Available 2027 — get on the list', href: `mailto:${contactEmail}?subject=Tessio%20managed%20trust%20layer` },
+    cta: { label: 'Available 2027, get on the list', href: `mailto:${contactEmail}?subject=Tessio%20managed%20trust%20layer` },
   },
   {
     title: 'EUDI for the .NET ecosystem',
     body: 'A bridge between the EU Digital Identity Wallet and the stacks .NET shops already run. No translating from Kotlin or Rust.',
-    cta: { label: 'Read the engineering brief', href: `${verifierRepo}/blob/main/docs/agent-brief.md` },
+    cta: { label: 'Get it on NuGet', href: nugetUrl },
   },
 ];
 
 const timeline = [
-  { date: 'Now', body: 'Tessio.Verifier 0.1.0 — frozen public contracts published. Implementation in flight across four workstreams.' },
-  { date: 'Q4 2026', body: 'Tessio.Verifier 1.0 — full verification flow, demo mode, sample app. Ready to run against the Commission reference wallet.' },
-  { date: '6 Dec 2027', body: 'Mandatory acceptance under Regulation (EU) 2024/1183. .NET-stack relying parties need a verifier in production.' },
+  { date: 'Now', body: 'Tessio.Verifier 0.2 ships. SD-JWT VC and mdoc (mDL) verification, four run modes, checked against the specification\'s own test vectors. On NuGet for .NET 8 to 10, usable today.' },
+  { date: 'Dec 2026', body: 'Member states must make the EUDI Wallet available under Regulation (EU) 2024/1183. Real credentials to verify.' },
+  { date: '6 Dec 2027', body: 'Mandatory acceptance. Regulated .NET relying parties need a verifier in production.' },
 ];
 ---
 
@@ -71,8 +72,8 @@ const timeline = [
           <span style="color: var(--color-text-muted);">on your .NET stack.</span>
         </h1>
         <p class="text-lg md:text-xl leading-relaxed max-w-2xl mb-10" style="color: var(--color-text-muted);">
-          Tessio builds the verification stack for the EU Digital Identity Wallet — starting with an
-          <strong style="color: var(--color-text);">open-source ASP.NET Core verifier</strong> and growing into the
+          Tessio builds the verification stack for the EU Digital Identity Wallet. It starts with an
+          <strong style="color: var(--color-text);">open-source ASP.NET Core verifier</strong>, already on NuGet, and grows into the
           managed trust layer that .NET teams will need by December 2027.
         </p>
         <div class="flex flex-wrap gap-3">
@@ -131,12 +132,12 @@ const timeline = [
           <h2 class="text-3xl font-bold tracking-tight mb-6">Why now</h2>
           <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
             Regulation <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj" target="_blank" rel="noopener" style="color: var(--color-accent);" class="underline">(EU) 2024/1183</a>
-            mandates that all 27 member states issue a Digital Identity Wallet, and obliges relying parties in regulated
+            mandates that all 27 member states issue a Digital Identity Wallet and obliges relying parties in regulated
             sectors to accept it by <strong style="color: var(--color-text);">6 December 2027</strong>.
           </p>
           <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">
-            The reference verifier work happens in Kotlin and Rust. .NET shops — and there are a lot of them in EU
-            public-sector and finance — are left translating. Tessio closes that gap.
+            The reference verifier work happens in Kotlin and Rust. .NET shops, and there are a lot of them in EU
+            public-sector and finance, are left translating. Tessio closes that gap.
           </p>
         </div>
         <div>
@@ -172,7 +173,7 @@ const timeline = [
         </p>
         <h3 class="text-2xl font-bold tracking-tight mb-3">Let's talk.</h3>
         <p class="text-base leading-relaxed mb-6 max-w-2xl" style="color: var(--color-text-muted);">
-          We're talking to .NET teams running verification pilots, integrators planning 2027 rollout, and member-state
+          We're talking to .NET teams running verification pilots, integrators planning 2027 rollout and member-state
           authorities looking for an EU-aligned reference stack. If that's you, drop a line.
         </p>
         <a
