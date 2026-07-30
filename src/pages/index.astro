@@ -1,37 +1,110 @@
 ---
 import Base from '../layouts/Base.astro';
 
+const cloudUrl = 'https://cloud.tessio.eu';
+const apiUrl = 'https://api.tessio.eu';
 const verifierUrl = 'https://verifier.tessio.eu';
 const verifierRepo = 'https://github.com/tripledownab/tessio-verifier';
 const nugetUrl = 'https://www.nuget.org/packages/Tessio.Verifier.AspNetCore';
 const contactEmail = 'hello@tessio.eu';
+const accessMailto = `mailto:${contactEmail}?subject=Tessio%20Cloud%20access`;
 
-const pillars = [
+const products = [
   {
-    title: 'Open-source verifier',
-    body: 'Tessio.Verifier, the .NET-native implementation. OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), four run modes so you can build before wallets ship. On NuGet, Apache-2.0.',
-    cta: { label: 'Go to verifier.tessio.eu', href: verifierUrl },
+    name: 'Tessio Cloud',
+    tag: 'Hosted · live now',
+    body: 'A hosted API and dashboard for age and identity verification on the EU Digital Identity Wallet. One call returns a signed over-18 result — API keys, webhooks and usage analytics included. Integrate today against the sandbox.',
+    cta: { label: 'Request access', href: accessMailto },
+    secondary: { label: 'Sign in', href: cloudUrl },
+    highlight: true,
   },
   {
-    title: 'Managed trust layer',
-    body: 'WRPAC registration, 27-state trust-list aggregation, hosted dashboards. The hard parts of taking a verifier to production, run for you.',
-    cta: { label: 'Available 2027, get on the list', href: `mailto:${contactEmail}?subject=Tessio%20managed%20trust%20layer` },
-  },
-  {
-    title: 'EUDI for the .NET ecosystem',
-    body: 'A bridge between the EU Digital Identity Wallet and the stacks .NET shops already run. No translating from Kotlin or Rust.',
+    name: 'Tessio.Verifier',
+    tag: 'Open source · Apache-2.0',
+    body: 'The ASP.NET Core-native verifier that Tessio Cloud runs on. OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), four run modes so you can build before wallets ship. On NuGet for .NET 8 to 10 — self-host on your own stack.',
     cta: { label: 'Get it on NuGet', href: nugetUrl },
+    secondary: { label: 'View on GitHub', href: verifierRepo },
+    highlight: false,
   },
+];
+
+const steps = [
+  { n: '01', title: 'Call the API', body: `POST a check to ${'/v1/age-checks'} and get back a hosted verification link — no SDK lock-in, no document handling on your side.` },
+  { n: '02', title: 'User proves the claim', body: 'The person confirms a single claim — like being over 18 — straight from their EU Digital Identity Wallet. No ID scan, no selfie.' },
+  { n: '03', title: 'You get a yes / no', body: 'A signed result arrives over your webhook. You store the boolean your compliance needs — and nothing else.' },
 ];
 
 const timeline = [
-  { date: 'Now', body: 'Tessio.Verifier 0.2 ships. SD-JWT VC and mdoc (mDL) verification, four run modes, checked against the specification\'s own test vectors. On NuGet for .NET 8 to 10, usable today.' },
-  { date: 'Dec 2026', body: 'Member states must make the EUDI Wallet available under Regulation (EU) 2024/1183. Real credentials to verify.' },
-  { date: '6 Dec 2027', body: 'Mandatory acceptance. Regulated .NET relying parties need a verifier in production.' },
+  { date: 'Now', body: 'Tessio Cloud is live and Tessio.Verifier 0.2 ships — SD-JWT VC and mdoc (mDL) verification, checked against the specification\'s own test vectors. Build against the sandbox today.' },
+  { date: 'Dec 2026', body: 'Member states must make the EUDI Wallet available under Regulation (EU) 2024/1183. Real wallets, real credentials to verify.' },
+  { date: '6 Dec 2027', body: 'Mandatory acceptance. Regulated relying parties must accept the EU Digital Identity Wallet in production.' },
 ];
+
+const faqs = [
+  {
+    q: 'What is Tessio Cloud?',
+    a: 'Tessio Cloud is a hosted API for age and identity verification built on the EU Digital Identity (EUDI) Wallet. You send a check, the user proves a claim such as being over 18 from their wallet, and you get a signed yes/no back — without handling documents or storing personal data.',
+  },
+  {
+    q: 'How does the age verification API work?',
+    a: 'Your app calls the /v1/age-checks endpoint, we return a hosted verification link, the user confirms the claim from their EU Digital Identity Wallet, and you receive the result over a webhook. You can integrate today against our sandbox and switch to live wallets as member states roll them out.',
+  },
+  {
+    q: 'Do you store personal data?',
+    a: 'No. Age verification is data-minimised by design: the result is an over-18 boolean, not a date of birth or an identity document. There is no selfie, no ID scan and no personal data retained — only the yes/no your compliance needs.',
+  },
+  {
+    q: 'Is it GDPR compliant?',
+    a: 'Data minimisation is built in — we verify a single claim and store no personal data, which is exactly the posture GDPR and the EU Digital Identity framework are designed around. Self-hosting is available if you need the verifier inside your own boundary.',
+  },
+  {
+    q: 'Is there an open-source or self-hosted option?',
+    a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open-source, ASP.NET Core-native EUDI verifier (OpenID4VP, SD-JWT VC and mdoc). It is on NuGet under Apache-2.0, so you can build and self-host on your own .NET stack.',
+  },
+  {
+    q: 'When must businesses accept the EU Digital Identity Wallet?',
+    a: 'Member states must make the EUDI Wallet available by December 2026 under Regulation (EU) 2024/1183, and regulated relying parties must accept it by 6 December 2027.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', name: 'Tessio', url: 'https://tessio.eu' },
+    {
+      '@type': 'Product',
+      name: 'Tessio Cloud',
+      url: cloudUrl,
+      brand: { '@type': 'Brand', name: 'Tessio' },
+      category: 'Age & identity verification API',
+      description:
+        'Hosted age and identity verification API for the EU Digital Identity Wallet. Privacy-first over-18 checks with no personal data stored.',
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Tessio.Verifier',
+      url: verifierUrl,
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: '.NET 8–10',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+      description:
+        'Open-source, ASP.NET Core-native EUDI verifier: OpenID4VP, SD-JWT VC and mdoc. Apache-2.0, on NuGet.',
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
 ---
 
 <Base>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
   <header
     class="sticky top-0 z-10 backdrop-blur-md border-b"
     style="background-color: color-mix(in srgb, var(--color-bg) 85%, transparent); border-color: var(--color-border);"
@@ -63,16 +136,17 @@ const timeline = [
         </svg>
         <span>Tessio</span>
       </a>
-      <nav class="flex items-center gap-6 text-sm">
-        <a href="#what" class="hover:opacity-70 transition-opacity">What</a>
-        <a href="#why" class="hover:opacity-70 transition-opacity">Why</a>
-        <a href={verifierUrl} class="hover:opacity-70 transition-opacity">Verifier</a>
+      <nav class="flex items-center gap-4 md:gap-6 text-sm">
+        <a href="#product" class="hidden sm:inline hover:opacity-70 transition-opacity">Product</a>
+        <a href="#why" class="hidden sm:inline hover:opacity-70 transition-opacity">Why</a>
+        <a href="#developers" class="hover:opacity-70 transition-opacity">Developers</a>
+        <a href={cloudUrl} class="hover:opacity-70 transition-opacity">Sign in</a>
         <a
-          href={`mailto:${contactEmail}`}
+          href={accessMailto}
           class="px-3 py-1.5 rounded-md text-white text-xs font-medium"
           style="background-color: var(--color-accent);"
         >
-          Get in touch
+          Request access
         </a>
       </nav>
     </div>
@@ -83,67 +157,106 @@ const timeline = [
     <section class="max-w-6xl mx-auto px-6 pt-20 pb-16 md:pt-32 md:pb-24">
       <div class="max-w-3xl">
         <p class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-accent);">
-          EU Digital Identity · .NET
+          Age verification · EU Digital Identity · .NET
         </p>
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6">
-          The EUDI Wallet,<br />
-          <span style="color: var(--color-text-muted);">on your .NET stack.</span>
+          Verify age and identity.<br />
+          <span style="color: var(--color-text-muted);">Store nothing.</span>
         </h1>
-        <p class="text-lg md:text-xl leading-relaxed max-w-2xl mb-10" style="color: var(--color-text-muted);">
-          Tessio builds the verification stack for the EU Digital Identity Wallet. It starts with an
-          <strong style="color: var(--color-text);">open-source ASP.NET Core verifier</strong>, already on NuGet, and grows into the
-          managed trust layer that .NET teams will need by December 2027.
+        <p class="text-lg md:text-xl leading-relaxed max-w-2xl mb-8" style="color: var(--color-text);">
+          <strong>Tessio Cloud</strong> is a hosted API for age and identity verification on the
+          <strong>EU Digital Identity Wallet</strong>. One call returns a signed over-18 result —
+          <span style="color: var(--color-text-muted);">no documents, no selfies, no personal data stored</span> —
+          built on our open-source .NET verifier.
         </p>
         <div class="flex flex-wrap gap-3">
           <a
-            href={verifierUrl}
+            href={accessMailto}
             class="px-5 py-3 rounded-md font-medium text-white transition-opacity hover:opacity-90"
             style="background-color: var(--color-accent);"
           >
-            See the verifier →
+            Request access →
           </a>
           <a
-            href="#what"
+            href={nugetUrl}
             class="px-5 py-3 rounded-md font-medium border transition-colors"
             style="border-color: var(--color-border);"
           >
-            What we're building
+            Get the .NET verifier
           </a>
         </div>
+        <p class="text-sm mt-6" style="color: var(--color-text-muted);">
+          Live at <a href={cloudUrl} class="underline" style="color: var(--color-accent);">cloud.tessio.eu</a>.
+          Built for iGaming, age-restricted retail, dating and adult platforms facing UK OSA and EU DSA age-assurance duties.
+        </p>
       </div>
     </section>
 
-    <!-- What -->
-    <section class="max-w-6xl mx-auto px-6 pb-24" id="what">
-      <h2 class="text-3xl font-bold tracking-tight mb-3">What we ship</h2>
+    <!-- Products -->
+    <section class="max-w-6xl mx-auto px-6 pb-24" id="product">
+      <h2 class="text-3xl font-bold tracking-tight mb-3">Two products, one core</h2>
       <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
-        Two layers, one ecosystem. Open-source where the protocol lives. Managed where the operational burden lives.
+        The hosted product where the operational burden lives, and the open-source verifier where the protocol lives.
       </p>
-      <div class="grid gap-6 md:grid-cols-3">
+      <div class="grid gap-6 md:grid-cols-2">
         {
-          pillars.map((p) => (
+          products.map((p) => (
             <div
-              class="rounded-xl border p-6 flex flex-col"
-              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+              class="rounded-xl border p-8 flex flex-col"
+              style={`background-color: var(--color-bg-elevated); border-color: ${p.highlight ? 'var(--color-accent)' : 'var(--color-border)'};`}
             >
-              <h3 class="text-lg font-semibold tracking-tight mb-3">{p.title}</h3>
+              <p class="text-xs font-medium uppercase tracking-widest mb-3" style="color: var(--color-accent);">
+                {p.tag}
+              </p>
+              <h3 class="text-xl font-semibold tracking-tight mb-3">{p.name}</h3>
               <p class="text-sm leading-relaxed mb-6 flex-1" style="color: var(--color-text-muted);">
                 {p.body}
               </p>
-              <a
-                href={p.cta.href}
-                class="text-sm font-medium hover:opacity-70 transition-opacity"
-                style="color: var(--color-accent);"
-              >
-                {p.cta.label} →
-              </a>
+              <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+                <a
+                  href={p.cta.href}
+                  class="text-sm font-medium hover:opacity-70 transition-opacity"
+                  style="color: var(--color-accent);"
+                >
+                  {p.cta.label} →
+                </a>
+                <a
+                  href={p.secondary.href}
+                  class="text-sm font-medium hover:opacity-70 transition-opacity"
+                  style="color: var(--color-text-muted);"
+                >
+                  {p.secondary.label}
+                </a>
+              </div>
             </div>
           ))
         }
       </div>
     </section>
 
-    <!-- Why -->
+    <!-- How it works -->
+    <section class="max-w-6xl mx-auto px-6 pb-24" id="how">
+      <h2 class="text-3xl font-bold tracking-tight mb-3">Age verification in three calls</h2>
+      <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
+        Data-minimised by design. You get the claim you need — not the identity behind it.
+      </p>
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          steps.map((s) => (
+            <div
+              class="rounded-xl border p-6"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <p class="text-2xl font-mono font-bold mb-3" style="color: var(--color-accent);">{s.n}</p>
+              <h3 class="text-base font-semibold tracking-tight mb-2">{s.title}</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">{s.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Why / Timeline -->
     <section class="max-w-6xl mx-auto px-6 pb-24" id="why">
       <div class="grid md:grid-cols-2 gap-12 items-start">
         <div>
@@ -151,14 +264,15 @@ const timeline = [
           <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
             Regulation <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj" target="_blank" rel="noopener" style="color: var(--color-accent);" class="underline">(EU) 2024/1183</a>
             mandates that all 27 member states issue a Digital Identity Wallet and obliges relying parties in regulated
-            sectors to accept it by <strong style="color: var(--color-text);">6 December 2027</strong>.
+            sectors to accept it by <strong style="color: var(--color-text);">6 December 2027</strong> — while UK OSA and
+            EU DSA age-assurance duties are already in force.
           </p>
           <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">
-            The reference verifier work happens in Kotlin and Rust. .NET shops, and there are a lot of them in EU
-            public-sector and finance, are left translating. Tessio closes that gap.
+            The reference verifier work happens in Kotlin and Rust. .NET shops — and there are a lot of them in EU
+            public-sector and finance — are left translating. Tessio closes that gap, hosted or self-run.
           </p>
         </div>
-        <div>
+        <div id="developers">
           <h3 class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-text-muted);">
             Timeline
           </h3>
@@ -180,6 +294,21 @@ const timeline = [
       </div>
     </section>
 
+    <!-- FAQ -->
+    <section class="max-w-6xl mx-auto px-6 pb-24" id="faq">
+      <h2 class="text-3xl font-bold tracking-tight mb-12">Frequently asked</h2>
+      <div class="grid gap-x-12 gap-y-8 md:grid-cols-2">
+        {
+          faqs.map((f) => (
+            <div>
+              <h3 class="text-base font-semibold tracking-tight mb-2">{f.q}</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">{f.a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
     <!-- Contact -->
     <section class="max-w-6xl mx-auto px-6 pb-24" id="contact">
       <div
@@ -187,15 +316,16 @@ const timeline = [
         style="background-color: var(--color-bg-elevated); border-left-color: var(--color-accent); border-color: var(--color-border);"
       >
         <p class="text-xs font-medium uppercase tracking-widest mb-3" style="color: var(--color-accent);">
-          Working on EUDI?
+          Working on age or identity verification?
         </p>
         <h3 class="text-2xl font-bold tracking-tight mb-3">Let's talk.</h3>
         <p class="text-base leading-relaxed mb-6 max-w-2xl" style="color: var(--color-text-muted);">
-          We're talking to .NET teams running verification pilots, integrators planning 2027 rollout and member-state
-          authorities looking for an EU-aligned reference stack. If that's you, drop a line.
+          Tessio Cloud is invite-only while we onboard design partners. We're talking to operators running age-assurance
+          pilots, integrators planning 2027 rollout and member-state authorities looking for an EU-aligned reference stack.
+          If that's you, drop a line.
         </p>
         <a
-          href={`mailto:${contactEmail}?subject=Tessio`}
+          href={accessMailto}
           class="inline-block px-5 py-3 rounded-md font-medium text-white transition-opacity hover:opacity-90"
           style="background-color: var(--color-accent);"
         >
@@ -216,7 +346,9 @@ const timeline = [
         </p>
       </div>
       <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <a href={cloudUrl} class="hover:opacity-70">Tessio Cloud</a>
         <a href={verifierUrl} class="hover:opacity-70">Verifier</a>
+        <a href={nugetUrl} target="_blank" rel="noopener" class="hover:opacity-70">NuGet</a>
         <a href={verifierRepo} target="_blank" rel="noopener" class="hover:opacity-70">GitHub</a>
         <a href={`mailto:${contactEmail}`} class="hover:opacity-70">Contact</a>
       </nav>
