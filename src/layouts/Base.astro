@@ -12,15 +12,15 @@ const { title, description, image = '/og.png' } = Astro.props;
 
 const siteTitle = title
   ? `${title} · Tessio`
-  : 'Tessio Cloud — EU age & identity verification API for the EUDI Wallet';
+  : 'Tessio Cloud: age and identity verification for the EUDI Wallet';
 const siteDesc =
   description ??
-  'Hosted age & identity verification for the EU Digital Identity Wallet. Privacy-first over-18 checks that store no personal data — built on an open-source .NET core.';
+  'Hosted age and identity verification for the EU Digital Identity Wallet. Over-18 checks that keep no personal data, built on an open-source .NET core.';
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 
-// Site-wide Organization graph — page-specific JSON-LD (Product, FAQ) rides the `head` slot.
+// Site-wide Organization graph. Page-specific JSON-LD (Product, FAQ) rides the `head` slot.
 const orgJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -57,7 +57,7 @@ const orgJsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Tessio.Cloud — EU age & identity verification API" />
+    <meta property="og:image:alt" content="Tessio.Cloud: EU age and identity verification API" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -75,7 +75,7 @@ const orgJsonLd = {
       rel="stylesheet"
     />
     <slot name="head" />
-    <script defer src="https://analytics.quaterio.com/script.js" data-website-id="a4075622-7115-4bb5-bc15-17b62a02408e"></script>
+    <script defer src="https://analytics.tessio.eu/script.js" data-website-id="a4075622-7115-4bb5-bc15-17b62a02408e"></script>
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />

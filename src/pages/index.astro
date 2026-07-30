@@ -13,7 +13,7 @@ const products = [
   {
     name: 'Tessio Cloud',
     tag: 'Hosted · live now',
-    body: 'A hosted API and dashboard for age and identity verification on the EU Digital Identity Wallet. One call returns a signed over-18 result — API keys, webhooks and usage analytics included. Integrate today against the sandbox.',
+    body: 'A hosted API and dashboard for age and identity checks on the EU Digital Identity Wallet. You get API keys, webhooks and usage analytics. You can start building today against the sandbox.',
     cta: { label: 'Request access', href: accessMailto },
     secondary: { label: 'Sign in', href: cloudUrl },
     highlight: true,
@@ -21,7 +21,7 @@ const products = [
   {
     name: 'Tessio.Verifier',
     tag: 'Open source · Apache-2.0',
-    body: 'The ASP.NET Core-native verifier that Tessio Cloud runs on. OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), four run modes so you can build before wallets ship. On NuGet for .NET 8 to 10 — self-host on your own stack.',
+    body: 'The ASP.NET Core verifier that Tessio Cloud runs on. It does OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), with four run modes so you can build before wallets ship. It is on NuGet for .NET 8 to 10, so you can run it yourself.',
     cta: { label: 'Get it on NuGet', href: nugetUrl },
     secondary: { label: 'View on GitHub', href: verifierRepo },
     highlight: false,
@@ -29,41 +29,41 @@ const products = [
 ];
 
 const steps = [
-  { n: '01', title: 'Call the API', body: `POST a check to ${'/v1/age-checks'} and get back a hosted verification link — no SDK lock-in, no document handling on your side.` },
-  { n: '02', title: 'User proves the claim', body: 'The person confirms a single claim — like being over 18 — straight from their EU Digital Identity Wallet. No ID scan, no selfie.' },
-  { n: '03', title: 'You get a yes / no', body: 'A signed result arrives over your webhook. You store the boolean your compliance needs — and nothing else.' },
+  { n: '01', title: 'Call the API', body: 'POST a check to /v1/age-checks. You get back a hosted verification link. No SDK to install, no documents to handle.' },
+  { n: '02', title: 'The user confirms', body: 'The person confirms one claim, like being over 18, from their EU Digital Identity Wallet. No ID scan, no selfie.' },
+  { n: '03', title: 'You get a yes or no', body: 'A signed result lands on your webhook. You store the answer you need, and nothing else.' },
 ];
 
 const timeline = [
-  { date: 'Now', body: 'Tessio Cloud is live and Tessio.Verifier 0.2 ships — SD-JWT VC and mdoc (mDL) verification, checked against the specification\'s own test vectors. Build against the sandbox today.' },
-  { date: 'Dec 2026', body: 'Member states must make the EUDI Wallet available under Regulation (EU) 2024/1183. Real wallets, real credentials to verify.' },
-  { date: '6 Dec 2027', body: 'Mandatory acceptance. Regulated relying parties must accept the EU Digital Identity Wallet in production.' },
+  { date: 'Now', body: 'Tessio Cloud is live and Tessio.Verifier 0.3 is out. It verifies SD-JWT VC and mdoc (mDL) and passes the specification\'s own test vectors. You can build against the sandbox today.' },
+  { date: 'Dec 2026', body: 'Member states have to make the EUDI Wallet available under Regulation (EU) 2024/1183. Real wallets, real credentials to verify.' },
+  { date: 'Dec 2027', body: 'Acceptance becomes mandatory. Regulated relying parties need a verifier in production.' },
 ];
 
 const faqs = [
   {
     q: 'What is Tessio Cloud?',
-    a: 'Tessio Cloud is a hosted API for age and identity verification built on the EU Digital Identity (EUDI) Wallet. You send a check, the user proves a claim such as being over 18 from their wallet, and you get a signed yes/no back — without handling documents or storing personal data.',
+    a: 'A hosted API for age and identity checks on the EU Digital Identity Wallet. You send a check, the person proves a claim such as being over 18 from their wallet, and you get a signed yes or no back. You never handle documents, and we keep no personal data.',
   },
   {
     q: 'How does the age verification API work?',
-    a: 'Your app calls the /v1/age-checks endpoint, we return a hosted verification link, the user confirms the claim from their EU Digital Identity Wallet, and you receive the result over a webhook. You can integrate today against our sandbox and switch to live wallets as member states roll them out.',
+    a: 'Your app calls the /v1/age-checks endpoint and gets a hosted verification link. The person confirms the claim from their EU Digital Identity Wallet, and the result comes back on your webhook. You can build against the sandbox today and move to live wallets as member states roll them out.',
   },
   {
     q: 'Do you store personal data?',
-    a: 'No. Age verification is data-minimised by design: the result is an over-18 boolean, not a date of birth or an identity document. There is no selfie, no ID scan and no personal data retained — only the yes/no your compliance needs.',
+    a: 'No. The result is an over-18 yes or no, not a date of birth or an ID document. There is no selfie and no ID scan, and we keep no personal data. You get the answer your compliance needs and nothing more.',
   },
   {
     q: 'Is it GDPR compliant?',
-    a: 'Data minimisation is built in — we verify a single claim and store no personal data, which is exactly the posture GDPR and the EU Digital Identity framework are designed around. Self-hosting is available if you need the verifier inside your own boundary.',
+    a: 'We check one claim and store no personal data, which is the posture GDPR and the EU Digital Identity framework are built for. If you need the verifier inside your own boundary, you can self-host it.',
   },
   {
     q: 'Is there an open-source or self-hosted option?',
-    a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open-source, ASP.NET Core-native EUDI verifier (OpenID4VP, SD-JWT VC and mdoc). It is on NuGet under Apache-2.0, so you can build and self-host on your own .NET stack.',
+    a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open-source ASP.NET Core verifier for OpenID4VP, SD-JWT VC and mdoc. It is on NuGet under Apache-2.0, so you can build and run it on your own .NET stack.',
   },
   {
     q: 'When must businesses accept the EU Digital Identity Wallet?',
-    a: 'Member states must make the EUDI Wallet available by December 2026 under Regulation (EU) 2024/1183, and regulated relying parties must accept it by 6 December 2027.',
+    a: 'Member states have to make the wallet available by December 2026 under Regulation (EU) 2024/1183, and regulated relying parties have to accept it by December 2027.',
   },
 ];
 
@@ -76,19 +76,19 @@ const jsonLd = {
       name: 'Tessio Cloud',
       url: cloudUrl,
       brand: { '@type': 'Brand', name: 'Tessio' },
-      category: 'Age & identity verification API',
+      category: 'Age and identity verification API',
       description:
-        'Hosted age and identity verification API for the EU Digital Identity Wallet. Privacy-first over-18 checks with no personal data stored.',
+        'Hosted age and identity verification API for the EU Digital Identity Wallet. Over-18 checks that keep no personal data.',
     },
     {
       '@type': 'SoftwareApplication',
       name: 'Tessio.Verifier',
       url: verifierUrl,
       applicationCategory: 'DeveloperApplication',
-      operatingSystem: '.NET 8–10',
+      operatingSystem: '.NET 8 to 10',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
       description:
-        'Open-source, ASP.NET Core-native EUDI verifier: OpenID4VP, SD-JWT VC and mdoc. Apache-2.0, on NuGet.',
+        'Open-source, ASP.NET Core-native EUDI verifier for OpenID4VP, SD-JWT VC and mdoc. Apache-2.0, on NuGet.',
     },
     {
       '@type': 'FAQPage',
@@ -134,11 +134,11 @@ const jsonLd = {
           <path class="g3" pathLength="1" d="M132.909 81.0 L100.0 100.0" />
           <path class="g3" pathLength="1" d="M100.0 138.0 L100.0 100.0" />
         </svg>
-        <span>Tessio</span>
+        <span class="hidden sm:inline">Tessio</span>
       </a>
       <nav class="flex items-center gap-4 md:gap-6 text-sm">
         <a href="#product" class="hidden sm:inline hover:opacity-70 transition-opacity">Product</a>
-        <a href="#why" class="hidden sm:inline hover:opacity-70 transition-opacity">Why</a>
+        <a href="#pricing" class="hidden sm:inline hover:opacity-70 transition-opacity">Pricing</a>
         <a href="#developers" class="hover:opacity-70 transition-opacity">Developers</a>
         <a href={cloudUrl} class="hover:opacity-70 transition-opacity">Sign in</a>
         <a
@@ -160,14 +160,14 @@ const jsonLd = {
           Age verification · EU Digital Identity · .NET
         </p>
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6">
-          Verify age and identity.<br />
-          <span style="color: var(--color-text-muted);">Store nothing.</span>
+          Age and identity verification,<br />
+          <span style="color: var(--color-text-muted);">on the EU Digital Identity Wallet.</span>
         </h1>
         <p class="text-lg md:text-xl leading-relaxed max-w-2xl mb-8" style="color: var(--color-text);">
-          <strong>Tessio Cloud</strong> is a hosted API for age and identity verification on the
-          <strong>EU Digital Identity Wallet</strong>. One call returns a signed over-18 result —
-          <span style="color: var(--color-text-muted);">no documents, no selfies, no personal data stored</span> —
-          built on our open-source .NET verifier.
+          Tessio Cloud is a hosted verification API. You ask whether someone is over 18, they confirm it from their
+          wallet, and you get back a signed yes or no.
+          <span style="color: var(--color-text-muted);">No documents, no selfies, and no personal data kept.</span>
+          It runs on our open-source .NET verifier.
         </p>
         <div class="flex flex-wrap gap-3">
           <a
@@ -187,7 +187,7 @@ const jsonLd = {
         </div>
         <p class="text-sm mt-6" style="color: var(--color-text-muted);">
           Live at <a href={cloudUrl} class="underline" style="color: var(--color-accent);">cloud.tessio.eu</a>.
-          Built for iGaming, age-restricted retail, dating and adult platforms facing UK OSA and EU DSA age-assurance duties.
+          Built for iGaming, age-restricted retail, dating and adult platforms that have to meet UK OSA and EU DSA age rules.
         </p>
       </div>
     </section>
@@ -196,7 +196,7 @@ const jsonLd = {
     <section class="max-w-6xl mx-auto px-6 pb-24" id="product">
       <h2 class="text-3xl font-bold tracking-tight mb-3">Two products, one core</h2>
       <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
-        The hosted product where the operational burden lives, and the open-source verifier where the protocol lives.
+        The hosted product for teams who want it run for them, and the open-source verifier for teams who want to run it themselves.
       </p>
       <div class="grid gap-6 md:grid-cols-2">
         {
@@ -238,7 +238,7 @@ const jsonLd = {
     <section class="max-w-6xl mx-auto px-6 pb-24" id="how">
       <h2 class="text-3xl font-bold tracking-tight mb-3">Age verification in three calls</h2>
       <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
-        Data-minimised by design. You get the claim you need — not the identity behind it.
+        You get the claim you asked for, not the identity behind it.
       </p>
       <div class="grid gap-6 md:grid-cols-3">
         {
@@ -263,13 +263,13 @@ const jsonLd = {
           <h2 class="text-3xl font-bold tracking-tight mb-6">Why now</h2>
           <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
             Regulation <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj" target="_blank" rel="noopener" style="color: var(--color-accent);" class="underline">(EU) 2024/1183</a>
-            mandates that all 27 member states issue a Digital Identity Wallet and obliges relying parties in regulated
-            sectors to accept it by <strong style="color: var(--color-text);">6 December 2027</strong> — while UK OSA and
-            EU DSA age-assurance duties are already in force.
+            makes all 27 member states issue a Digital Identity Wallet, and makes relying parties in regulated sectors
+            accept it by <strong style="color: var(--color-text);">December 2027</strong>. UK OSA and EU DSA age rules
+            already apply today.
           </p>
           <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">
-            The reference verifier work happens in Kotlin and Rust. .NET shops — and there are a lot of them in EU
-            public-sector and finance — are left translating. Tessio closes that gap, hosted or self-run.
+            Most of the reference verifier work is in Kotlin and Rust, so .NET teams end up porting it. There are a lot
+            of those teams in EU public sector and finance. Tessio gives them a verifier that fits, hosted or self-run.
           </p>
         </div>
         <div id="developers">
@@ -291,6 +291,34 @@ const jsonLd = {
             }
           </ol>
         </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="max-w-6xl mx-auto px-6 pb-24" id="pricing">
+      <h2 class="text-3xl font-bold tracking-tight mb-3">Pricing</h2>
+      <p class="mb-8 text-lg max-w-2xl" style="color: var(--color-text-muted);">
+        You pay for what you verify.
+      </p>
+      <div
+        class="rounded-xl border p-8 max-w-3xl"
+        style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+      >
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+          Tessio Cloud is usage-based. You pay a platform subscription for the dashboard, API keys and support, plus a
+          per-check rate on top. The rate drops as your volume grows, and age checks are priced for high volume.
+        </p>
+        <p class="text-base leading-relaxed mb-6" style="color: var(--color-text-muted);">
+          Early access is invite-only, and design partners get preferential pricing while we build out. Tell us the
+          volume you are planning and we will send a quote.
+        </p>
+        <a
+          href={accessMailto}
+          class="inline-block text-sm font-medium hover:opacity-70 transition-opacity"
+          style="color: var(--color-accent);"
+        >
+          Request access and a quote →
+        </a>
       </div>
     </section>
 
@@ -320,9 +348,9 @@ const jsonLd = {
         </p>
         <h3 class="text-2xl font-bold tracking-tight mb-3">Let's talk.</h3>
         <p class="text-base leading-relaxed mb-6 max-w-2xl" style="color: var(--color-text-muted);">
-          Tessio Cloud is invite-only while we onboard design partners. We're talking to operators running age-assurance
-          pilots, integrators planning 2027 rollout and member-state authorities looking for an EU-aligned reference stack.
-          If that's you, drop a line.
+          Tessio Cloud is invite-only while we onboard design partners. We are talking to operators running
+          age-assurance pilots, integrators planning their 2027 rollout, and member-state teams looking for an
+          EU-aligned reference stack. If that is you, get in touch.
         </p>
         <a
           href={accessMailto}
