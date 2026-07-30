@@ -4,16 +4,33 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  /** Absolute-or-root path to the social share image. */
+  image?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image = '/og.png' } = Astro.props;
+
 const siteTitle = title
   ? `${title} · Tessio`
-  : 'Tessio · EU Digital Identity for .NET shops';
+  : 'Tessio Cloud: age and identity verification for the EUDI Wallet';
 const siteDesc =
   description ??
-  'Tessio builds the EU Digital Identity Wallet verification stack for .NET. Open-source verifier today, managed trust layer coming.';
+  'Hosted age and identity verification for the EU Digital Identity Wallet. Over-18 checks that keep no personal data, built on an open-source .NET core.';
+
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+
+// Site-wide Organization graph. Page-specific JSON-LD (Product, FAQ) rides the `head` slot.
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Tessio',
+  url: 'https://tessio.eu',
+  logo: 'https://tessio.eu/favicon.svg',
+  description: siteDesc,
+  parentOrganization: { '@type': 'Organization', name: 'Triple Down AB', url: 'https://3dwn.se' },
+  sameAs: ['https://github.com/tripledownab/tessio-verifier'],
+};
 ---
 
 <!doctype html>
@@ -23,20 +40,42 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <link rel="canonical" href={canonical} />
+
     <title>{siteTitle}</title>
     <meta name="description" content={siteDesc} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Tessio" />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDesc} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tessio.Cloud: EU age and identity verification API" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDesc} />
+    <meta name="twitter:image" content={ogImage} />
+
     <meta name="generator" content={Astro.generator} />
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} is:inline />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <script defer src="https://analytics.quaterio.com/script.js" data-website-id="a4075622-7115-4bb5-bc15-17b62a02408e"></script>
+    <slot name="head" />
+    <script defer src="https://analytics.tessio.eu/script.js" data-website-id="a4075622-7115-4bb5-bc15-17b62a02408e"></script>
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />
