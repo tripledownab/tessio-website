@@ -1,0 +1,234 @@
+---
+import { Code } from 'astro:components';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { API_URL, ACCESS_MAILTO, CLOUD_URL } from '../consts';
+
+const title = 'Developer docs';
+const description =
+  'Integrate the Tessio Cloud age verification API. Start a check, get a signed over-18 result over a webhook, and store no personal data. Built on the EU Digital Identity Wallet.';
+
+// Shiki dual theme: light inline, dark applied via the media query in the style block below.
+const codeThemes = { light: 'github-light', dark: 'github-dark' };
+
+// Code samples live as strings so their braces render as text, not Astro expressions.
+const createReq = `curl -X POST ${API_URL}/v1/age-checks \\
+  -H "Authorization: Bearer tk_live_your_key" \\
+  -H "Content-Type: application/json" \\
+  -H "Idempotency-Key: order-4821" \\
+  -d '{ "minAge": 18, "reference": "order-4821" }'`;
+
+const createResp = `{
+  "id": "3f2a9c7e-8b1d-4e2a-9c11-6a0f2b7d4e88",
+  "url": "openid4vp://?client_id=...&request_uri=...",
+  "status": "pending",
+  "expiresAt": "2026-07-31T17:12:00Z"
+}`;
+
+const pollReq = `curl ${API_URL}/v1/age-checks/3f2a9c7e-8b1d-4e2a-9c11-6a0f2b7d4e88 \\
+  -H "Authorization: Bearer tk_live_your_key"`;
+
+const pollResp = `{
+  "id": "3f2a9c7e-8b1d-4e2a-9c11-6a0f2b7d4e88",
+  "status": "completed",
+  "result": { "minAge": 18, "meetsMinAge": true, "method": "demo" },
+  "reference": "order-4821"
+}`;
+
+const webhookReq = `curl -X PUT ${API_URL}/v1/webhook \\
+  -H "Authorization: Bearer tk_live_your_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{ "url": "https://yourapp.com/webhooks/tessio" }'`;
+
+const webhookEvent = `POST /webhooks/tessio
+X-Tessio-Event: age_check.completed
+X-Tessio-Signature: t=1753894320,v1=9f86d081884c7d659a2feaa0...
+
+{
+  "id": "3f2a9c7e-8b1d-4e2a-9c11-6a0f2b7d4e88",
+  "type": "age_check.completed",
+  "status": "completed",
+  "result": { "minAge": 18, "meetsMinAge": true, "method": "demo" }
+}`;
+
+const verifySnippet = `import crypto from "node:crypto";
+
+// header = req.headers["x-tessio-signature"]  ->  "t=<unix>,v1=<hex>"
+const { t, v1 } = Object.fromEntries(header.split(",").map((p) => p.split("=")));
+const expected = crypto.createHmac("sha256", webhookSecret)
+  .update(t + "." + rawBody)          // sign the exact raw body
+  .digest("hex");
+const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(v1));`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Tessio Cloud API: developer documentation',
+  description,
+  url: 'https://tessio.eu/docs',
+  about: 'Age verification API for the EU Digital Identity Wallet',
+};
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="max-w-6xl mx-auto px-6 pt-20 pb-16 md:pt-32 md:pb-24">
+    <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+      Developer docs
+    </p>
+    <h1 class="font-heading text-4xl font-bold tracking-tight text-foreground mb-4">
+      The age verification API
+    </h1>
+    <p class="text-lg leading-relaxed mb-6" style="color: var(--color-text-muted);">
+      Start a check, send the user to their EU Digital Identity Wallet, and get a signed over-18 result back.
+      You never handle a document, and we store no personal data. Everything below works today against the sandbox.
+    </p>
+    <p class="text-sm mb-12" style="color: var(--color-text-muted);">
+      Access is invite-only.
+      <a href={ACCESS_MAILTO} class="underline" style="color: var(--color-accent);">Request access</a>
+      to get a project API key, then manage keys and webhooks in the
+      <a href={CLOUD_URL} class="underline" style="color: var(--color-accent);">dashboard</a>.
+    </p>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold tracking-tight mb-3">Base URL and auth</h2>
+      <p class="text-base leading-relaxed mb-3" style="color: var(--color-text-muted);">
+        All requests go to <code class="doc-code">{API_URL}</code> over HTTPS. The machine-to-machine
+        endpoints authenticate with a project API key (<code class="doc-code">tk_…</code>) as a Bearer token:
+      </p>
+      <Code code="Authorization: Bearer tk_live_your_key" lang="http" themes={codeThemes} />
+      <p class="text-sm mt-3" style="color: var(--color-text-muted);">
+        Keep the key server-side. It is shown once when you create it, and you can revoke it any time from the dashboard.
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold tracking-tight mb-3">1. Start a check</h2>
+      <p class="text-base leading-relaxed mb-3" style="color: var(--color-text-muted);">
+        Create a check. The body is optional; omit it to verify <code class="doc-code">age_over_18</code>.
+        Send an <code class="doc-code">Idempotency-Key</code> so a retry returns the original check instead of
+        creating a new one.
+      </p>
+      <Code code={createReq} lang="bash" themes={codeThemes} />
+      <p class="text-base leading-relaxed mt-4 mb-3" style="color: var(--color-text-muted);">
+        You get back a check <code class="doc-code">id</code> and an OpenID4VP <code class="doc-code">url</code>.
+        Present the <code class="doc-code">url</code> to the user's wallet, as a QR code on desktop or a deep link on mobile.
+      </p>
+      <Code code={createResp} lang="json" themes={codeThemes} />
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold tracking-tight mb-3">2. Get the result</h2>
+      <p class="text-base leading-relaxed mb-3" style="color: var(--color-text-muted);">
+        Register a webhook once and let results come to you. Polling
+        <code class="doc-code">GET /v1/age-checks/{'{'}id{'}'}</code> stays available as a fallback.
+      </p>
+      <Code code={pollReq} lang="bash" themes={codeThemes} />
+      <p class="text-base leading-relaxed mt-4 mb-3" style="color: var(--color-text-muted);">
+        <code class="doc-code">result</code> is <code class="doc-code">null</code> until
+        <code class="doc-code">status</code> is <code class="doc-code">completed</code>. Then it carries the boolean you need:
+      </p>
+      <Code code={pollResp} lang="json" themes={codeThemes} />
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold tracking-tight mb-3">3. Webhooks</h2>
+      <p class="text-base leading-relaxed mb-3" style="color: var(--color-text-muted);">
+        Point us at your endpoint. We return a signing secret once. Omit
+        <code class="doc-code">events</code> to receive them all.
+      </p>
+      <Code code={webhookReq} lang="bash" themes={codeThemes} />
+      <p class="text-base leading-relaxed mt-4 mb-3" style="color: var(--color-text-muted);">
+        Each event is a POST with an <code class="doc-code">X-Tessio-Event</code> header and a signed body:
+      </p>
+      <Code code={webhookEvent} lang="http" themes={codeThemes} />
+      <p class="text-base leading-relaxed mt-4 mb-3" style="color: var(--color-text-muted);">
+        Verify the signature before trusting an event. Recompute the HMAC over
+        <code class="doc-code">t + "." + rawBody</code> with your secret and compare it to
+        <code class="doc-code">v1</code>:
+      </p>
+      <Code code={verifySnippet} lang="javascript" themes={codeThemes} />
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold tracking-tight mb-3">Errors</h2>
+      <p class="text-base leading-relaxed mb-3" style="color: var(--color-text-muted);">
+        Errors return a JSON body like <code class="doc-code">{'{'} "error": "code" {'}'}</code>.
+      </p>
+      <ul class="space-y-2 text-sm" style="color: var(--color-text-muted);">
+        <li><code class="doc-code">400 unsupported_min_age</code> the requested age threshold is not supported (the MVP supports 18).</li>
+        <li><code class="doc-code">401</code> the key is missing, invalid, or revoked.</li>
+        <li><code class="doc-code">409 idempotency_key_reuse</code> the same key was used with a different body.</li>
+        <li><code class="doc-code">429</code> rate limit (default 60 per minute) or monthly quota. On a rate limit, honour the <code class="doc-code">Retry-After</code> header.</li>
+      </ul>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold tracking-tight mb-3">No personal data</h2>
+      <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">
+        A check returns an over-18 boolean, not a date of birth or an identity document. There is no selfie
+        and no ID scan, and we keep no personal data. If you need the verifier inside your own boundary, the
+        open-source <a href="https://verifier.tessio.eu" class="underline" style="color: var(--color-accent);">Tessio.Verifier</a>
+        self-hosts on your own .NET stack.
+      </p>
+    </section>
+
+    <div
+      class="rounded-xl border-l-4 p-6"
+      style="background-color: var(--color-bg-elevated); border-left-color: var(--color-accent); border-color: var(--color-border);"
+    >
+      <h2 class="text-lg font-semibold tracking-tight mb-2">Ready to build?</h2>
+      <p class="text-sm leading-relaxed mb-4" style="color: var(--color-text-muted);">
+        Request access to get a project API key. You can integrate against the sandbox straight away.
+      </p>
+      <a
+        href={ACCESS_MAILTO}
+        class="inline-block px-5 py-2.5 rounded-md text-sm font-medium text-white transition-opacity hover:opacity-90"
+        style="background-color: var(--color-accent);"
+      >
+        Request access →
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style is:global>
+  /* Shiki code blocks (<Code>): match the site's card shape; swap to the dark theme on dark mode. */
+  .astro-code {
+    overflow-x: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-code-border);
+    padding: 1rem 1.25rem;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .astro-code code {
+    font-family: var(--font-mono);
+  }
+  @media (prefers-color-scheme: dark) {
+    .astro-code,
+    .astro-code span {
+      color: var(--shiki-dark) !important;
+      background-color: var(--shiki-dark-bg) !important;
+      font-style: var(--shiki-dark-font-style) !important;
+      font-weight: var(--shiki-dark-font-weight) !important;
+      text-decoration: var(--shiki-dark-text-decoration) !important;
+    }
+  }
+  .doc-code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background-color: var(--color-code-bg);
+    border: 1px solid var(--color-code-border);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+    color: var(--color-text);
+  }
+</style>

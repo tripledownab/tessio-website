@@ -1,13 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-
-const cloudUrl = 'https://cloud.tessio.eu';
-const apiUrl = 'https://api.tessio.eu';
-const verifierUrl = 'https://verifier.tessio.eu';
-const verifierRepo = 'https://github.com/tripledownab/tessio-verifier';
-const nugetUrl = 'https://www.nuget.org/packages/Tessio.Verifier.AspNetCore';
-const contactEmail = 'hello@tessio.eu';
-const accessMailto = `mailto:${contactEmail}?subject=Tessio%20Cloud%20access`;
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import {
+  CLOUD_URL as cloudUrl,
+  VERIFIER_URL as verifierUrl,
+  VERIFIER_REPO as verifierRepo,
+  NUGET_URL as nugetUrl,
+  CONTACT_EMAIL as contactEmail,
+  ACCESS_MAILTO as accessMailto,
+} from '../consts';
 
 const products = [
   {
@@ -105,52 +107,7 @@ const jsonLd = {
 <Base>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
 
-  <header
-    class="sticky top-0 z-10 backdrop-blur-md border-b"
-    style="background-color: color-mix(in srgb, var(--color-bg) 85%, transparent); border-color: var(--color-border);"
-  >
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
-        <svg
-          class="ts-mark"
-          width="42"
-          height="42"
-          viewBox="0 0 200 200"
-          fill="none"
-          stroke-width="7"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path class="g1" pathLength="1" d="M100.0 24.0 L165.818 62.0 L165.818 138.0 L100.0 176.0 L34.182 138.0 L34.182 62.0Z" />
-          <path class="g2" pathLength="1" d="M100.0 24.0 L100.0 62.0" />
-          <path class="g2" pathLength="1" d="M165.818 62.0 L132.909 81.0" />
-          <path class="g2" pathLength="1" d="M165.818 138.0 L132.909 119.0" />
-          <path class="g2" pathLength="1" d="M100.0 176.0 L100.0 138.0" />
-          <path class="g2" pathLength="1" d="M34.182 138.0 L67.091 119.0" />
-          <path class="g2" pathLength="1" d="M34.182 62.0 L67.091 81.0" />
-          <path class="g3" pathLength="1" d="M100.0 62.0 L132.909 81.0 L132.909 119.0 L100.0 138.0 L67.091 119.0 L67.091 81.0Z" />
-          <path class="g3" pathLength="1" d="M67.091 81.0 L100.0 100.0" />
-          <path class="g3" pathLength="1" d="M132.909 81.0 L100.0 100.0" />
-          <path class="g3" pathLength="1" d="M100.0 138.0 L100.0 100.0" />
-        </svg>
-        <span class="hidden sm:inline">Tessio</span>
-      </a>
-      <nav class="flex items-center gap-4 md:gap-6 text-sm">
-        <a href="#product" class="hidden sm:inline hover:opacity-70 transition-opacity">Product</a>
-        <a href="#pricing" class="hidden sm:inline hover:opacity-70 transition-opacity">Pricing</a>
-        <a href="#developers" class="hover:opacity-70 transition-opacity">Developers</a>
-        <a href={cloudUrl} class="hover:opacity-70 transition-opacity">Sign in</a>
-        <a
-          href={accessMailto}
-          class="px-3 py-1.5 rounded-md text-white text-xs font-medium"
-          style="background-color: var(--color-accent);"
-        >
-          Request access
-        </a>
-      </nav>
-    </div>
-  </header>
+  <Header />
 
   <main class="flex-1">
     <!-- Hero -->
@@ -363,23 +320,5 @@ const jsonLd = {
     </section>
   </main>
 
-  <footer class="border-t" style="border-color: var(--color-border);">
-    <div
-      class="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-    >
-      <div>
-        <p class="font-semibold tracking-tight">Tessio</p>
-        <p class="text-sm mt-1" style="color: var(--color-text-muted);">
-          A <a href="https://3dwn.se" target="_blank" rel="noopener" style="color: var(--color-text-muted);" class="underline">Triple Down AB</a> project.
-        </p>
-      </div>
-      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-        <a href={cloudUrl} class="hover:opacity-70">Tessio Cloud</a>
-        <a href={verifierUrl} class="hover:opacity-70">Verifier</a>
-        <a href={nugetUrl} target="_blank" rel="noopener" class="hover:opacity-70">NuGet</a>
-        <a href={verifierRepo} target="_blank" rel="noopener" class="hover:opacity-70">GitHub</a>
-        <a href={`mailto:${contactEmail}`} class="hover:opacity-70">Contact</a>
-      </nav>
-    </div>
-  </footer>
+  <Footer />
 </Base>

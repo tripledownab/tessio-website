@@ -1,0 +1,51 @@
+---
+import { CLOUD_URL, ACCESS_MAILTO } from '../consts';
+// Sticky site header. Anchors are absolute (/#...) so they also work from /docs.
+---
+
+<header
+  class="sticky top-0 z-10 backdrop-blur-md border-b"
+  style="background-color: color-mix(in srgb, var(--color-bg) 85%, transparent); border-color: var(--color-border);"
+>
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+      <svg
+        class="ts-mark"
+        width="42"
+        height="42"
+        viewBox="0 0 200 200"
+        fill="none"
+        stroke-width="7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path class="g1" pathLength="1" d="M100.0 24.0 L165.818 62.0 L165.818 138.0 L100.0 176.0 L34.182 138.0 L34.182 62.0Z" />
+        <path class="g2" pathLength="1" d="M100.0 24.0 L100.0 62.0" />
+        <path class="g2" pathLength="1" d="M165.818 62.0 L132.909 81.0" />
+        <path class="g2" pathLength="1" d="M165.818 138.0 L132.909 119.0" />
+        <path class="g2" pathLength="1" d="M100.0 176.0 L100.0 138.0" />
+        <path class="g2" pathLength="1" d="M34.182 138.0 L67.091 119.0" />
+        <path class="g2" pathLength="1" d="M34.182 62.0 L67.091 81.0" />
+        <path class="g3" pathLength="1" d="M100.0 62.0 L132.909 81.0 L132.909 119.0 L100.0 138.0 L67.091 119.0 L67.091 81.0Z" />
+        <path class="g3" pathLength="1" d="M67.091 81.0 L100.0 100.0" />
+        <path class="g3" pathLength="1" d="M132.909 81.0 L100.0 100.0" />
+        <path class="g3" pathLength="1" d="M100.0 138.0 L100.0 100.0" />
+      </svg>
+      <span class="hidden sm:inline">Tessio</span>
+    </a>
+    <nav class="flex items-center gap-4 md:gap-6 text-sm">
+      <a href="/#product" class="hidden sm:inline hover:opacity-70 transition-opacity">Product</a>
+      <a href="/#pricing" class="hidden sm:inline hover:opacity-70 transition-opacity">Pricing</a>
+      <a href="/docs" class="hover:opacity-70 transition-opacity">Docs</a>
+      <a href={CLOUD_URL} class="hover:opacity-70 transition-opacity">Sign in</a>
+      <a
+        href={ACCESS_MAILTO}
+        class="px-3 py-1.5 rounded-md text-white text-xs font-medium"
+        style="background-color: var(--color-accent);"
+      >
+        Request access
+      </a>
+    </nav>
+  </div>
+</header>

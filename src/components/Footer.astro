@@ -1,0 +1,24 @@
+---
+import { CLOUD_URL, VERIFIER_URL, NUGET_URL, VERIFIER_REPO, CONTACT_EMAIL } from '../consts';
+---
+
+<footer class="border-t" style="border-color: var(--color-border);">
+  <div
+    class="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+  >
+    <div>
+      <p class="font-semibold tracking-tight">Tessio</p>
+      <p class="text-sm mt-1" style="color: var(--color-text-muted);">
+        A <a href="https://3dwn.se" target="_blank" rel="noopener" style="color: var(--color-text-muted);" class="underline">Triple Down AB</a> project.
+      </p>
+    </div>
+    <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+      <a href={CLOUD_URL} class="hover:opacity-70">Tessio Cloud</a>
+      <a href="/docs" class="hover:opacity-70">Docs</a>
+      <a href={VERIFIER_URL} class="hover:opacity-70">Verifier</a>
+      <a href={NUGET_URL} target="_blank" rel="noopener" class="hover:opacity-70">NuGet</a>
+      <a href={VERIFIER_REPO} target="_blank" rel="noopener" class="hover:opacity-70">GitHub</a>
+      <a href={`mailto:${CONTACT_EMAIL}`} class="hover:opacity-70">Contact</a>
+    </nav>
+  </div>
+</footer>
