@@ -1,0 +1,201 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqList from '../components/FaqList.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import Cta from '../components/Cta.astro';
+import { breadcrumbLd, faqLd, productLd, graph } from '../lib/seo';
+import { ACCESS_MAILTO } from '../consts';
+import type { Comparison } from '../data/comparisons';
+
+interface RelatedLink {
+  label: string;
+  href: string;
+  note?: string;
+}
+interface Props {
+  comparison: Comparison;
+  related: RelatedLink[];
+}
+const { comparison: c, related } = Astro.props;
+
+const path = `/compare/${c.slug}`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Compare', path: '/compare' },
+  { name: c.name, path },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  faqLd(c.faqs),
+  productLd({
+    name: `Tessio Cloud vs ${c.name}`,
+    description: c.description,
+    url: path,
+  }),
+);
+---
+
+<Base title={c.title} description={c.description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        {c.category}
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        Tessio vs {c.name}
+      </h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        {c.lead}
+      </p>
+      <div class="flex flex-wrap gap-3 mt-8">
+        <a
+          href={ACCESS_MAILTO}
+          class="px-5 py-3 rounded-md font-medium text-white transition-opacity hover:opacity-90"
+          style="background-color: var(--color-accent);"
+        >
+          Request access →
+        </a>
+        <a
+          href="/docs"
+          class="px-5 py-3 rounded-md font-medium border transition-colors"
+          style="border-color: var(--color-border);"
+        >
+          Read the docs
+        </a>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      {
+        c.intro.map((p) => (
+          <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+            {p}
+          </p>
+        ))
+      }
+    </section>
+
+    <!-- Comparison table -->
+    <section class="max-w-6xl mx-auto px-6 pb-6">
+      <h2 class="text-2xl font-bold tracking-tight mb-6">Tessio and {c.name}, side by side</h2>
+      <div class="overflow-x-auto rounded-xl border" style="border-color: var(--color-border);">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr style="background-color: var(--color-bg-elevated);">
+              <th class="text-left font-semibold p-4 w-1/3" style="border-bottom: 1px solid var(--color-border);">
+                &nbsp;
+              </th>
+              <th
+                class="text-left font-semibold p-4"
+                style="border-bottom: 1px solid var(--color-border); color: var(--color-accent);"
+              >
+                Tessio
+              </th>
+              <th class="text-left font-semibold p-4" style="border-bottom: 1px solid var(--color-border);">
+                {c.name}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              c.rows.map((row) => (
+                <tr>
+                  <td
+                    class="p-4 font-medium align-top"
+                    style="border-bottom: 1px solid var(--color-border);"
+                  >
+                    {row.feature}
+                  </td>
+                  <td
+                    class="p-4 align-top"
+                    style="border-bottom: 1px solid var(--color-border); background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);"
+                  >
+                    {typeof row.tessio === 'boolean' ? (
+                      <span style={`color: ${row.tessio ? 'var(--color-accent)' : 'var(--color-text-muted)'};`}>
+                        {row.tessio ? '✓ Yes' : 'No'}
+                      </span>
+                    ) : (
+                      <span style="color: var(--color-text);">{row.tessio}</span>
+                    )}
+                  </td>
+                  <td
+                    class="p-4 align-top"
+                    style="border-bottom: 1px solid var(--color-border); color: var(--color-text-muted);"
+                  >
+                    {typeof row.them === 'boolean' ? (
+                      <span>{row.them ? '✓ Yes' : 'No'}</span>
+                    ) : (
+                      <span>{row.them}</span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs mt-3" style="color: var(--color-text-muted);">
+        We try to keep this fair and current from public sources. If something about {c.name} is out of
+        date, tell us at
+        <a href="mailto:hello@tessio.eu" class="underline" style="color: var(--color-accent);">hello@tessio.eu</a>
+        and we'll fix it.
+      </p>
+    </section>
+
+    <!-- Where they are strong + when to pick them -->
+    <section class="max-w-6xl mx-auto px-6 py-14">
+      <h2 class="text-2xl font-bold tracking-tight mb-4">Where {c.name} is strong</h2>
+      <ul class="space-y-3 mb-10">
+        {
+          c.theirStrengths.map((s) => (
+            <li class="flex gap-3 text-base leading-relaxed" style="color: var(--color-text-muted);">
+              <span aria-hidden="true" style="color: var(--color-accent);">
+                •
+              </span>
+              <span>{s}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <div
+        class="rounded-xl border p-6"
+        style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+      >
+        <h3 class="text-lg font-semibold tracking-tight mb-2">When to choose {c.name} over us</h3>
+        <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">{c.chooseThem}</p>
+      </div>
+    </section>
+
+    <!-- When Tessio fits -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      <h2 class="text-2xl font-bold tracking-tight mb-4">When teams pick Tessio</h2>
+      <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">{c.chooseUs}</p>
+    </section>
+
+    <FaqList faqs={c.faqs} />
+
+    <RelatedLinks heading="Compare and explore" links={related} />
+
+    <Cta
+      eyebrow="Age verification API"
+      title="See if Tessio fits"
+      body="Access is invite-only while we onboard design partners. Tell us what you're building and the volume you expect, and we'll get you a sandbox key and a quote."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

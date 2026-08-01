@@ -1,0 +1,17 @@
+---
+import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import { COMPARISONS } from '../../data/comparisons';
+import { relatedForComparison } from '../../lib/links';
+
+export function getStaticPaths() {
+  return COMPARISONS.map((comparison) => ({
+    params: { slug: comparison.slug },
+    props: { comparison },
+  }));
+}
+
+const { comparison } = Astro.props;
+const related = relatedForComparison(comparison);
+---
+
+<ComparisonLayout comparison={comparison} related={related} />

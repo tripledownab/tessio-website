@@ -1,0 +1,155 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqList from '../components/FaqList.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import Cta from '../components/Cta.astro';
+import { breadcrumbLd, faqLd, graph } from '../lib/seo';
+import { ACCESS_MAILTO } from '../consts';
+import type { Regulation } from '../data/regulations';
+
+interface RelatedLink {
+  label: string;
+  href: string;
+  note?: string;
+}
+interface Props {
+  regulation: Regulation;
+  related: RelatedLink[];
+}
+const { regulation: r, related } = Astro.props;
+
+const path = `/${r.slug}`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: r.shortName, path },
+];
+const jsonLd = graph(breadcrumbLd(crumbs), faqLd(r.faqs));
+---
+
+<Base title={r.title} description={r.description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        {r.category}
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        {r.name}
+      </h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        {r.lead}
+      </p>
+    </section>
+
+    <!-- Key facts -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      <div
+        class="rounded-xl border p-6 md:p-8"
+        style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+      >
+        <h2 class="text-sm font-medium uppercase tracking-widest mb-5" style="color: var(--color-text-muted);">
+          At a glance
+        </h2>
+        <dl class="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+          {
+            r.facts.map((f) => (
+              <div class="border-l-2 pl-4" style="border-left-color: var(--color-accent);">
+                <dt class="text-xs font-medium uppercase tracking-wider mb-1" style="color: var(--color-accent);">
+                  {f.label}
+                </dt>
+                <dd class="text-sm leading-relaxed" style="color: var(--color-text);">
+                  {f.value}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+
+    <!-- Sections -->
+    <section class="max-w-6xl mx-auto px-6 pb-6">
+      {
+        r.sections.map((s) => (
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold tracking-tight mb-4">{s.heading}</h2>
+            {s.body.map((p) => (
+              <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+                {p}
+              </p>
+            ))}
+          </div>
+        ))
+      }
+    </section>
+
+    <!-- Where Tessio fits -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      <div
+        class="rounded-xl border-l-4 p-6"
+        style="background-color: var(--color-bg-elevated); border-left-color: var(--color-accent); border-color: var(--color-border);"
+      >
+        <h2 class="text-2xl font-bold tracking-tight mb-4">Where Tessio fits</h2>
+        {
+          r.tessioFit.map((p) => (
+            <p class="text-base leading-relaxed mb-4 last:mb-0" style="color: var(--color-text-muted);">
+              {p}
+            </p>
+          ))
+        }
+      </div>
+    </section>
+
+    <FaqList faqs={r.faqs} />
+
+    <!-- Primary sources -->
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <h2 class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-text-muted);">
+        Primary sources
+      </h2>
+      <ul class="space-y-2 text-sm">
+        {
+          r.sources.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener"
+                class="underline"
+                style="color: var(--color-accent);"
+              >
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="text-xs mt-4" style="color: var(--color-text-muted);">
+        This is a plain-language summary, not legal advice. Check your own duties against the primary sources
+        and your regulator.
+      </p>
+    </section>
+
+    <RelatedLinks heading="Put it into practice" links={related} />
+
+    <Cta
+      eyebrow="Age verification API"
+      title="Get ready with a wallet-native check"
+      body="Tessio proves someone is over 18 from their EU Digital Identity Wallet and stores no personal data. Access is invite-only while we onboard design partners. Tell us what you're building."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

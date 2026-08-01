@@ -1,0 +1,10 @@
+---
+import RegulationLayout from '../layouts/RegulationLayout.astro';
+import { getRegulation } from '../data/regulations';
+import { relatedForRegulation } from '../lib/links';
+
+const regulation = getRegulation('dsa')!;
+const related = relatedForRegulation(regulation);
+---
+
+<RegulationLayout regulation={regulation} related={related} />
