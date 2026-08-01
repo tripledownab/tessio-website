@@ -77,7 +77,7 @@ const jsonLd = graph(
     </section>
 
     <!-- Intro -->
-    <section class="max-w-3xl mx-auto px-6 pb-14">
+    <section class="max-w-6xl mx-auto px-6 pb-14">
       {
         r.intro.map((p) => (
           <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
@@ -109,7 +109,7 @@ const jsonLd = graph(
     <!-- Code snippet (developers) -->
     {
       r.snippet && (
-        <section class="max-w-3xl mx-auto px-6 pb-14">
+        <section class="max-w-6xl mx-auto px-6 pb-14">
           <h2 class="text-2xl font-bold tracking-tight mb-3">Start a check</h2>
           <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
             One POST creates a check and returns a link for the user's wallet. The signed result comes back on
@@ -123,7 +123,7 @@ const jsonLd = graph(
     <!-- Checklist (compliance) -->
     {
       r.checklist && r.checklist.length > 0 && (
-        <section class="max-w-3xl mx-auto px-6 pb-14">
+        <section class="max-w-6xl mx-auto px-6 pb-14">
           <h2 class="text-2xl font-bold tracking-tight mb-4">{r.checklistHeading ?? 'The short version'}</h2>
           <div
             class="rounded-xl border p-6"
