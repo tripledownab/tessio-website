@@ -1,7 +1,7 @@
 // comparison-data — one record per competitor. Pages under /compare/[slug] are thin wrappers.
 //
 // Rules for this file:
-//  - Honest and balanced. Every page has a real "when to choose them over us" section.
+//  - Balanced and fair. Every page has a real "when to choose them over us" section.
 //  - No competitor pricing. None of these vendors publish list pricing, so we never state it.
 //  - EUDI claims are careful: "accepts the wallet as a document" (Veriff, Sumsub) and
 //    "sandbox pilot" (Persona) are true. For the rest we say "none we could find, verify",
@@ -68,7 +68,7 @@ export const COMPARISONS: Comparison[] = [
     category: 'Age assurance and digital ID',
     title: 'Yoti alternative: EUDI-native age verification',
     description:
-      'Tessio vs Yoti, compared honestly. A privacy-first age verification API built on the EU Digital Identity Wallet that stores no personal data, next to Yoti age assurance.',
+      'Tessio vs Yoti, compared fairly. A privacy-first age verification API built on the EU Digital Identity Wallet that stores no personal data, next to Yoti age assurance.',
     lead: "Yoti is one of the most established names in age assurance. Tessio takes a narrower, wallet-first route: it proves someone is over 18 straight from the EU Digital Identity Wallet and keeps no personal data. Here's a fair look at where each one fits.",
     intro: [
       "Yoti and Tessio both help you check that a user is old enough, but they come at it from different ends. Yoti built a broad toolkit over the last decade: facial age estimation, a reusable Yoti digital ID app, age tokens and full document plus biometric identity checks. It's a proven, certified option, especially for UK Online Safety Act work.",
@@ -162,7 +162,7 @@ export const COMPARISONS: Comparison[] = [
     category: 'Identity verification and KYC',
     title: 'Onfido alternative: privacy-first EU age verification',
     description:
-      'Tessio vs Onfido (now part of Entrust), compared honestly. An EUDI-native age verification API that stores no personal data, next to Onfido document and biometric identity verification.',
+      'Tessio vs Onfido (now part of Entrust), compared fairly. An EUDI-native age verification API that stores no personal data, next to Onfido document and biometric identity verification.',
     lead: 'Onfido, now part of Entrust, is an enterprise identity verification suite built on document and biometric checks. Tessio is a focused age verification API that proves someone is over 18 from the EU Digital Identity Wallet and stores no personal data.',
     intro: [
       "Onfido verifies identity with document capture and facial biometrics, wrapped in an orchestration layer that mixes methods and data sources per market. Since Entrust completed the acquisition in 2024, it sits inside a broader identity and credential portfolio. For enterprises that want full IDV plus fraud plus orchestration, that breadth is the point.",
@@ -256,8 +256,8 @@ export const COMPARISONS: Comparison[] = [
     category: 'KYC, AML and fraud',
     title: 'Sumsub alternative: EU age verification, no PII',
     description:
-      'Tessio vs Sumsub, compared honestly. An EUDI-native age verification API that stores no personal data, next to the Sumsub full-funnel KYC, AML and fraud platform.',
-    lead: 'Sumsub is a full-funnel KYC, AML and fraud platform, strong in crypto and fintech. Tessio is a narrow age verification API built on the EU Digital Identity Wallet that stores no personal data. If your obligation is compliance onboarding, that gap matters, so here it is honestly.',
+      'Tessio vs Sumsub, compared fairly. An EUDI-native age verification API that stores no personal data, next to the Sumsub full-funnel KYC, AML and fraud platform.',
+    lead: 'Sumsub is a full-funnel KYC, AML and fraud platform, strong in crypto and fintech. Tessio is a narrow age verification API built on the EU Digital Identity Wallet that stores no personal data. If your obligation is compliance onboarding, that gap matters, so here is how they compare.',
     intro: [
       'Sumsub covers the whole compliance funnel. Document and biometric verification, liveness, AML screening, transaction and fraud monitoring, and crypto tooling like travel-rule support. For high-risk verticals that need real KYC and AML, it is a broad and capable suite.',
       "Tessio doesn't do KYC or AML. It proves one claim, over 18, from a wallet credential, and returns a signed yes or no with no personal data kept. When you only need an age gate rather than full compliance onboarding, that is a lot less data to hold and a lot less to wire up.",
@@ -350,7 +350,7 @@ export const COMPARISONS: Comparison[] = [
     category: 'Age assurance',
     title: 'AgeChecked alternative: EUDI age verification',
     description:
-      'Tessio vs AgeChecked, compared honestly. An EUDI-native age verification API that stores no personal data, next to AgeChecked orchestrated age assurance for regulated sectors.',
+      'Tessio vs AgeChecked, compared fairly. An EUDI-native age verification API that stores no personal data, next to AgeChecked orchestrated age assurance for regulated sectors.',
     lead: 'AgeChecked is a UK age assurance specialist with a strong record in gambling and age restricted commerce. Tessio is a wallet-native age verification API built on the EU Digital Identity Wallet. Both minimise data, so this comparison is more about market and method than philosophy.',
     intro: [
       'AgeChecked orchestrates multiple age check methods: a client API, batch upload, a consumer pop-up gateway, database and knowledge checks, and a large anonymised database of pre-verified ages. It anonymises consumers and says it keeps no personal data on its systems, which makes it a genuinely privacy-minded option, and it is well suited to UK regulated sectors.',
@@ -444,7 +444,7 @@ export const COMPARISONS: Comparison[] = [
     category: 'Identity data and fraud',
     title: 'GBG alternative: EUDI age verification, no PII',
     description:
-      'Tessio vs GBG, compared honestly. An EUDI-native age verification API that stores no personal data, next to the GBG identity data network, location intelligence and fraud tools.',
+      'Tessio vs GBG, compared fairly. An EUDI-native age verification API that stores no personal data, next to the GBG identity data network, location intelligence and fraud tools.',
     lead: 'GBG is a large, listed identity data and fraud company built on a global data network. Tessio is a narrow age verification API built on the EU Digital Identity Wallet that stores no personal data. These two are about as far apart in approach as this list gets.',
     intro: [
       'GBG verifies people against a huge network of over 200 data partners, adds location intelligence through Loqate and layers fraud prevention on top. It is an enterprise-scale, data-network approach that is strong for data-driven, low-friction verification and address validation across many markets.',

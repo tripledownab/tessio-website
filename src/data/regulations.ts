@@ -122,8 +122,8 @@ export const REGULATIONS: Regulation[] = [
     category: 'EU regulation',
     title: 'DSA age assurance: what the Digital Services Act asks for',
     description:
-      'The EU Digital Services Act does not mandate blanket age verification. It asks platforms to protect minors proportionately. Here is the honest picture and where a wallet-based age check fits.',
-    lead: "The Digital Services Act does not order blanket age verification. It asks platforms accessible to minors to protect them proportionately, and the Commission's 2025 guidance points to age verification for higher-risk services. Here's the honest picture.",
+      'The EU Digital Services Act does not mandate blanket age verification. It asks platforms to protect minors proportionately. Here is what it actually requires and where a wallet-based age check fits.',
+    lead: "The Digital Services Act does not order blanket age verification. It asks platforms accessible to minors to protect them proportionately, and the Commission's 2025 guidance points to age verification for higher-risk services. Here's what it actually asks for.",
     facts: [
       { label: 'Law', value: 'Digital Services Act, Regulation (EU) 2022/2065' },
       { label: 'Key article', value: 'Article 28, protection of minors' },
@@ -194,10 +194,10 @@ export const REGULATIONS: Regulation[] = [
     shortName: 'EUDI',
     name: 'The EU Digital Identity Wallet, for relying parties',
     category: 'EU Digital Identity',
-    title: 'EUDI Wallet for relying parties: the honest timeline',
+    title: 'EUDI Wallet for relying parties: the real timeline',
     description:
-      'The EU Digital Identity Wallet is coming to all 27 member states. Here is what it is, the honest timeline, and what relying parties need to accept it and verify an over-18 proof.',
-    lead: "The EU Digital Identity Wallet is coming to all 27 member states under the eIDAS update. Here's what it is, an honest read of the timeline, and what relying parties actually need to accept it.",
+      'The EU Digital Identity Wallet is coming to all 27 member states. Here is what it is, a realistic timeline, and what relying parties need to accept it and verify an over-18 proof.',
+    lead: "The EU Digital Identity Wallet is coming to all 27 member states under the eIDAS update. Here's what it is, a straight read of the timeline, and what relying parties actually need to accept it.",
     facts: [
       { label: 'Law', value: 'Regulation (EU) 2024/1183, amending eIDAS 910/2014' },
       { label: 'In force', value: '20 May 2024' },
@@ -215,10 +215,10 @@ export const REGULATIONS: Regulation[] = [
         ],
       },
       {
-        heading: 'The honest timeline',
+        heading: 'The timeline, realistically',
         body: [
           'The regulation has applied since 20 May 2024. The deadlines that follow are tied to the implementing acts, the first batch of which entered into force around 24 December 2024. Each member state has to make at least one wallet available within 24 months of those acts, which lands around the end of 2026. Regulated relying parties have to accept the wallet within 36 months, which lands around the end of 2027.',
-          'Two honest caveats. Those dates are derived from the 24 and 36 month clocks rather than fixed in the text, and rollout across 27 member states is likely to be uneven. And using a wallet is voluntary for citizens, so real users will not all have one on day one. That is why a fallback method still matters, and why Tessio ships with one.',
+          'Two caveats worth stating. Those dates are derived from the 24 and 36 month clocks rather than fixed in the text, and rollout across 27 member states is likely to be uneven. And using a wallet is voluntary for citizens, so real users will not all have one on day one. That is why a fallback method still matters, and why Tessio ships with one.',
         ],
       },
       {
