@@ -1,0 +1,163 @@
+---
+import { Code } from 'astro:components';
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqList from '../components/FaqList.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import Cta from '../components/Cta.astro';
+import { breadcrumbLd, faqLd, productLd, graph } from '../lib/seo';
+import { ACCESS_MAILTO } from '../consts';
+import type { Role } from '../data/roles';
+
+interface RelatedLink {
+  label: string;
+  href: string;
+  note?: string;
+}
+interface Props {
+  role: Role;
+  related: RelatedLink[];
+}
+const { role: r, related } = Astro.props;
+
+const codeThemes = { light: 'github-light', dark: 'github-dark' };
+const path = `/for/${r.slug}`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'For', path: '/for' },
+  { name: r.name, path },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  faqLd(r.faqs),
+  productLd({
+    name: `Tessio Cloud for ${r.name.toLowerCase()}`,
+    description: r.description,
+    url: path,
+  }),
+);
+---
+
+<Base title={r.title} description={r.description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        {r.audience}
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        {r.heading}
+      </h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        {r.lead}
+      </p>
+      <div class="flex flex-wrap gap-3 mt-8">
+        <a
+          href={r.primaryCta.href}
+          class="px-5 py-3 rounded-md font-medium text-white transition-opacity hover:opacity-90"
+          style="background-color: var(--color-accent);"
+        >
+          {r.primaryCta.label} →
+        </a>
+        <a
+          href={r.secondaryCta.href}
+          class="px-5 py-3 rounded-md font-medium border transition-colors"
+          style="border-color: var(--color-border);"
+        >
+          {r.secondaryCta.label}
+        </a>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="max-w-3xl mx-auto px-6 pb-14">
+      {
+        r.intro.map((p) => (
+          <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+            {p}
+          </p>
+        ))
+      }
+    </section>
+
+    <!-- Pillars -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      <div class="grid gap-6 md:grid-cols-2">
+        {
+          r.pillars.map((p) => (
+            <div
+              class="rounded-xl border p-6"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <h2 class="text-lg font-semibold tracking-tight mb-2">{p.title}</h2>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                {p.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Code snippet (developers) -->
+    {
+      r.snippet && (
+        <section class="max-w-3xl mx-auto px-6 pb-14">
+          <h2 class="text-2xl font-bold tracking-tight mb-3">Start a check</h2>
+          <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+            One POST creates a check and returns a link for the user's wallet. The signed result comes back on
+            your webhook. Everything is in the <a href="/docs" class="underline" style="color: var(--color-accent);">developer docs</a>.
+          </p>
+          <Code code={r.snippet} lang="bash" themes={codeThemes} />
+        </section>
+      )
+    }
+
+    <!-- Checklist (compliance) -->
+    {
+      r.checklist && r.checklist.length > 0 && (
+        <section class="max-w-3xl mx-auto px-6 pb-14">
+          <h2 class="text-2xl font-bold tracking-tight mb-4">{r.checklistHeading ?? 'The short version'}</h2>
+          <div
+            class="rounded-xl border p-6"
+            style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+          >
+            <ul class="space-y-3">
+              {r.checklist.map((c) => (
+                <li class="flex gap-3 text-base leading-relaxed" style="color: var(--color-text);">
+                  <span aria-hidden="true" style="color: var(--color-accent);">
+                    ✓
+                  </span>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <FaqList faqs={r.faqs} />
+
+    <RelatedLinks heading="Keep exploring" links={related} />
+
+    <Cta
+      eyebrow={r.audience}
+      title={r.ctaTitle}
+      body={r.ctaBody}
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

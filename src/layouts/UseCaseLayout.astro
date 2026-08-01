@@ -1,0 +1,189 @@
+---
+import { Code } from 'astro:components';
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FaqList from '../components/FaqList.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import Cta from '../components/Cta.astro';
+import { breadcrumbLd, faqLd, productLd, graph } from '../lib/seo';
+import { ACCESS_MAILTO } from '../consts';
+import type { UseCase } from '../data/use-cases';
+
+interface RelatedLink {
+  label: string;
+  href: string;
+  note?: string;
+}
+interface Props {
+  useCase: UseCase;
+  related: RelatedLink[];
+}
+const { useCase: u, related } = Astro.props;
+
+const codeThemes = { light: 'github-light', dark: 'github-dark' };
+const path = `/use-cases/${u.slug}`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Use cases', path: '/use-cases' },
+  { name: u.short, path },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  faqLd(u.faqs),
+  productLd({
+    name: `Tessio Cloud for ${u.name}`,
+    description: u.description,
+    url: path,
+  }),
+);
+---
+
+<Base title={u.title} description={u.description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        {u.category}
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        Age verification for {u.name}
+      </h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        {u.lead}
+      </p>
+      <div class="flex flex-wrap gap-3 mt-8">
+        <a
+          href={ACCESS_MAILTO}
+          class="px-5 py-3 rounded-md font-medium text-white transition-opacity hover:opacity-90"
+          style="background-color: var(--color-accent);"
+        >
+          Request access →
+        </a>
+        <a
+          href="/docs"
+          class="px-5 py-3 rounded-md font-medium border transition-colors"
+          style="border-color: var(--color-border);"
+        >
+          See the API
+        </a>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="max-w-3xl mx-auto px-6 pb-14">
+      <h2 class="text-2xl font-bold tracking-tight mb-4">The problem</h2>
+      {
+        u.problem.map((p) => (
+          <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+            {p}
+          </p>
+        ))
+      }
+    </section>
+
+    <!-- Before / after -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      <h2 class="text-2xl font-bold tracking-tight mb-6">Before and after</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        <div
+          class="rounded-xl border p-6"
+          style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+        >
+          <p class="text-xs font-medium uppercase tracking-widest mb-4" style="color: var(--color-text-muted);">
+            The usual way
+          </p>
+          <ul class="space-y-3">
+            {
+              u.before.map((b) => (
+                <li class="flex gap-3 text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                  <span aria-hidden="true">✗</span>
+                  <span>{b}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div
+          class="rounded-xl border p-6"
+          style="background-color: var(--color-bg-elevated); border-color: var(--color-accent);"
+        >
+          <p class="text-xs font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+            With Tessio
+          </p>
+          <ul class="space-y-3">
+            {
+              u.after.map((a) => (
+                <li class="flex gap-3 text-sm leading-relaxed" style="color: var(--color-text);">
+                  <span aria-hidden="true" style="color: var(--color-accent);">
+                    ✓
+                  </span>
+                  <span>{a}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="max-w-6xl mx-auto px-6 pb-14">
+      <h2 class="text-2xl font-bold tracking-tight mb-6">How it works</h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          u.how.map((s, i) => (
+            <div
+              class="rounded-xl border p-6"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <p class="text-2xl font-mono font-bold mb-3" style="color: var(--color-accent);">
+                {String(i + 1).padStart(2, '0')}
+              </p>
+              <h3 class="text-base font-semibold tracking-tight mb-2">{s.title}</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                {s.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Code snippet -->
+    {
+      u.snippet && (
+        <section class="max-w-3xl mx-auto px-6 pb-14">
+          <h2 class="text-2xl font-bold tracking-tight mb-3">Start a check</h2>
+          <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
+            One POST creates a check and returns a link for the user's wallet. The signed result lands on your
+            webhook. Full detail is in the <a href="/docs" class="underline" style="color: var(--color-accent);">developer docs</a>.
+          </p>
+          <Code code={u.snippet} lang="bash" themes={codeThemes} />
+        </section>
+      )
+    }
+
+    <FaqList faqs={u.faqs} />
+
+    <RelatedLinks heading="Related reading" links={related} />
+
+    <Cta
+      eyebrow={`Age assurance for ${u.name}`}
+      title="Put it in front of your users"
+      body="Access is invite-only while we onboard design partners. Tell us your volume and the markets you cover, and we'll set you up with a sandbox key and a quote."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

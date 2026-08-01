@@ -1,0 +1,35 @@
+---
+// Internal-linking block that ties the compare / use-case / for / regulation systems together.
+interface LinkItem {
+  label: string;
+  href: string;
+  note?: string;
+}
+interface Props {
+  heading?: string;
+  links: LinkItem[];
+}
+const { heading = 'Keep reading', links } = Astro.props;
+---
+
+<section class="max-w-6xl mx-auto px-6 pb-20">
+  <h2 class="text-xl font-semibold tracking-tight mb-6">{heading}</h2>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          class="block rounded-xl border p-5 transition-opacity hover:opacity-80"
+          style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+        >
+          <p class="font-medium tracking-tight mb-1">{l.label}</p>
+          {l.note && (
+            <p class="text-sm" style="color: var(--color-text-muted);">
+              {l.note}
+            </p>
+          )}
+        </a>
+      ))
+    }
+  </div>
+</section>

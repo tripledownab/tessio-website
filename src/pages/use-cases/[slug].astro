@@ -1,0 +1,17 @@
+---
+import UseCaseLayout from '../../layouts/UseCaseLayout.astro';
+import { USE_CASES } from '../../data/use-cases';
+import { relatedForUseCase } from '../../lib/links';
+
+export function getStaticPaths() {
+  return USE_CASES.map((useCase) => ({
+    params: { slug: useCase.slug },
+    props: { useCase },
+  }));
+}
+
+const { useCase } = Astro.props;
+const related = relatedForUseCase(useCase);
+---
+
+<UseCaseLayout useCase={useCase} related={related} />

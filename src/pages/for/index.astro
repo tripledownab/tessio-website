@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import Cta from '../../components/Cta.astro';
+import { ROLES } from '../../data/roles';
+import { USE_CASES } from '../../data/use-cases';
+import { breadcrumbLd, itemListLd, graph } from '../../lib/seo';
+import { ACCESS_MAILTO } from '../../consts';
+
+const title = 'Tessio for developers, compliance and platform providers';
+const description =
+  'Whether you are wiring up the API, signing off the data posture or reselling age assurance to operators, here is how Tessio fits your role. Wallet-native, privacy-first, self-hostable.';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'For', path: '/for' },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  itemListLd(
+    'Tessio by role',
+    ROLES.map((r) => ({ name: `Tessio for ${r.name.toLowerCase()}`, path: `/for/${r.slug}` })),
+  ),
+);
+
+const related = USE_CASES.slice(0, 3).map((u) => ({
+  label: `Age verification for ${u.name}`,
+  href: `/use-cases/${u.slug}`,
+  note: u.category,
+}));
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        Who it's for
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">Tessio for your role</h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        Age verification touches a few different people on a team. The developer wiring up the API, the
+        compliance lead signing off the data posture, and the platform provider reselling it to operators.
+        Here's the version of Tessio that speaks to each.
+      </p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          ROLES.map((r) => (
+            <a
+              href={`/for/${r.slug}`}
+              class="block rounded-xl border p-6 transition-opacity hover:opacity-80"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <p class="text-xs font-medium uppercase tracking-widest mb-2" style="color: var(--color-accent);">
+                {r.audience}
+              </p>
+              <p class="text-lg font-semibold tracking-tight mb-1">{r.heading}</p>
+              <p class="text-sm" style="color: var(--color-text-muted);">
+                {r.lead}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <RelatedLinks heading="By use case" links={related} />
+
+    <Cta
+      eyebrow="Age verification API"
+      title="Find the fit for your team"
+      body="Access is invite-only while we onboard design partners. Tell us your role and what you're building, and we'll point you at the right starting place."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

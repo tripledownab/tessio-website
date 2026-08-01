@@ -1,24 +1,90 @@
 ---
 import { CLOUD_URL, VERIFIER_URL, NUGET_URL, VERIFIER_REPO, CONTACT_EMAIL } from '../consts';
+
+// Footer link columns. Kept in data so the internal-linking stays easy to see and edit.
+const columns: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
+  {
+    heading: 'Product',
+    links: [
+      { label: 'Tessio Cloud', href: CLOUD_URL },
+      { label: 'Developer docs', href: '/docs' },
+      { label: 'For developers', href: '/for/developers' },
+      { label: 'Verifier', href: VERIFIER_URL },
+      { label: 'NuGet', href: NUGET_URL, external: true },
+      { label: 'GitHub', href: VERIFIER_REPO, external: true },
+    ],
+  },
+  {
+    heading: 'Explore',
+    links: [
+      { label: 'Compare', href: '/compare' },
+      { label: 'Use cases', href: '/use-cases' },
+      { label: 'For compliance', href: '/for/compliance' },
+      { label: 'For platform providers', href: '/for/platform-providers' },
+    ],
+  },
+  {
+    heading: 'Regulation',
+    links: [
+      { label: 'UK Online Safety Act', href: '/osa' },
+      { label: 'EU Digital Services Act', href: '/dsa' },
+      { label: 'EU Digital Identity Wallet', href: '/eudi' },
+    ],
+  },
+];
 ---
 
-<footer class="border-t" style="border-color: var(--color-border);">
-  <div
-    class="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-  >
-    <div>
-      <p class="font-semibold tracking-tight">Tessio</p>
-      <p class="text-sm mt-1" style="color: var(--color-text-muted);">
-        A <a href="https://3dwn.se" target="_blank" rel="noopener" style="color: var(--color-text-muted);" class="underline">Triple Down AB</a> project.
-      </p>
+<footer class="border-t mt-auto" style="border-color: var(--color-border);">
+  <div class="max-w-6xl mx-auto px-6 py-14">
+    <div class="grid gap-10 md:grid-cols-4">
+      <div class="md:col-span-1">
+        <p class="font-semibold tracking-tight">Tessio</p>
+        <p class="text-sm mt-2 leading-relaxed max-w-xs" style="color: var(--color-text-muted);">
+          Age and identity verification on the EU Digital Identity Wallet. No documents, no personal data kept.
+        </p>
+        <p class="text-sm mt-3" style="color: var(--color-text-muted);">
+          A <a
+            href="https://3dwn.se"
+            target="_blank"
+            rel="noopener"
+            style="color: var(--color-text-muted);"
+            class="underline">Triple Down AB</a
+          > project.
+        </p>
+      </div>
+
+      {
+        columns.map((col) => (
+          <nav aria-label={col.heading}>
+            <p class="text-xs font-medium uppercase tracking-widest mb-4" style="color: var(--color-text-muted);">
+              {col.heading}
+            </p>
+            <ul class="space-y-2 text-sm">
+              {col.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="hover:opacity-70 transition-opacity"
+                    {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
     </div>
-    <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-      <a href={CLOUD_URL} class="hover:opacity-70">Tessio Cloud</a>
-      <a href="/docs" class="hover:opacity-70">Docs</a>
-      <a href={VERIFIER_URL} class="hover:opacity-70">Verifier</a>
-      <a href={NUGET_URL} target="_blank" rel="noopener" class="hover:opacity-70">NuGet</a>
-      <a href={VERIFIER_REPO} target="_blank" rel="noopener" class="hover:opacity-70">GitHub</a>
-      <a href={`mailto:${CONTACT_EMAIL}`} class="hover:opacity-70">Contact</a>
-    </nav>
+
+    <div
+      class="mt-12 pt-6 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+      style="border-color: var(--color-border);"
+    >
+      <p class="text-sm" style="color: var(--color-text-muted);">Tessio is invite-only while we onboard design partners.</p>
+      <a href={`mailto:${CONTACT_EMAIL}`} class="text-sm hover:opacity-70 transition-opacity" style="color: var(--color-accent);">
+        {CONTACT_EMAIL}
+      </a>
+    </div>
   </div>
 </footer>

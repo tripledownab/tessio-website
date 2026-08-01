@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import Cta from '../../components/Cta.astro';
+import { COMPARISONS } from '../../data/comparisons';
+import { USE_CASES } from '../../data/use-cases';
+import { breadcrumbLd, itemListLd, graph } from '../../lib/seo';
+import { ACCESS_MAILTO } from '../../consts';
+
+const title = 'Compare Tessio: honest age verification comparisons';
+const description =
+  'How Tessio compares to Yoti, Veriff, Onfido, Persona, Sumsub, iDenfy, AgeChecked, VerifyMy and GBG. Balanced comparisons, including when to choose the other tool.';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Compare', path: '/compare' },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  itemListLd(
+    'Age verification comparisons',
+    COMPARISONS.map((c) => ({ name: `Tessio vs ${c.name}`, path: `/compare/${c.slug}` })),
+  ),
+);
+
+const related = USE_CASES.slice(0, 3).map((u) => ({
+  label: `Age verification for ${u.name}`,
+  href: `/use-cases/${u.slug}`,
+  note: u.category,
+}));
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        Comparisons
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">Compare Tessio</h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        Tessio is a privacy-first age verification API built on the EU Digital Identity Wallet. Here's how it
+        stacks up against the identity and age-assurance tools you might already be looking at. We keep these
+        fair, including an honest note on when to choose the other tool.
+      </p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          COMPARISONS.map((c) => (
+            <a
+              href={`/compare/${c.slug}`}
+              class="block rounded-xl border p-6 transition-opacity hover:opacity-80"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <p class="text-xs font-medium uppercase tracking-widest mb-2" style="color: var(--color-accent);">
+                {c.category}
+              </p>
+              <p class="text-lg font-semibold tracking-tight mb-1">Tessio vs {c.name}</p>
+              <p class="text-sm" style="color: var(--color-text-muted);">
+                {c.name} alternative, compared honestly.
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <RelatedLinks heading="By use case" links={related} />
+
+    <Cta
+      eyebrow="Age verification API"
+      title="See if Tessio fits your build"
+      body="Access is invite-only while we onboard design partners. Tell us what you're building and the volume you expect, and we'll set you up with a sandbox key and a quote."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

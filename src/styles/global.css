@@ -12,6 +12,31 @@
 
 /* --- site-specific styles (tessio.eu) --- */
 
+/* Shiki code blocks (<Code>): match the site's card shape and swap to the dark theme
+   on dark mode. Shared by /docs and the code samples on use-case and role pages. */
+.astro-code {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-code-border);
+  padding: 1rem 1.25rem;
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.astro-code code {
+  font-family: var(--font-mono);
+}
+@media (prefers-color-scheme: dark) {
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
 /* Animated tesseract mark in the header. The <svg> element spins one full
    turn per 4.2s cycle while its paths draw in independently (same period, so
    the loop is seamless). Colour follows the theme via --color-text:

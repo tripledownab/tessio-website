@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import Cta from '../../components/Cta.astro';
+import { USE_CASES } from '../../data/use-cases';
+import { REGULATIONS } from '../../data/regulations';
+import { breadcrumbLd, itemListLd, graph } from '../../lib/seo';
+import { ACCESS_MAILTO } from '../../consts';
+
+const title = 'Age verification use cases by industry';
+const description =
+  'Age verification for iGaming, age restricted retail, dating, adult platforms and social. Prove users are 18+ from the EU Digital Identity Wallet and store no personal data.';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Use cases', path: '/use-cases' },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  itemListLd(
+    'Age verification use cases',
+    USE_CASES.map((u) => ({ name: `Age verification for ${u.name}`, path: `/use-cases/${u.slug}` })),
+  ),
+);
+
+const related = REGULATIONS.map((r) => ({ label: r.name, href: `/${r.slug}`, note: r.category }));
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        Use cases
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        Age verification by use case
+      </h1>
+      <p class="text-lg md:text-xl leading-relaxed max-w-3xl" style="color: var(--color-text);">
+        Different industries face different age rules, but the same problem: prove someone is old enough without
+        turning into an ID collector. Here's how Tessio fits the verticals that have to get age assurance right.
+      </p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          USE_CASES.map((u) => (
+            <a
+              href={`/use-cases/${u.slug}`}
+              class="block rounded-xl border p-6 transition-opacity hover:opacity-80"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <p class="text-xs font-medium uppercase tracking-widest mb-2" style="color: var(--color-accent);">
+                {u.category}
+              </p>
+              <p class="text-lg font-semibold tracking-tight mb-1">Age verification for {u.name}</p>
+              <p class="text-sm" style="color: var(--color-text-muted);">
+                {u.lead}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <RelatedLinks heading="Know your duties" links={related} />
+
+    <Cta
+      eyebrow="Age verification API"
+      title="Put age assurance in your flow"
+      body="Access is invite-only while we onboard design partners. Tell us your vertical and the markets you cover, and we'll get you a sandbox key and a quote."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the docs"
+      secondaryHref="/docs"
+    />
+  </main>
+
+  <Footer />
+</Base>

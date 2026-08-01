@@ -1,0 +1,17 @@
+---
+import RoleLayout from '../../layouts/RoleLayout.astro';
+import { ROLES } from '../../data/roles';
+import { relatedForRole } from '../../lib/links';
+
+export function getStaticPaths() {
+  return ROLES.map((role) => ({
+    params: { slug: role.slug },
+    props: { role },
+  }));
+}
+
+const { role } = Astro.props;
+const related = relatedForRole(role.slug);
+---
+
+<RoleLayout role={role} related={related} />
