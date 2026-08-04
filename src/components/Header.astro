@@ -1,5 +1,5 @@
 ---
-import { CLOUD_URL, ACCESS_MAILTO } from '../consts';
+import { CLOUD_URL, LABS_URL, ACCESS_MAILTO } from '../consts';
 // Sticky site header. Anchors are absolute (/#...) so they also work from /docs.
 ---
 
@@ -40,6 +40,7 @@ import { CLOUD_URL, ACCESS_MAILTO } from '../consts';
       <a href="/use-cases" class="hidden md:inline hover:opacity-70 transition-opacity">Use cases</a>
       <a href="/#pricing" class="hidden lg:inline hover:opacity-70 transition-opacity">Pricing</a>
       <a href="/docs" class="hover:opacity-70 transition-opacity">Docs</a>
+      <a href={LABS_URL} class="hidden md:inline hover:opacity-70 transition-opacity">Labs</a>
       <a href={CLOUD_URL} class="hidden sm:inline hover:opacity-70 transition-opacity">Sign in</a>
       <a
         href={ACCESS_MAILTO}

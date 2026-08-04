@@ -1,5 +1,5 @@
 ---
-import { CLOUD_URL, VERIFIER_URL, NUGET_URL, VERIFIER_REPO, CONTACT_EMAIL } from '../consts';
+import { CLOUD_URL, LABS_URL, VERIFIER_URL, NUGET_URL, VERIFIER_REPO, CONTACT_EMAIL } from '../consts';
 
 // Footer link columns. Kept in data so the internal-linking stays easy to see and edit.
 const columns: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
@@ -10,6 +10,7 @@ const columns: { heading: string; links: { label: string; href: string; external
       { label: 'Developer docs', href: '/docs' },
       { label: 'For developers', href: '/for/developers' },
       { label: 'Verifier', href: VERIFIER_URL },
+      { label: 'Tessio Labs', href: LABS_URL },
       { label: 'NuGet', href: NUGET_URL, external: true },
       { label: 'GitHub', href: VERIFIER_REPO, external: true },
     ],
