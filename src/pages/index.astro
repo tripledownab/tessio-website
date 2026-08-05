@@ -113,6 +113,34 @@ const jsonLd = {
     },
   ],
 };
+const labsTools = [
+  {
+    slug: 'sd-jwt',
+    name: 'SD-JWT VC Validator',
+    body: 'Decode a verifiable credential and check its disclosures bind to the signed digests.',
+  },
+  {
+    slug: 'mdoc',
+    name: 'mdoc / mDL Validator',
+    body: 'Validate an ISO 18013-5 mobile document, its Mobile Security Object and its IACA chain.',
+  },
+  {
+    slug: 'ades',
+    name: 'eIDAS Signature Validator',
+    body: 'Check a PAdES, CAdES or JAdES signature, its timestamp, and its EU trusted-list qualification.',
+  },
+  {
+    slug: 'trusted-list',
+    name: 'EU Trusted List Checker',
+    body: 'See whether a certificate is a qualified CA on an EU trusted list, and which national list.',
+  },
+  {
+    slug: 'lote',
+    name: 'EUDI Trusted Entity Checker',
+    body: 'See whether the EU wallet ecosystem trusts a certificate, as a PID, WRPAC or public EAA provider.',
+  },
+];
+
 ---
 
 <Base>
@@ -242,28 +270,31 @@ const jsonLd = {
     <section class="max-w-6xl mx-auto px-6 pb-24" id="labs">
       <h2 class="text-3xl font-bold tracking-tight mb-3">Free tools in Tessio Labs</h2>
       <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
-        Free validators for EU digital identity and trust, on the same engine as Tessio Cloud.
+        Five free validators for EU digital identity and trust, on the same engine as Tessio Cloud.
+        Nothing you paste is stored.
       </p>
-      <div
-        class="rounded-xl border p-8 max-w-3xl"
-        style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
-      >
-        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
-          The SD-JWT VC validator is live: decode a verifiable credential, check that its disclosures bind to
-          the signed digests, and optionally anchor the issuer against the EU trust framework. It runs in your
-          browser, and nothing you paste is stored.
-        </p>
-        <p class="text-base leading-relaxed mb-6" style="color: var(--color-text-muted);">
-          An eIDAS signature validator, an mdoc reader, and a trusted-list checker are on the way.
-        </p>
-        <a
-          href={labsUrl}
-          class="inline-block text-sm font-medium hover:opacity-70 transition-opacity"
-          style="color: var(--color-accent);"
-        >
-          Open Tessio Labs →
-        </a>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          labsTools.map((tool) => (
+            <a
+              href={`${labsUrl}/${tool.slug}`}
+              class="rounded-xl border p-6 block transition-colors hover:border-current"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <h3 class="text-base font-semibold tracking-tight mb-2">{tool.name}</h3>
+              <p class="text-sm leading-relaxed mb-3" style="color: var(--color-text-muted);">{tool.body}</p>
+              <span class="text-sm font-medium" style="color: var(--color-accent);">Open →</span>
+            </a>
+          ))
+        }
       </div>
+      <a
+        href={labsUrl}
+        class="inline-block mt-8 text-sm font-medium hover:opacity-70 transition-opacity"
+        style="color: var(--color-accent);"
+      >
+        Open Tessio Labs →
+      </a>
     </section>
 
     <!-- How it works -->
