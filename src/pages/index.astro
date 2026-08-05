@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     q: 'How does the age verification API work?',
-    a: 'Your app calls the /v1/age-checks endpoint and gets a hosted verification link. The person confirms the claim from their EU Digital Identity Wallet, and the result comes back on your webhook. You can build against the sandbox today and move to live wallets as member states roll them out.',
+    a: 'Your app calls the /v1/age-checks endpoint and gets a hosted verification link. The person confirms the claim from their EU Digital Identity Wallet, and the result comes back on your webhook. You can build against the sandbox today. Going live then needs two things beyond your integration: member states shipping the wallet, and us holding the relying-party access certificate that wallets check before they release any data. We do not hold one yet, and no production wallet will accept a verifier without it.',
   },
   {
     q: 'Do you store personal data?',

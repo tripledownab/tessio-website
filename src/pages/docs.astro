@@ -160,7 +160,7 @@ const jsonLd = {
         Errors return a JSON body like <code class="doc-code">{'{'} "error": "code" {'}'}</code>.
       </p>
       <ul class="space-y-2 text-sm" style="color: var(--color-text-muted);">
-        <li><code class="doc-code">400 unsupported_min_age</code> the requested age threshold is not supported (the MVP supports 18).</li>
+        <li><code class="doc-code">400 unsupported_min_age</code> the requested age threshold is not one of the discrete <code class="doc-code">age_over_N</code> values the EU age-verification attestation defines (13, 15, 16, 18, 21, 23, 25, 27, 28, 40, 60, 65, 67). The sandbox demonstrates 18.</li>
         <li><code class="doc-code">401</code> the key is missing, invalid, or revoked.</li>
         <li><code class="doc-code">409 idempotency_key_reuse</code> the same key was used with a different body.</li>
         <li><code class="doc-code">429</code> rate limit (default 60 per minute) or monthly quota. On a rate limit, honour the <code class="doc-code">Retry-After</code> header.</li>
