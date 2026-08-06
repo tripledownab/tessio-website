@@ -52,10 +52,10 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
+        # If this step fails with "Deployment cancelled." or "due to in progress deployment", Pages is
+        # holding a stuck deployment from an earlier run. Retrying cannot clear it, because Pages keys a
+        # deployment on the commit SHA and the stuck one blocks every new attempt. Cancel it explicitly:
+        #   gh api --method POST repos/<owner>/<repo>/pages/deployments/<sha>/cancel
+        # then push a new commit. Raising the action's timeout does not help: 600000 ms is both the
+        # default and the maximum it accepts, and anything larger is silently capped.
         uses: actions/deploy-pages@v5
-        with:
-          # Pages can sit in deployment_queued for a while. The action's default 10 minute wait ran out
-          # on 2026-08-06 and cancelled the deployment, which then poisons retries: Pages keys a
-          # deployment on the commit SHA, so re-running the same commit lands on the already-cancelled
-          # deployment and fails instantly with "Deployment cancelled." Only a new commit clears it.
-          timeout: 1800000
