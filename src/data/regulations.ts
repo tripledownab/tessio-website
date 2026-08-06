@@ -83,7 +83,7 @@ export const REGULATIONS: Regulation[] = [
     ],
     tessioFit: [
       'Tessio gives you a cryptographic over-18 proof from the EU Digital Identity Wallet and a signed, auditable result to keep as evidence. There is no ID upload for the user and no personal data stored, which is exactly the friction and the liability that age checks usually add.',
-      "You are still responsible for meeting Ofcom's highly effective criteria for your service, and a fallback method covers users who don't have a wallet yet. We're happy to walk through how a wallet check sits in your setup.",
+      "You are still responsible for meeting Ofcom's highly effective criteria for your service. We do not provide a document or selfie fallback, so a wallet check is one method in your mix today rather than the whole answer, and you will still need coverage for users without a wallet. We're happy to walk through how it sits in your setup.",
     ],
     faqs: [
       {

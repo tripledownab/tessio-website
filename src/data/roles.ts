@@ -104,7 +104,7 @@ export const ROLES: Role[] = [
     category: 'Data posture and audit',
     title: 'Age verification for compliance and DPOs',
     description:
-      'Age verification with no personal data stored. Over-18 checks from the EU Digital Identity Wallet, a signed audit trail, GDPR data minimisation and a self-host option for data residency.',
+      'Age verification with no personal data stored. Over-18 checks from the EU Digital Identity Wallet, a signed audit trail, GDPR data minimisation, and an open-source verifier core you can run inside your own boundary.',
     heading: 'Age verification your DPO will actually like',
     lead: 'Tessio proves a user is over 18 from their EU Digital Identity Wallet and stores no personal data. No document images, no dates of birth, nothing to breach. Here is the compliance posture in plain terms.',
     intro: [
@@ -135,7 +135,7 @@ export const ROLES: Role[] = [
       'A signed, auditable result you can keep as evidence of a real check.',
       'Aligned with the DSA principle that you should not collect extra data to check age.',
       'Built on the EU Digital Identity Wallet standards for the eIDAS mandate.',
-      'A self-host option for teams that cannot send identity data to a third-party cloud.',
+      'The verification core is open source under Apache-2.0, so teams that cannot send identity data to a third-party cloud can run it themselves.',
     ],
     checklistHeading: 'The compliance posture',
     primaryCta: { label: 'Request access', href: ACCESS_MAILTO },

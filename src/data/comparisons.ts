@@ -47,7 +47,7 @@ const FEATURES = [
 type Feature = (typeof FEATURES)[number];
 
 const TESSIO: Record<Feature, string | boolean> = {
-  'Core approach': 'EU Digital Identity Wallet credential over OpenID4VP, plus a fallback while wallets roll out',
+  'Core approach': 'EU Digital Identity Wallet credential over OpenID4VP',
   'What you get back': 'A signed over-18 yes or no',
   'Personal data stored': 'None. No date of birth, no document image, no selfie',
   'EU Digital Identity Wallet': 'Native. The whole product is built on it',

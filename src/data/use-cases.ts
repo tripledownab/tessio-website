@@ -46,7 +46,7 @@ export const USE_CASES: UseCase[] = [
     category: 'Betting and gaming',
     title: 'Age verification for iGaming and betting',
     description:
-      'Age assurance for iGaming and betting. Prove players are 18+ from the EU Digital Identity Wallet, cut sign-up drop-off and store no personal data. EUDI-native, self-hostable.',
+      'Age assurance for iGaming and betting. Prove players are 18+ from the EU Digital Identity Wallet, cut sign-up drop-off and store no personal data. EUDI-native, built on our open-source verifier.',
     lead: "Every licensed market makes you check that players are 18 or older. Tessio does that from the player's EU Digital Identity Wallet, so you get a signed yes or no, less sign-up drop-off and no ID data to hold.",
     problem: [
       'Betting and gaming operators have to verify age in every market they hold a licence in. The usual fix is a document scan or a database check bolted onto sign-up. That adds friction right where you lose the most players, and it means you are now storing identity documents that are a GDPR and breach liability.',
@@ -71,7 +71,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         title: 'The player confirms 18+',
-        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID scan, no selfie, and a fallback covers players without a wallet yet.',
+        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID scan and no selfie.',
       },
       {
         title: 'You get a signed result',
@@ -128,7 +128,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         title: 'The buyer confirms 18+',
-        body: 'They prove they are over 18 from their EU Digital Identity Wallet. A fallback covers buyers who do not have a wallet yet.',
+        body: 'They prove they are over 18 from their EU Digital Identity Wallet, at checkout, without uploading anything.',
       },
       {
         title: 'You get a signed result',
@@ -185,7 +185,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         title: 'The user confirms 18+',
-        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID upload, and a fallback covers users without a wallet.',
+        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID upload.',
       },
       {
         title: 'You get a signed result',
@@ -204,7 +204,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         q: 'What about users without an EU wallet?',
-        a: 'A fallback method covers users who do not have a wallet yet, so you can protect minors today and lean more on the wallet as it rolls out across the EU.',
+        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop-in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
       },
     ],
     regulations: ['dsa', 'osa', 'eudi'],
@@ -242,7 +242,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         title: 'The visitor confirms 18+',
-        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID upload, and a fallback covers visitors without a wallet.',
+        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID upload.',
       },
       {
         title: 'You get a signed result',
@@ -261,7 +261,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         q: 'What about visitors without a wallet?',
-        a: 'A fallback method covers visitors who do not have an EU wallet yet, so you can meet your duties today and shift more traffic to the wallet as adoption grows.',
+        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop-in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
       },
     ],
     regulations: ['osa', 'dsa', 'eudi'],
@@ -299,7 +299,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         title: 'The user confirms 18+',
-        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID upload, and a fallback covers users without a wallet.',
+        body: 'They prove they are over 18 from their EU Digital Identity Wallet. No ID upload.',
       },
       {
         title: 'You get a signed result',
@@ -318,7 +318,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         q: 'What about users without a wallet?',
-        a: 'A fallback method covers users without an EU wallet yet, so you can protect minors now and rely more on the wallet as it becomes common.',
+        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop-in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
       },
     ],
     regulations: ['dsa', 'osa', 'eudi'],
