@@ -53,3 +53,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          # Pages can sit in deployment_queued for a while. The action's default 10 minute wait ran out
+          # on 2026-08-06 and cancelled the deployment, which then poisons retries: Pages keys a
+          # deployment on the commit SHA, so re-running the same commit lands on the already-cancelled
+          # deployment and fails instantly with "Deployment cancelled." Only a new commit clears it.
+          timeout: 1800000
