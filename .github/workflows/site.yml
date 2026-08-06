@@ -54,8 +54,23 @@ jobs:
         id: deployment
         # If this step fails with "Deployment cancelled." or "due to in progress deployment", Pages is
         # holding a stuck deployment from an earlier run. Retrying cannot clear it, because Pages keys a
-        # deployment on the commit SHA and the stuck one blocks every new attempt. Cancel it explicitly:
-        #   gh api --method POST repos/<owner>/<repo>/pages/deployments/<sha>/cancel
-        # then push a new commit. Raising the action's timeout does not help: 600000 ms is both the
-        # default and the maximum it accepts, and anything larger is silently capped.
+        # deployment on the commit SHA and the stuck one blocks every new attempt. Cancel it with the
+        # FULL sha (a short sha returns a silent 404), after which `gh run rerun <id> --failed` works
+        # and no new commit is needed:
+        #   gh api --method POST repos/<owner>/<repo>/pages/deployments/<full-sha>/cancel
+        # Raising the action's timeout does not help: 600000 ms is both the default and the maximum it
+        # accepts, and anything larger is silently capped.
         uses: actions/deploy-pages@v5
+
+      # Ping IndexNow (Bing, Yandex, Seznam, Naver) once the new build is actually live. Google does
+      # not use IndexNow and is covered by Search Console plus the sitemap in robots.txt.
+      # This job does not otherwise check out the repo, so the script would not exist without this.
+      - uses: actions/checkout@v5
+
+      # continue-on-error: a search-engine ping must never turn a good deploy into a failed one.
+      - name: Tell IndexNow the site changed
+        continue-on-error: true
+        env:
+          INDEXNOW_KEY: 6859f82b21abec5c7b846a95f86d0d1a
+          INDEXNOW_HOST: tessio.eu
+        run: node scripts/submit-indexnow.mjs
