@@ -6,7 +6,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import FaqList from '../components/FaqList.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import Cta from '../components/Cta.astro';
-import { breadcrumbLd, faqLd, productLd, graph } from '../lib/seo';
+import { breadcrumbLd, faqLd, serviceLd, graph } from '../lib/seo';
 import { ACCESS_MAILTO } from '../consts';
 import type { Comparison } from '../data/comparisons';
 
@@ -30,7 +30,7 @@ const crumbs = [
 const jsonLd = graph(
   breadcrumbLd(crumbs),
   faqLd(c.faqs),
-  productLd({
+  serviceLd({
     name: `Tessio Cloud vs ${c.name}`,
     description: c.description,
     url: path,

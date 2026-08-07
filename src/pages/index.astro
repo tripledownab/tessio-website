@@ -75,11 +75,15 @@ const jsonLd = {
   '@graph': [
     { '@type': 'WebSite', name: 'Tessio', url: 'https://tessio.eu' },
     {
-      '@type': 'Product',
+      // Service, not Product: Google requires Product to carry offers, review or aggregateRating,
+      // and we can honestly supply none of them. Tessio.Verifier and Tessio Labs below stay
+      // SoftwareApplication with price 0, because those genuinely are free.
+      '@type': 'Service',
       name: 'Tessio Cloud',
       url: cloudUrl,
-      brand: { '@type': 'Brand', name: 'Tessio' },
-      category: 'Age and identity verification API',
+      provider: { '@type': 'Organization', name: 'Tessio', url: 'https://tessio.eu' },
+      serviceType: 'Age and identity verification API',
+      areaServed: { '@type': 'Place', name: 'European Union' },
       description:
         'Hosted age and identity verification API for the EU Digital Identity Wallet. Over-18 checks that keep no personal data.',
     },
