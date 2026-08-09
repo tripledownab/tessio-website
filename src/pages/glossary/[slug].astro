@@ -1,0 +1,14 @@
+---
+import GlossaryLayout from '../../layouts/GlossaryLayout.astro';
+import { GLOSSARY } from '../../data/glossary';
+import { relatedForGlossary } from '../../lib/links';
+
+export function getStaticPaths() {
+  return GLOSSARY.map((term) => ({ params: { slug: term.slug }, props: { term } }));
+}
+
+const { term } = Astro.props;
+const related = relatedForGlossary(term);
+---
+
+<GlossaryLayout term={term} related={related} />
