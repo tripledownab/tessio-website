@@ -82,6 +82,50 @@ export function serviceLd(opts: { name: string; description: string; url: string
   };
 }
 
+/**
+ * schema.org DefinedTerm for a glossary entry.
+ *
+ * The short one-sentence definition goes in `description`, deliberately, rather than the full page
+ * text. This is the field that gets lifted into a search or assistant answer, so it has to be the
+ * sentence that stands on its own.
+ */
+export function definedTermLd(opts: {
+  name: string;
+  alternateName: string[];
+  description: string;
+  slug: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    name: opts.name,
+    alternateName: opts.alternateName,
+    description: opts.description,
+    url: abs(`/glossary/${opts.slug}`),
+    inDefinedTermSet: {
+      '@type': 'DefinedTermSet',
+      name: 'Tessio glossary of EU digital identity terms',
+      url: abs('/glossary'),
+    },
+  };
+}
+
+/** schema.org DefinedTermSet for the glossary hub. */
+export function definedTermSetLd(terms: { name: string; description: string; slug: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: 'Tessio glossary of EU digital identity terms',
+    url: abs('/glossary'),
+    hasDefinedTerm: terms.map((t) => ({
+      '@type': 'DefinedTerm',
+      name: t.name,
+      description: t.description,
+      url: abs(`/glossary/${t.slug}`),
+    })),
+  };
+}
+
 /** Combine several JSON-LD nodes into a single @graph document. */
 export function graph(...nodes: object[]) {
   return {

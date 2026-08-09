@@ -1,5 +1,5 @@
 ---
-import { CLOUD_URL, LABS_URL, VERIFIER_URL, NUGET_URL, VERIFIER_REPO, CONTACT_EMAIL } from '../consts';
+import { CLOUD_URL, LABS_URL, VERIFIER_URL, NUGET_URL, VERIFIER_REPO, LINKEDIN_URL, CONTACT_EMAIL } from '../consts';
 
 // Footer link columns. Kept in data so the internal-linking stays easy to see and edit.
 const columns: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
@@ -20,6 +20,7 @@ const columns: { heading: string; links: { label: string; href: string; external
     links: [
       { label: 'Compare', href: '/compare' },
       { label: 'Use cases', href: '/use-cases' },
+      { label: 'Glossary', href: '/glossary' },
       { label: 'For compliance', href: '/for/compliance' },
       { label: 'For platform providers', href: '/for/platform-providers' },
     ],
@@ -83,9 +84,20 @@ const columns: { heading: string; links: { label: string; href: string; external
       style="border-color: var(--color-border);"
     >
       <p class="text-sm" style="color: var(--color-text-muted);">Tessio is invite-only while we onboard design partners.</p>
-      <a href={`mailto:${CONTACT_EMAIL}`} class="text-sm hover:opacity-70 transition-opacity" style="color: var(--color-accent);">
-        {CONTACT_EMAIL}
-      </a>
+      <div class="flex items-center gap-5">
+        <a
+          href={LINKEDIN_URL}
+          target="_blank"
+          rel="noopener"
+          class="text-sm hover:opacity-70 transition-opacity"
+          style="color: var(--color-text-muted);"
+        >
+          LinkedIn
+        </a>
+        <a href={`mailto:${CONTACT_EMAIL}`} class="text-sm hover:opacity-70 transition-opacity" style="color: var(--color-accent);">
+          {CONTACT_EMAIL}
+        </a>
+      </div>
     </div>
   </div>
 </footer>

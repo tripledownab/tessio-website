@@ -1,9 +1,11 @@
 // Internal-linking helpers. These turn slugs into consistent {label, href, note} link items and
-// build the "related" blocks that tie the compare / use-case / for / regulation systems together.
+// build the "related" blocks that tie the compare / use-case / for / regulation / glossary systems
+// together.
 import { COMPARISONS, type Comparison } from '../data/comparisons';
 import { USE_CASES, type UseCase } from '../data/use-cases';
 import { ROLES } from '../data/roles';
 import { REGULATIONS, type Regulation } from '../data/regulations';
+import { GLOSSARY, type GlossaryTerm } from '../data/glossary';
 
 export interface LinkItem {
   label: string;
@@ -29,6 +31,11 @@ export function roleLink(slug: string): LinkItem | null {
 export function regulationLink(slug: string): LinkItem | null {
   const r = REGULATIONS.find((x) => x.slug === slug);
   return r ? { label: r.name, href: `/${r.slug}`, note: r.category } : null;
+}
+
+export function glossaryLink(slug: string): LinkItem | null {
+  const t = GLOSSARY.find((x) => x.slug === slug);
+  return t ? { label: t.term, href: `/glossary/${t.slug}`, note: t.category } : null;
 }
 
 export const DOCS_LINK: LinkItem = { label: 'Developer docs', href: '/docs', note: 'The age verification API' };
@@ -71,6 +78,14 @@ export function relatedForRole(slug: string): LinkItem[] {
     ...r.useCases.map(useCaseLink),
     ...r.regulations.map(regulationLink),
     ...otherRoles,
+    DOCS_LINK,
+  ]);
+}
+
+export function relatedForGlossary(t: GlossaryTerm): LinkItem[] {
+  return resolve([
+    ...t.related.map(glossaryLink),
+    ...(t.regulations ?? []).map(regulationLink),
     DOCS_LINK,
   ]);
 }
