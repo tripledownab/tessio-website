@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { LINKEDIN_URL } from '../consts';
 
 interface Props {
   title?: string;
@@ -29,7 +30,9 @@ const orgJsonLd = {
   logo: 'https://tessio.eu/favicon.svg',
   description: siteDesc,
   parentOrganization: { '@type': 'Organization', name: 'Triple Down AB', url: 'https://3dwn.se' },
-  sameAs: ['https://github.com/tripledownab/tessio-verifier'],
+  // sameAs is how Google ties this site to the same entity elsewhere, so it wants profiles we
+  // actually control, not every link we like.
+  sameAs: [LINKEDIN_URL, 'https://github.com/tripledownab/tessio-verifier'],
 };
 ---
 
