@@ -6,7 +6,7 @@
 // entry. Two pages targeting one query split the signal and we lose to ourselves. Those belong in the
 // related links pointing at /eudi, /osa and /dsa instead.
 //
-// Every entry is written from something we did rather than from a specification summary, and where we
+// Every entry is written from something we did and not from a specification summary, and where we
 // have a Labs validator for the thing being defined, the entry links to it. That is the difference
 // between this and the dozen identikit EUDI glossaries: the reader can go and check one.
 import type { Faq } from '../../lib/seo';
@@ -39,7 +39,7 @@ export interface GlossaryTerm {
   title: string;
   description: string;
   /**
-   * The one-sentence plain-language definition. This is the sentence that gets quoted, by a person
+   * The one-sentence plain language definition. This is the sentence that gets quoted, by a person
    * skimming and by an AI answer, so it has to stand alone without the paragraphs under it.
    */
   short: string;

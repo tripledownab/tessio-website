@@ -48,8 +48,8 @@ export const REGULATIONS: Regulation[] = [
     category: 'UK regulation',
     title: 'OSA age verification: Online Safety Act age assurance',
     description:
-      "The UK Online Safety Act requires highly effective age assurance to keep children away from adult content. Here's what it means, the real dates, and how a wallet-based over-18 check fits.",
-    lead: "The Online Safety Act makes many services use highly effective age assurance to keep children away from adult content. Here's what that means in plain language, the dates that actually matter, and where a wallet-based over-18 check fits.",
+      "The UK Online Safety Act requires highly effective age assurance to keep children away from adult content. Here's what it means, the real dates, and how a wallet based over-18 check fits.",
+    lead: "The Online Safety Act makes many services use highly effective age assurance to keep children away from adult content. Here's what that means in plain language, the dates that actually matter, and where a wallet based over-18 check fits.",
     facts: [
       { label: 'Law', value: 'Online Safety Act 2023' },
       { label: 'Regulator', value: 'Ofcom' },
@@ -76,7 +76,7 @@ export const REGULATIONS: Regulation[] = [
       {
         heading: 'How a wallet check fits',
         body: [
-          'A wallet-based check asks the user to prove one fact, that they are over 18, from a credential their EU Digital Identity Wallet already holds. Ofcom lists digital identity services and wallets among the methods that can be highly effective, so this is a recognised route rather than a workaround.',
+          'A wallet based check asks the user to prove one fact, that they are over 18, from a credential their EU Digital Identity Wallet already holds. Ofcom lists digital identity services and wallets among the methods that can be highly effective, so this is a recognised route rather than a workaround.',
           "The privacy story is the part users notice. The most common complaint about age checks, especially on adult sites, is being told to upload an ID. A wallet proof avoids that. The user confirms they're over 18 and nothing else, and with Tessio there is no document or date of birth stored on your systems or ours.",
         ],
       },
@@ -88,7 +88,7 @@ export const REGULATIONS: Regulation[] = [
     faqs: [
       {
         q: 'Does the Online Safety Act require age verification?',
-        a: 'It requires highly effective age assurance, which can be met through age verification or age estimation, or both. Ofcom judges a method on whether it is technically accurate, robust, reliable and fair, not on the label. A wallet-based over-18 proof is one recognised way to get there.',
+        a: 'It requires highly effective age assurance, which can be met through age verification or age estimation, or both. Ofcom judges a method on whether it is technically accurate, robust, reliable and fair, not on the label. A wallet based over-18 proof is one recognised way to get there.',
       },
       {
         q: 'Who has to comply, and when?',
@@ -122,8 +122,8 @@ export const REGULATIONS: Regulation[] = [
     category: 'EU regulation',
     title: 'DSA age assurance: what the Digital Services Act asks for',
     description:
-      'The EU Digital Services Act does not mandate blanket age verification. It asks platforms to protect minors proportionately. Here is what it actually requires and where a wallet-based age check fits.',
-    lead: "The Digital Services Act does not order blanket age verification. It asks platforms accessible to minors to protect them proportionately, and the Commission's 2025 guidance points to age verification for higher-risk services. Here's what it actually asks for.",
+      'The EU Digital Services Act does not mandate blanket age verification. It asks platforms to protect minors proportionately. Here is what it actually requires and where a wallet based age check fits.',
+    lead: "The Digital Services Act does not order blanket age verification. It asks platforms accessible to minors to protect them proportionately, and the Commission's 2025 guidance points to age verification for higher risk services. Here's what it actually asks for.",
     facts: [
       { label: 'Law', value: 'Digital Services Act, Regulation (EU) 2022/2065' },
       { label: 'Key article', value: 'Article 28, protection of minors' },
@@ -136,7 +136,7 @@ export const REGULATIONS: Regulation[] = [
       {
         heading: 'What the DSA actually says',
         body: [
-          'It is worth being precise here, because the DSA is often described as an age-verification law and it is not. Article 28(1) asks providers of online platforms accessible to minors to put in place appropriate and proportionate measures for a high level of privacy, safety and security for those minors. Article 28(2) bans profiling-based advertising to users the platform knows with reasonable certainty are minors.',
+          'It is worth being precise here, because the DSA is often described as an age-verification law and it is not. Article 28(1) asks providers of online platforms accessible to minors to put in place appropriate and proportionate measures for a high level of privacy, safety and security for those minors. Article 28(2) bans profiling based advertising to users the platform knows with reasonable certainty are minors.',
           'Article 28(3) is the part people miss. It says compliance should not oblige a platform to process additional personal data just to work out whether a user is a minor. So the DSA is risk based and proportionate, and it actively cautions against collecting more data to check age.',
         ],
       },
@@ -144,33 +144,33 @@ export const REGULATIONS: Regulation[] = [
         heading: 'The 2025 guidelines',
         body: [
           'On 14 July 2025 the Commission published guidelines on the protection of minors under Article 28. They are soft law, so following them is voluntary and does not automatically prove compliance, but the Commission will use them when it assesses whether a platform meets Article 28(1).',
-          'The guidelines take a risk-based line. They point to age verification for higher-risk contexts, such as adult content and gambling or where national law sets a minimum age, and to age estimation in other cases. Whatever the method, it should be accurate, reliable, robust, non-intrusive and non-discriminatory.',
+          'The guidelines take a risk based line. They point to age verification for higher risk contexts, such as adult content and gambling or where national law sets a minimum age, and to age estimation in other cases. Whatever the method, it should be accurate, reliable, robust, non-intrusive and non-discriminatory.',
         ],
       },
       {
         heading: 'The EU age-verification blueprint',
         body: [
-          'On the same day the Commission released the first version of an EU age-verification blueprint. It is a white-label, open-source approach, and the detail that matters for us is that it is built on the same technical specifications as the EU Digital Identity Wallet. Denmark, France, Greece, Italy and Spain were the first to take it up.',
-          'That tells you the direction of travel. The Commission is steering age checks towards privacy-preserving, wallet-aligned proofs rather than document uploads and databases.',
+          'On the same day the Commission released the first version of an EU age-verification blueprint. It is a white label, open source approach, and the detail that matters for us is that it is built on the same technical specifications as the EU Digital Identity Wallet. Denmark, France, Greece, Italy and Spain were the first to take it up.',
+          'That tells you the direction of travel. The Commission is steering age checks towards privacy preserving, wallet aligned proofs rather than document uploads and databases.',
         ],
       },
     ],
     tessioFit: [
       'Because Article 28(3) resists collecting extra personal data to check age, a proof that returns only an over-18 yes or no and stores nothing sits well with the DSA. Tessio does exactly that, from the EU Digital Identity Wallet.',
-      'It also uses the same standards as the Commission age-verification blueprint, so you are aligned with where EU age assurance is heading rather than betting on a document-based tool that regulators are steering away from.',
+      'It also uses the same standards as the Commission age-verification blueprint, so you are aligned with where EU age assurance is heading rather than betting on a document based tool that regulators are steering away from.',
     ],
     faqs: [
       {
         q: 'Does the DSA require age verification?',
-        a: 'No, there is no blanket age-verification mandate in the DSA. Article 28 asks for proportionate measures to protect minors, and Article 28(3) says you should not have to collect extra personal data just to check age. The Commission guidance recommends age verification for higher-risk services like adult content and gambling.',
+        a: 'No, there is no blanket age-verification mandate in the DSA. Article 28 asks for proportionate measures to protect minors, and Article 28(3) says you should not have to collect extra personal data just to check age. The Commission guidance recommends age verification for higher risk services like adult content and gambling.',
       },
       {
         q: 'What does Article 28 actually require?',
-        a: 'Appropriate and proportionate measures for a high level of privacy, safety and security for minors on platforms accessible to them, no profiling-based ads to known minors, and no obligation to process additional personal data to assess whether a user is a minor.',
+        a: 'Appropriate and proportionate measures for a high level of privacy, safety and security for minors on platforms accessible to them, no profiling based ads to known minors, and no obligation to process additional personal data to assess whether a user is a minor.',
       },
       {
         q: 'Is this the same as the EU age-verification app?',
-        a: 'The Commission released an age-verification blueprint on 14 July 2025 that is built on the EU Digital Identity Wallet specifications. It is voluntary, and it points age checks towards the same privacy-preserving, wallet-aligned approach Tessio uses.',
+        a: 'The Commission released an age-verification blueprint on 14 July 2025 that is built on the EU Digital Identity Wallet specifications. It is voluntary, and it points age checks towards the same privacy preserving, wallet aligned approach Tessio uses.',
       },
     ],
     useCases: ['social', 'dating', 'adult'],
@@ -232,13 +232,13 @@ export const REGULATIONS: Regulation[] = [
         heading: 'What you need to verify a wallet',
         body: [
           'To accept a wallet credential you need a verifier that speaks OpenID4VP and understands both mandated credential formats, SD-JWT VC and ISO 18013-5 mdoc. You also need a trust layer that stays current as member states and issuers come online, so you know a credential really was issued by who it claims.',
-          'That is what Tessio is. A hosted verifier and trust layer for age and identity checks, with an open-source .NET core you can self-host if credentials cannot leave your environment.',
+          'That is what Tessio is. A hosted verifier and trust layer for age and identity checks, with an open source .NET core you can self host if credentials cannot leave your environment.',
         ],
       },
     ],
     tessioFit: [
-      'Tessio is built on the EU Digital Identity Wallet standards, so accepting a wallet is the thing it does rather than a feature bolted on. You integrate once and stay ready as wallets roll out, instead of re-integrating a document-based tool later.',
-      'For age specifically, Tessio returns a signed over-18 yes or no and stores no personal data. If you are a regulated relying party planning your 2027 rollout, or you just want a wallet-native age check now, that is the fit.',
+      'Tessio is built on the EU Digital Identity Wallet standards, so accepting a wallet is the thing it does rather than a feature bolted on. You integrate once and stay ready as wallets roll out, instead of re-integrating a document based tool later.',
+      'For age specifically, Tessio returns a signed over-18 yes or no and stores no personal data. If you are a regulated relying party planning your 2027 rollout, or you just want a wallet native age check now, that is the fit.',
     ],
     faqs: [
       {
@@ -251,7 +251,7 @@ export const REGULATIONS: Regulation[] = [
       },
       {
         q: 'What do I need to verify a wallet credential?',
-        a: 'A verifier that speaks OpenID4VP and understands SD-JWT VC and ISO 18013-5 mdoc, plus a trust layer that stays current as issuers come online. Tessio provides both, hosted or self-hosted on .NET.',
+        a: 'A verifier that speaks OpenID4VP and understands SD-JWT VC and ISO 18013-5 mdoc, plus a trust layer that stays current as issuers come online. Tessio provides both, hosted or self hosted on .NET.',
       },
     ],
     useCases: ['igaming', 'retail', 'adult'],

@@ -30,14 +30,14 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       {
         heading: 'Why this is stronger than a promise',
         body: [
-          'The usual alternative is a service that receives everything and undertakes to delete what it does not need. That is a promise about behaviour, audited by trusting the party who made it. Selective disclosure is a property of the format: the undisclosed values are not in the message, so there is nothing to delete, nothing to breach and nothing to produce in response to a subject access request.',
+          'The usual alternative is a service that receives everything and undertakes to delete what it does not need. That is a promise about behaviour, and you audit it by trusting whoever made it. Selective disclosure is a property of the format: the undisclosed values are not in the message, so there is nothing to delete, nothing to breach and nothing to produce in response to a subject access request.',
           'It also moves the decision to the holder. The wallet, not the verifier, decides what leaves the device, and the consent screen is the moment that happens.',
         ],
       },
       {
         heading: 'The part implementers get wrong',
         body: [
-          'Disclosure is recursive. A disclosed value can itself contain further digests naming more disclosures, so a nested claim like an address with a selectively disclosable street is normal rather than exotic. A verifier that only looks for digests in the top-level signed payload will report a perfectly good nested credential as not binding. We shipped that bug and fixed it, which is why it is called out here.',
+          'Disclosure is recursive. A disclosed value can itself contain further digests naming more disclosures, so a nested claim like an address with a selectively disclosable street is ordinary. A verifier that only looks for digests in the top-level signed payload will report a perfectly good nested credential as not binding. We shipped that bug and fixed it, which is why it is called out here.',
           'The other one is arithmetic on multiplicity. RFC 9901 requires rejecting a credential where a digest appears more than once, and a naive implementation storing digests in a set throws away exactly the information that rule is about.',
         ],
       },
@@ -70,8 +70,8 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
         a: 'No, and that\'s the whole trick. The signature covers the digests, which don\'t change when you choose not to reveal the value behind one.',
       },
       {
-        q: 'Is this the same as zero-knowledge proofs?',
-        a: 'No. Selective disclosure reveals the actual values you chose to share. A zero-knowledge proof can answer a question about a value without revealing the value at all. Salted hashes are simpler, deployed today, and reveal more.',
+        q: 'Is this the same as zero knowledge proofs?',
+        a: 'No. Selective disclosure reveals the actual values you chose to share. A zero knowledge proof can answer a question about a value without revealing the value at all. Salted hashes are simpler, deployed today, and reveal more.',
       },
     ],
     sources: [
@@ -89,12 +89,12 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
     description:
       'SD-JWT VC is the JSON credential format the EU wallet uses alongside mdoc. What it is, how it differs from a plain JWT, and which spec version to build against.',
     short:
-      'SD-JWT VC is a verifiable credential format built on JSON Web Tokens with selective disclosure added, so a holder can reveal individual claims from an issuer-signed credential. It is one of the two formats the EU Digital Identity Wallet uses, the other being ISO mdoc.',
+      'SD-JWT VC is a verifiable credential format built on JSON Web Tokens with selective disclosure added, so a holder can reveal individual claims from an issuer signed credential. It is one of the two formats the EU Digital Identity Wallet uses, the other being ISO mdoc.',
     sections: [
       {
         heading: 'What it adds to a JWT',
         body: [
-          'A plain JWT is all-or-nothing: the payload is readable by anyone holding the token, so presenting it reveals every claim in it. SD-JWT keeps the JWS structure and replaces disclosable claims with digests, moving the values into separate disclosures that travel alongside and are handed over one by one.',
+          'A plain JWT is all or nothing: the payload is readable by anyone holding the token, so presenting it reveals every claim in it. SD-JWT keeps the JWS structure and replaces disclosable claims with digests, moving the values into separate disclosures that travel alongside and are handed over one by one.',
           'Around that sits the VC layer, which adds the things a credential needs beyond the mechanism: a type (`vct`), issuer identification and key resolution, and optional holder key binding so a presentation can be tied to the device holding it.',
         ],
       },
@@ -108,8 +108,8 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       {
         heading: 'How a presentation is put together',
         body: [
-          'A presentation is the issuer-signed JWT, then each disclosure being revealed, then optionally a key-binding JWT, all joined with tildes. A trailing tilde with nothing after it means there is no key binding. That format detail catches people out, because an empty final segment and a missing final segment mean different things.',
-          'The key-binding JWT is signed by the holder\'s own key and ties the presentation to a specific verifier and moment. Verifying it is what shows the presenter holds the credential rather than having copied it, and it is a separate check from verifying the issuer signature.',
+          'A presentation is the issuer signed JWT, then each disclosure being revealed, then optionally a key binding JWT, all joined with tildes. A trailing tilde with nothing after it means there is no key binding. That format detail catches people out, because an empty final segment and a missing final segment mean different things.',
+          'The key binding JWT is signed by the holder\'s own key and ties the presentation to a specific verifier and moment. Verifying it is what shows the presenter holds the credential and did not copy it, and it is a separate check from verifying the issuer signature.',
         ],
       },
     ],
@@ -118,11 +118,11 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       { label: 'VC layer', value: 'draft-ietf-oauth-sd-jwt-vc, at -17 in mid-2026' },
       { label: 'EUDI ARF pins', value: 'Draft 15, may be updated to 16' },
       { label: 'Media type', value: 'dc+sd-jwt (earlier drafts used vc+sd-jwt)' },
-      { label: 'Presentation format', value: 'JWT ~ disclosure ~ ... ~ optional key-binding JWT' },
+      { label: 'Presentation format', value: 'JWT ~ disclosure ~ ... ~ optional key binding JWT' },
       { label: 'Sibling format', value: 'ISO 18013-5 mdoc, used for mDL and the EU age attestation' },
     ],
     whyItMatters: [
-      'If you\'re building for the EU wallet, target the draft the ARF pins rather than the newest one. The gap between them is currently two revisions, and matching IETF instead of the ecosystem is how you end up conformant to nothing anyone is using.',
+      'If you\'re building for the EU wallet, target the draft the ARF pins, not the newest one. The gap between them is currently two revisions, and matching IETF instead of the ecosystem is how you end up conformant to nothing anyone is using.',
       'If you\'re assessing a credential, verifying the issuer signature and verifying key binding are two different checks. Only the second says the person presenting it\'s the person it was issued to.',
     ],
     tools: [
@@ -139,11 +139,11 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'Do I need the holder\'s public key to verify one?',
-        a: 'You need the issuer\'s key to verify the credential itself. You need the holder key, from the cnf claim, only to verify key binding, and only presentations that carry a key-binding JWT have one.',
+        a: 'You need the issuer\'s key to verify the credential itself. You need the holder key, from the cnf claim, only to verify key binding, and only presentations that carry a key binding JWT have one.',
       },
       {
         q: 'What does the trailing tilde mean?',
-        a: 'That there is no key-binding JWT. A presentation ending in a tilde has none; one ending in a non-empty segment has that segment as the key-binding JWT. It\'s a small distinction that decides whether you\'re looking at a credential or a presentation.',
+        a: 'That there is no key binding JWT. A presentation ending in a tilde has none; one ending in a non-empty segment has that segment as the key binding JWT. It\'s a small distinction that decides whether you\'re looking at a credential or a presentation.',
       },
     ],
     sources: [
@@ -168,7 +168,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       {
         heading: 'The Mobile Security Object is the load-bearing part',
         body: [
-          'An mdoc separates the values from what the issuer signed. Each disclosed data element travels as an issuer-signed item with a random salt and a digest ID. The Mobile Security Object, the MSO, is the structure the issuer actually signs, and it contains the digests of all those items grouped by namespace, plus the document type and a validity window.',
+          'An mdoc separates the values from what the issuer signed. Each disclosed data element travels as an issuer signed item with a random salt and a digest ID. The Mobile Security Object, the MSO, is the structure the issuer actually signs, and it contains the digests of all those items grouped by namespace, plus the document type and a validity window.',
           'So verifying an mdoc means hashing each element you received and finding that digest in the MSO under the right namespace and digest ID. It is the same idea as SD-JWT disclosure, expressed in CBOR. Skip that step and you have checked a signature over a structure while never confirming it covers the values in front of you.',
         ],
       },
@@ -176,7 +176,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
         heading: 'Two signatures that prove different things',
         body: [
           'Issuer data authentication is the MSO signature, made by a Document Signer whose certificate chains to an issuing authority root. It proves an authority vouched for these values.',
-          'Device authentication is a separate signature or MAC made by the device, over a session transcript that binds the response to this particular request. It proves the holder is presenting it now, rather than someone replaying a copy. An inspection tool that takes a pasted document cannot check the second one, because there is no session to bind to, and it should say so rather than let a green tick imply otherwise.',
+          'Device authentication is a separate signature or MAC made by the device, over a session transcript that binds the response to this particular request. It proves the holder is presenting it now, and that nobody is replaying a copy. An inspection tool that takes a pasted document cannot check the second one, because there is no session to bind to, and it should say so, because a green tick implies otherwise.',
         ],
       },
       {
@@ -217,7 +217,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'Does verifying an mdoc prove the person in front of me holds it?',
-        a: 'Only if device authentication is checked, and that needs a real session to bind against. A tool validating a pasted document is checking the issuer-signed side, which is a different and weaker claim.',
+        a: 'Only if device authentication is checked, and that needs a real session to bind against. A tool validating a pasted document is checking the issuer signed side, which is a different and weaker claim.',
       },
     ],
     sources: [
@@ -236,26 +236,26 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
     description:
       'PID is the core identity credential in the EU wallet: the one that says who you are. Why asking for it to check an age is usually the wrong call.',
     short:
-      'Person Identification Data, or PID, is the core identity credential in the EU Digital Identity Wallet: the attested set of attributes that establish who someone is, issued by a member-state-designated PID provider. It is the wallet\'s identity document, and it carries a name and a date of birth.',
+      'Person Identification Data, or PID, is the core identity credential in the EU Digital Identity Wallet: the attested set of attributes that establish who someone is, issued by a member state designated PID provider. It is the wallet\'s identity document, and it carries a name and a date of birth.',
     sections: [
       {
         heading: 'What it is for',
         body: [
           'PID is the foundation credential. It is what a member state issues to establish identity in the wallet, and what other attestations are anchored to. Where a service genuinely needs to know who someone is, opening a bank account, signing a contract, accessing their own records, PID is the right credential to ask for.',
-          'PID providers are designated at member-state level and appear on the ecosystem\'s trusted entity lists, which is how a verifier decides whether a PID it receives came from an authority rather than from someone convincing.',
+          'PID providers are designated at member state level and appear on the ecosystem\'s trusted entity lists, which is how a verifier decides whether a PID it receives came from an authority rather than from someone convincing.',
         ],
       },
       {
         heading: 'Why it is usually the wrong credential for an age check',
         body: [
           'PID contains a date of birth. You can compute whether someone is over 18 from it, and doing so means you received their date of birth, and usually their name with it. You have then answered a yes-or-no question by collecting identity data, which is the exact trade the wallet was designed to avoid, and which brings retention, breach and subject-access obligations with it.',
-          'The alternative is a purpose-built attestation carrying age booleans and nothing else. Asking for PID when a narrower credential would answer the question is the wallet-era version of photocopying a passport to check someone is an adult, and under the DSA in particular, collecting more personal data than the check requires is the thing Article 28(3) pushes back on.',
+          'The alternative is a purpose built attestation carrying age booleans and nothing else. Asking for PID when a narrower credential would answer the question is the wallet-era version of photocopying a passport to check someone is an adult, and under the DSA in particular, collecting more personal data than the check requires is the thing Article 28(3) pushes back on.',
         ],
       },
     ],
     facts: [
       { label: 'What it is', value: 'The wallet\'s core identity credential' },
-      { label: 'Issued by', value: 'A member-state-designated PID provider' },
+      { label: 'Issued by', value: 'A member state designated PID provider' },
       { label: 'Contains', value: 'Identity attributes including name and date of birth' },
       { label: 'Right for', value: 'Knowing who someone is' },
       { label: 'Wrong for', value: 'Knowing only whether they are old enough' },
@@ -315,7 +315,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
         heading: 'Why this is a stronger privacy claim than a retention promise',
         body: [
           'Most age verification vendors offer some version of "we delete it afterwards". That is a promise about behaviour, and the only way to audit it is to trust them. This is different in kind. The credential does not contain the data, so there is nothing to delete, nothing to breach, and nothing to produce when someone files a subject access request. You cannot leak what the protocol never sends you.',
-          'And because it is a property of the credential rather than of the vendor, you do not have to take anyone\'s word for it. The doctype is public, the contents are specified, and you can go and look.',
+          'And because the credential has this property and the vendor does not need to promise it, you do not have to take anyone\'s word for it. The doctype is public, the contents are specified, and you can go and look.',
         ],
       },
       {
@@ -336,7 +336,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       { label: 'Requested with', value: 'DCQL, over OpenID4VP 1.0' },
     ],
     whyItMatters: [
-      'If you\'re writing the integration: read the disclosed boolean rather than trusting that verification succeeded, and give the unanswerable case its own state next to yes and no. Those two decisions are the difference between an age check and an age check that quietly lets everyone through.',
+      'If you\'re writing the integration: read the disclosed boolean. Verification succeeding is a different fact, and give the unanswerable case its own state next to yes and no. Those two decisions are the difference between an age check and an age check that quietly lets everyone through.',
       'If you\'re choosing a vendor: ask which credential they request. A vendor reading a birth date out of a PID is holding personal data about your users, whatever their retention policy says about it afterwards.',
     ],
     tools: [
@@ -361,7 +361,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'What about users who do not have a wallet?',
-        a: 'Then this credential can\'t answer for them, and you need another route for that traffic. That\'s a real gap during the rollout rather than something a verifier can solve, and any vendor telling you the wallet covers all your users today is describing a future rather than the present.',
+        a: 'Then this credential can\'t answer for them, and you need another route for that traffic. That\'s a real gap during the rollout, and no verifier can close it, and any vendor telling you the wallet covers all your users today is describing a future rather than the present.',
       },
     ],
     sources: [

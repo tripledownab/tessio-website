@@ -13,12 +13,12 @@ export const PROTOCOL_TERMS: GlossaryTerm[] = [
     description:
       'OpenID4VP is the protocol a verifier uses to request a credential from a wallet and receive the response. What a request contains, and what a wallet checks before answering.',
     short:
-      'OpenID for Verifiable Presentations, or OpenID4VP, is the protocol a verifier uses to ask a wallet for credentials and receive the presentation back. It is format-neutral: the same exchange carries SD-JWT VC and ISO mdoc, and it is what the EU Digital Identity Wallet uses.',
+      'OpenID for Verifiable Presentations, or OpenID4VP, is the protocol a verifier uses to ask a wallet for credentials and receive the presentation back. It is format neutral: the same exchange carries SD-JWT VC and ISO mdoc, and it is what the EU Digital Identity Wallet uses.',
     sections: [
       {
         heading: 'The shape of an exchange',
         body: [
-          'The verifier builds a presentation request: what it wants, who it is, where to send the answer, and a nonce that ties the response to this request and no other. The request is signed, and the wallet fetches it rather than trusting a request handed to it directly. The user is shown what is being asked for and by whom, approves or declines, and the wallet posts the presentation back to the response endpoint.',
+          'The verifier builds a presentation request: what it wants, who it is, where to send the answer, and a nonce that ties the response to this request and no other. The request is signed, and the wallet fetches it, and does not trust a request handed to it directly. The user is shown what is being asked for and by whom, approves or declines, and the wallet posts the presentation back to the response endpoint.',
           'Because the request is signed and its signing certificate travels with it, the wallet can decide whether to answer before showing anything to the user. That ordering is the important part: authentication of the asker happens before the consent screen, not after.',
         ],
       },
@@ -93,7 +93,7 @@ export const PROTOCOL_TERMS: GlossaryTerm[] = [
         heading: 'The mistake worth writing down',
         body: [
           'DCQL asks for a claim. It does not require the claim to have a particular value. A wallet holding age_over_18 with the value false can satisfy a request for age_over_18 perfectly well, and the response it returns will verify: the signature is good, the disclosure is genuine, the credential is authentic. The answer is simply no.',
-          'So a verifier that treats "the presentation verified" as "the person is over 18" is wrong, and wrong in the direction that lets everyone through. The value that was disclosed has to be read. We shipped exactly this bug and only caught it against a real wallet, which is why it is in the glossary rather than in a footnote.',
+          'So a verifier that treats "the presentation verified" as "the person is over 18" is wrong, and wrong in the direction that lets everyone through. The value that was disclosed has to be read. We shipped exactly this bug and only caught it against a real wallet, which is why it is in the glossary and not in a footnote.',
           'There is a third outcome too. If a credential verifies but did not disclose the claim you asked for, you have neither a yes nor a no; you have a check that cannot be answered. Folding that into "no" is tempting and wrong, and it deserves its own state in your data model.',
         ],
       },
@@ -123,11 +123,11 @@ export const PROTOCOL_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'What happens if the wallet does not have the credential I asked for?',
-        a: 'The user is told the request can\'t be satisfied, and you get no presentation rather than an empty one. That\'s a different outcome from a presentation that arrives without the claim you wanted.',
+        a: 'The user is told the request can\'t be satisfied, and you get no presentation at all, not an empty one. That\'s a different outcome from a presentation that arrives without the claim you wanted.',
       },
       {
         q: 'Is DCQL specific to the EU wallet?',
-        a: 'No, it\'s part of OpenID4VP and format-neutral. The EU wallet uses it, and so does anything else built on OpenID4VP 1.0.',
+        a: 'No, it\'s part of OpenID4VP and format neutral. The EU wallet uses it, and so does anything else built on OpenID4VP 1.0.',
       },
     ],
     sources: [

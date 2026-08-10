@@ -15,7 +15,7 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
     description:
       'A WRPAC is the certificate that proves to an EU Digital Identity Wallet that you are a registered relying party. What it does, who issues one, and what a wallet does when you do not have it.',
     short:
-      'A wallet-relying party access certificate, or WRPAC, is the certificate that proves to an EU Digital Identity Wallet that you are a registered relying party. Without one the wallet refuses your request outright, before any data is shared and before the user is even asked.',
+      'A wallet relying party access certificate, or WRPAC, is the certificate that proves to an EU Digital Identity Wallet that you are a registered relying party. Without one the wallet refuses your request outright, before any data is shared and before the user is even asked.',
     sections: [
       {
         heading: 'What it actually does',
@@ -34,7 +34,7 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
       {
         heading: 'Who issues one',
         body: [
-          'Access certificates come from providers that the wallet ecosystem publishes as a signed, machine-readable list, which is how a wallet decides whose certificates to trust. When we read the list the EU reference wallet is configured with, on 5 August 2026, it carried seven pilot providers, identified by country: EU, CZ, EE, LU, NL, PT and UT. UT is Utopia, the Commission\'s fictional test member state, which is the pilot lane.',
+          'Access certificates come from providers that the wallet ecosystem publishes as a signed, machine readable list, which is how a wallet decides whose certificates to trust. When we read the list the EU reference wallet is configured with, on 5 August 2026, it carried seven pilot providers, identified by country: EU, CZ, EE, LU, NL, PT and UT. UT is Utopia, the Commission\'s fictional test member state, which is the pilot lane.',
           'The practical consequence matters more than the list itself. You do not have to wait for your own country\'s register to open before you can develop, because a pilot certificate from the Commission\'s test provider is already trusted by the reference wallet today. Sweden, for one, was not on that list.',
         ],
       },
@@ -42,7 +42,7 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
         heading: 'Where the process actually is',
         body: [
           'There is no published self-serve route to request one. When we went looking in August 2026, what existed was the Commission\'s wallet support mailbox and the team that operates the age-verification issuer. We applied on 5 August 2026 and do not hold a certificate yet.',
-          'Secondary sources report that the implementing regulation on registering wallet-relying parties applies from 24 December 2026, which would put national registers in place around then. We have not confirmed that against the primary text, and dates in this area have moved before, so treat it as a lead rather than something to plan a launch around.',
+          'Secondary sources report that the implementing regulation on registering wallet relying parties applies from 24 December 2026, which would put national registers in place around then. We have not confirmed that against the primary text, and dates in this area have moved before, so treat it as a lead rather than something to plan a launch around.',
         ],
       },
     ],
@@ -108,7 +108,7 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
     description:
       'An EU trusted list is a signed list of the trust service providers a member state has qualified under eIDAS. The LOTL is the list of all 27. How the chain works, and why qualified is not the same as valid.',
     short:
-      'An EU trusted list is a signed, machine-readable list that a member state publishes of the trust service providers it has qualified under eIDAS. The LOTL, or List of Trusted Lists, is the European Commission\'s list pointing at all of them, and it is the root you start from when you want to know whether a certificate is genuinely qualified.',
+      'An EU trusted list is a signed, machine readable list that a member state publishes of the trust service providers it has qualified under eIDAS. The LOTL, or List of Trusted Lists, is the European Commission\'s list pointing at all of them, and it is the root you start from when you want to know whether a certificate is genuinely qualified.',
     sections: [
       {
         heading: 'How the chain of lists works',
@@ -200,14 +200,14 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
         heading: 'The check most verifiers skip',
         body: [
           'Chaining is necessary and not sufficient. ISO/IEC 18013-5 Annex B specifies a profile for the Document Signer certificate: what extended key usage it must carry, what key usage, and how long it may live. A verifier that checks only the chain will accept a certificate that anchors correctly but is not a valid Document Signer under that profile.',
-          'It is worth asking any mdoc library whether it enforces the Annex B profile, because the answer is often no, and a library that does not should say so rather than let a green result imply it did.',
+          'It is worth asking any mdoc library whether it enforces the Annex B profile, because the answer is often no, and a library that does not should say so. A green result implies it did.',
         ],
       },
       {
         heading: 'Where the roots come from',
         body: [
           'That is the practical difficulty. Unlike the eIDAS world, which has a published list of lists, mdoc IACA distribution is still fragmented: roots come from the issuing authorities themselves, from national registries, or from the EU ecosystem\'s trusted entity lists as those fill out.',
-          'Until you have loaded real roots, every real mdoc will correctly report as untrusted, which is a configuration state rather than a verdict about the document, and a verifier should distinguish the two.',
+          'Until you have loaded real roots, every real mdoc will correctly report as untrusted, which is a configuration state, not a verdict about the document, and a verifier should distinguish the two.',
         ],
       },
     ],
@@ -236,7 +236,7 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'Can one issuing authority have several IACA roots?',
-        a: 'Yes, and rotation is normal, which is why a verifier holds a set rather than one certificate and why an expired root doesn\'t necessarily mean an invalid document.',
+        a: 'Yes, and rotation is normal, which is why a verifier holds a set of them and why an expired root doesn\'t necessarily mean an invalid document.',
       },
       {
         q: 'Does anchoring on an IACA prove the document is genuine?',

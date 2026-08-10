@@ -20,7 +20,7 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
       {
         heading: 'The three words, and why the distinction is not pedantry',
         body: [
-          'Age verification establishes age from something authoritative: a government identity source, a bank record, a credential issued by someone who checked. It gives a determinate answer. Age estimation infers age from a signal that correlates with it, usually a face scan, and gives a probability with an error margin, which is why estimation providers publish a "challenge age" buffer and refuse anyone near the threshold.',
+          'Age verification establishes age from something authoritative: a government identity source, a bank record, a credential issued by someone who checked. The answer is determinate. Age estimation infers age from a signal that correlates with it, usually a face scan, and gives a probability with an error margin, which is why estimation providers publish a "challenge age" buffer and refuse anyone near the threshold.',
           'Age assurance covers both, and self-declaration sits at the bottom of the same ladder. Ticking a box that says "I am 18" is technically age assurance and is worth nothing, which is precisely why the regulators stopped using the word loosely.',
         ],
       },
@@ -28,14 +28,14 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
         heading: 'What changes with a wallet',
         body: [
           'The older methods share a problem: to learn one fact about someone, they collect much more. An ID scan gives you a name, a document number and a photograph in order to answer a yes or no question about age. That solves the regulator\'s problem and creates a data protection one.',
-          'A wallet-based check inverts it. The person holds a credential an authority already issued, and releases only the answer to the question asked. There is no document to store, no image to retain and no retention policy to audit, because the data never arrives. Whether that is available to you depends on the rollout rather than on the technology: the credential exists, and the wallets are arriving between now and December 2027.',
+          'A wallet based check inverts it. The person holds a credential an authority already issued, and releases only the answer to the question asked. There is no document to store, no image to retain and no retention policy to audit, because the data never arrives. Whether that is available to you is a question about the rollout, not the technology: the credential exists, and the wallets are arriving between now and December 2027.',
         ],
       },
       {
         heading: 'What a regulator actually assesses',
         body: [
-          'Not the label. Under the UK Online Safety Act the test is whether the assurance is "highly effective", which has four named criteria, and Ofcom has been explicit that self-declaration and payment-card checks do not meet it. Under the EU Digital Services Act the duty is risk-based rather than a blanket age-check mandate, and Article 28(3) actively resists collecting extra personal data in order to check age.',
-          'So the compliance question is two-part: is the method strong enough, and is it proportionate in what it collects. A method can fail either half. An ID scan is strong and often disproportionate; a checkbox is proportionate and useless.',
+          'Not the label. Under the UK Online Safety Act the test is whether the assurance is "highly effective", which has four named criteria, and Ofcom has been explicit that self-declaration and payment-card checks do not meet it. Under the EU Digital Services Act the duty is risk based, and there is no blanket age-check mandate, and Article 28(3) actively resists collecting extra personal data in order to check age.',
+          'So the compliance question is two part: is the method strong enough, and is it proportionate in what it collects. A method can fail either half. An ID scan is strong and often disproportionate; a checkbox is proportionate and useless.',
         ],
       },
     ],
@@ -87,7 +87,7 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
       {
         heading: 'The four criteria',
         body: [
-          'Technically accurate is whether the method correctly determines age in the first place. Robust is whether it holds up against ordinary circumvention rather than only against a cooperative user. Reliable is whether it works consistently across your actual user population rather than in a demonstration. Fair is whether it works equally well across demographics, which is where facial estimation has historically struggled and where a credential-based check has less to prove.',
+          'Technically accurate is whether the method correctly determines age in the first place. Robust is whether it holds up against ordinary circumvention, not just against a cooperative user. Reliable is whether it works consistently across your actual user population, and not only in a demonstration. Fair is whether it works equally well across demographics, which is where facial estimation has historically struggled and where a credential based check has less to prove.',
           'The criteria are cumulative. A method that is accurate but trivially bypassed is not highly effective, and neither is one that is accurate for most people and much worse for some.',
         ],
       },
@@ -99,10 +99,10 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
         ],
       },
       {
-        heading: 'Where a wallet-based check sits',
+        heading: 'Where a wallet based check sits',
         body: [
-          'A credential issued by a government-backed source and cryptographically verified is strong on the first three criteria by construction: the answer comes from an authority rather than from an inference, the signature is checkable, and it does not degrade with lighting or accent or age band.',
-          'The honest caveat is coverage, not strength. A method nobody can use is not reliable in Ofcom\'s sense, so during the rollout a wallet check is one route among several rather than the whole answer. Anyone telling you the EU wallet covers your whole user base today is describing 2027.',
+          'A credential issued by a government backed source and cryptographically verified is strong on the first three criteria by construction: the answer comes from an authority instead of an inference, the signature is checkable, and it does not degrade with lighting or accent or age band.',
+          'The honest caveat is coverage, not strength. A method nobody can use is not reliable in Ofcom\'s sense, so during the rollout a wallet check is one route among several, not the whole answer. Anyone telling you the EU wallet covers your whole user base today is describing 2027.',
         ],
       },
     ],
@@ -122,7 +122,7 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
     faqs: [
       {
         q: 'Is HEAA the same as the EU standard?',
-        a: 'No. HEAA is a UK term from the Online Safety Act. The EU Digital Services Act takes a risk-based approach and doesn\'t use it, so a service covering both markets is answering two differently shaped questions.',
+        a: 'No. HEAA is a UK term from the Online Safety Act. The EU Digital Services Act takes a risk based approach and doesn\'t use it, so a service covering both markets is answering two differently shaped questions.',
       },
       {
         q: 'Does a credit card check count?',
@@ -144,13 +144,13 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
   {
     slug: 'relying-party',
     term: 'Relying party',
-    aka: ['relying party', 'wallet-relying party', 'RP', 'verifier'],
+    aka: ['relying party', 'wallet relying party', 'RP', 'verifier'],
     category: 'Compliance',
     title: 'Relying party in the EU Digital Identity Wallet, explained',
     description:
       'A relying party is whoever asks a wallet for data and acts on the answer. Under the EU framework that role is registered, and registration is what gets you an access certificate.',
     short:
-      'A relying party is whoever asks an EU Digital Identity Wallet for data and relies on the answer, which in practice means your service. The EU framework makes it a registered role rather than an informal one: you register with a national authority, and that registration is what eventually gets you the access certificate a wallet checks before releasing anything.',
+      'A relying party is whoever asks an EU Digital Identity Wallet for data and relies on the answer, which in practice means your service. The EU framework makes it a registered role, not an informal one: you register with a national authority, and that registration is what eventually gets you the access certificate a wallet checks before releasing anything.',
     sections: [
       {
         heading: 'The role, and who holds it',
@@ -178,7 +178,7 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
       { label: 'Also called', value: 'Wallet-relying party, verifier' },
       { label: 'Who it is', value: 'Whoever asks the wallet and acts on the answer, usually the service' },
       { label: 'Registered with', value: 'A national registrar, under the EUDI framework' },
-      { label: 'Proves itself with', value: 'A wallet-relying party access certificate (WRPAC)' },
+      { label: 'Proves itself with', value: 'A wallet relying party access certificate (WRPAC)' },
       { label: 'Acceptance duty', value: 'Regulated relying parties, December 2027' },
     ],
     whyItMatters: [

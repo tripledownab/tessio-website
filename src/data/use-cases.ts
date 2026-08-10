@@ -46,7 +46,7 @@ export const USE_CASES: UseCase[] = [
     category: 'Betting and gaming',
     title: 'Age verification for iGaming and betting',
     description:
-      'Age assurance for iGaming and betting. Prove players are 18+ from the EU Digital Identity Wallet, cut sign-up drop-off and store no personal data. EUDI-native, built on our open-source verifier.',
+      'Age assurance for iGaming and betting. Prove players are 18+ from the EU Digital Identity Wallet, cut sign-up drop-off and store no personal data. EUDI-native, built on our open source verifier.',
     lead: "Every licensed market makes you check that players are 18 or older. Tessio does that from the player's EU Digital Identity Wallet, so you get a signed yes or no, less sign-up drop-off and no ID data to hold.",
     problem: [
       'Betting and gaming operators have to verify age in every market they hold a licence in. The usual fix is a document scan or a database check bolted onto sign-up. That adds friction right where you lose the most players, and it means you are now storing identity documents that are a GDPR and breach liability.',
@@ -82,7 +82,7 @@ export const USE_CASES: UseCase[] = [
     faqs: [
       {
         q: 'Does this satisfy licensing age checks?',
-        a: 'Tessio proves a player is over 18 and gives you a signed, auditable result you can keep as evidence. Age rules are set by your national gambling regulator and licence conditions, so check that a wallet-based over-18 proof meets your specific market. We are happy to talk through what your regulator expects.',
+        a: 'Tessio proves a player is over 18 and gives you a signed, auditable result you can keep as evidence. Age rules are set by your national gambling regulator and licence conditions, so check that a wallet based over-18 proof meets your specific market. We are happy to talk through what your regulator expects.',
       },
       {
         q: 'Will it hurt conversion?',
@@ -173,7 +173,7 @@ export const USE_CASES: UseCase[] = [
       'No clean audit trail to show a regulator.',
     ],
     after: [
-      'A wallet-based over-18 proof that users can give without sharing documents.',
+      'A wallet based over-18 proof that users can give without sharing documents.',
       'A signed, auditable result you can show demonstrates a real age check.',
       'No personal data stored, which suits a product built on trust.',
       'One approach aligned to the EU wallet and its coming mandate.',
@@ -196,7 +196,7 @@ export const USE_CASES: UseCase[] = [
     faqs: [
       {
         q: 'Does this meet DSA and Online Safety Act duties?',
-        a: 'The DSA asks platforms accessible to minors to take proportionate measures, and the Commission guidance points to age verification for higher-risk contexts. The UK Online Safety Act sets highly effective age-assurance duties enforced by Ofcom. Tessio gives you a real, auditable over-18 proof, which is the kind of measure both regimes are looking for. Read our summaries and confirm your own duties.',
+        a: 'The DSA asks platforms accessible to minors to take proportionate measures, and the Commission guidance points to age verification for higher risk contexts. The UK Online Safety Act sets highly effective age-assurance duties enforced by Ofcom. Tessio gives you a real, auditable over-18 proof, which is the kind of measure both regimes are looking for. Read our summaries and confirm your own duties.',
       },
       {
         q: 'Why is a wallet check better for a dating app?',
@@ -204,7 +204,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         q: 'What about users without an EU wallet?',
-        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop-in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
+        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
       },
     ],
     regulations: ['dsa', 'osa', 'eudi'],
@@ -230,7 +230,7 @@ export const USE_CASES: UseCase[] = [
       'Vendors not built for the EU wallet, so you re-integrate later.',
     ],
     after: [
-      'A wallet-based over-18 proof with no document to upload.',
+      'A wallet based over-18 proof with no document to upload.',
       'No personal data stored, so there is no sensitive dataset to leak.',
       'A real, auditable age check aimed at the highly effective standard.',
       'Built on the EU wallet standards the Commission blueprint also uses.',
@@ -261,7 +261,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         q: 'What about visitors without a wallet?',
-        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop-in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
+        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
       },
     ],
     regulations: ['osa', 'dsa', 'eudi'],
@@ -287,7 +287,7 @@ export const USE_CASES: UseCase[] = [
       'No auditable record that you took a real measure.',
     ],
     after: [
-      'A wallet-based over-18 proof that fits data minimisation.',
+      'A wallet based over-18 proof that fits data minimisation.',
       'No extra personal data collected or stored to check age.',
       'A signed, auditable result showing you took a proportionate measure.',
       'One approach aligned to the EU wallet and the Commission age-verification blueprint.',
@@ -310,7 +310,7 @@ export const USE_CASES: UseCase[] = [
     faqs: [
       {
         q: 'Does this fit the DSA data minimisation rule?',
-        a: 'The DSA says protecting minors should not push you to collect more personal data than you already hold. A wallet-based over-18 proof returns a single yes or no and stores nothing, which sits well with that principle. Read our DSA summary and confirm your own obligations.',
+        a: 'The DSA says protecting minors should not push you to collect more personal data than you already hold. A wallet based over-18 proof returns a single yes or no and stores nothing, which sits well with that principle. Read our DSA summary and confirm your own obligations.',
       },
       {
         q: 'Can I age restrict only part of the experience?',
@@ -318,7 +318,7 @@ export const USE_CASES: UseCase[] = [
       },
       {
         q: 'What about users without a wallet?',
-        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop-in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
+        a: 'Today, most people do not have one yet. EU wallet rollout is early and we do not provide a document or selfie fallback, so Tessio is not a drop in replacement for your current age checks. The realistic path is to run Tessio alongside what you already use and move more traffic to the wallet as adoption grows. We would rather tell you that now than after you have integrated.',
       },
     ],
     regulations: ['dsa', 'osa', 'eudi'],

@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     q: 'How does the age verification API work?',
-    a: 'Your app calls the /v1/age-checks endpoint and gets a hosted verification link. The person confirms the claim from their EU Digital Identity Wallet, and the result comes back on your webhook. You can build against the sandbox today. Going live then needs two things beyond your integration: member states shipping the wallet, and us holding the relying-party access certificate that wallets check before they release any data. We do not hold one yet, and no production wallet will accept a verifier without it.',
+    a: 'Your app calls the /v1/age-checks endpoint and gets a hosted verification link. The person confirms the claim from their EU Digital Identity Wallet, and the result comes back on your webhook. You can build against the sandbox today. Going live then needs two things beyond your integration: member states shipping the wallet, and us holding the relying party access certificate that wallets check before they release any data. We do not hold one yet, and no production wallet will accept a verifier without it.',
   },
   {
     q: 'Do you store personal data?',
@@ -58,11 +58,11 @@ const faqs = [
   },
   {
     q: 'Is it GDPR compliant?',
-    a: 'We check one claim and store no personal data, which is the posture GDPR and the EU Digital Identity framework are built for. If you need the verifier inside your own boundary, you can self-host it.',
+    a: 'We check one claim and store no personal data, which is the posture GDPR and the EU Digital Identity framework are built for. If you need the verifier inside your own boundary, you can self host it.',
   },
   {
-    q: 'Is there an open-source or self-hosted option?',
-    a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open-source ASP.NET Core verifier for OpenID4VP, SD-JWT VC and mdoc. It is on NuGet under Apache-2.0, so you can build and run it on your own .NET stack.',
+    q: 'Is there an open source or self hosted option?',
+    a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open source ASP.NET Core verifier for OpenID4VP, SD-JWT VC and mdoc. It is on NuGet under Apache-2.0, so you can build and run it on your own .NET stack.',
   },
   {
     q: 'When must businesses accept the EU Digital Identity Wallet?',
@@ -167,7 +167,7 @@ const labsTools = [
           Tessio Cloud is a hosted verification API. You ask whether someone is over 18, they confirm it from their
           wallet, and you get back a signed yes or no.
           <span style="color: var(--color-text-muted);">No documents, no selfies, and no personal data kept.</span>
-          It runs on our open-source .NET verifier.
+          It runs on our open source .NET verifier.
         </p>
         <div class="flex flex-wrap gap-3">
           <a
@@ -214,7 +214,7 @@ const labsTools = [
     <section class="max-w-6xl mx-auto px-6 pb-24" id="product">
       <h2 class="text-3xl font-bold tracking-tight mb-3">Two products, one core</h2>
       <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
-        The hosted product for teams who want it run for them, and the open-source verifier for teams who want to run it themselves.
+        The hosted product for teams who want it run for them, and the open source verifier for teams who want to run it themselves.
       </p>
       <div class="grid gap-6 md:grid-cols-2">
         {
@@ -376,7 +376,7 @@ const labsTools = [
           per-check rate on top. The rate drops as your volume grows, and age checks are priced for high volume.
         </p>
         <p class="text-base leading-relaxed mb-6" style="color: var(--color-text-muted);">
-          Early access is invite-only, and design partners get preferential pricing while we build out. Tell us the
+          Early access is invite only, and design partners get preferential pricing while we build out. Tell us the
           volume you are planning and we will send a quote.
         </p>
         <a
@@ -415,8 +415,8 @@ const labsTools = [
         </p>
         <h3 class="text-2xl font-bold tracking-tight mb-3">Let's talk.</h3>
         <p class="text-base leading-relaxed mb-6 max-w-2xl" style="color: var(--color-text-muted);">
-          Tessio Cloud is invite-only while we onboard design partners. We are talking to operators running
-          age-assurance pilots, integrators planning their 2027 rollout, and member-state teams looking for an
+          Tessio Cloud is invite only while we onboard design partners. We are talking to operators running
+          age-assurance pilots, integrators planning their 2027 rollout, and member state teams looking for an
           EU-aligned reference stack. If that is you, get in touch.
         </p>
         <a
