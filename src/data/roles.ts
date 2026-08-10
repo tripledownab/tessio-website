@@ -70,8 +70,8 @@ export const ROLES: Role[] = [
         body: 'A check returns an over-18 boolean, not a date of birth or a document. There is no selfie and no ID scan, so there is nothing for you to store or secure.',
       },
       {
-        title: 'Open source and self-hostable',
-        body: 'The core is Tessio.Verifier, ASP.NET Core, Apache-2.0, on NuGet for .NET 8 to 10. Run it hosted as Tessio Cloud, or self-host it on your own stack.',
+        title: 'Open source and self hostable',
+        body: 'The core is Tessio.Verifier, ASP.NET Core, Apache-2.0, on NuGet for .NET 8 to 10. Run it hosted as Tessio Cloud, or self host it on your own stack.',
       },
     ],
     snippet: devSnippet,
@@ -79,19 +79,19 @@ export const ROLES: Role[] = [
     secondaryCta: { label: 'Request access', href: ACCESS_MAILTO },
     ctaTitle: 'Build against the sandbox',
     ctaBody:
-      "Request access to get a project API key and integrate against the sandbox today. It's invite-only while we onboard design partners, and design partners get preferential pricing.",
+      "Request access to get a project API key and integrate against the sandbox today. It's invite only while we onboard design partners, and design partners get preferential pricing.",
     faqs: [
       {
         q: 'Is there an SDK to install?',
-        a: "No SDK needed. It's a plain REST API you can call with curl or your HTTP client of choice. If you want the verifier as a library, the open-source Tessio.Verifier is on NuGet for .NET.",
+        a: "No SDK needed. It's a plain REST API you can call with curl or your HTTP client of choice. If you want the verifier as a library, the open source Tessio.Verifier is on NuGet for .NET.",
       },
       {
         q: 'What do I get back?',
         a: 'A signed over-18 yes or no. Register a webhook to receive results, or poll GET /v1/age-checks/{id} as a fallback. The result carries the boolean you need and no personal data.',
       },
       {
-        q: 'Can I self-host it?',
-        a: 'Yes. Tessio Cloud runs on the open-source Tessio.Verifier, an ASP.NET Core library on NuGet under Apache-2.0 for .NET 8 to 10. You can run the verifier inside your own environment.',
+        q: 'Can I self host it?',
+        a: 'Yes. Tessio Cloud runs on the open source Tessio.Verifier, an ASP.NET Core library on NuGet under Apache-2.0 for .NET 8 to 10. You can run the verifier inside your own environment.',
       },
     ],
     useCases: ['igaming', 'retail'],
@@ -104,7 +104,7 @@ export const ROLES: Role[] = [
     category: 'Data posture and audit',
     title: 'Age verification for compliance and DPOs',
     description:
-      'Age verification with no personal data stored. Over-18 checks from the EU Digital Identity Wallet, a signed audit trail, GDPR data minimisation, and an open-source verifier core you can run inside your own boundary.',
+      'Age verification with no personal data stored. Over-18 checks from the EU Digital Identity Wallet, a signed audit trail, GDPR data minimisation, and an open source verifier core you can run inside your own boundary.',
     heading: 'Age verification your DPO will actually like',
     lead: 'Tessio proves a user is over 18 from their EU Digital Identity Wallet and stores no personal data. No document images, no dates of birth, nothing to breach. Here is the compliance posture in plain terms.',
     intro: [
@@ -126,7 +126,7 @@ export const ROLES: Role[] = [
       },
       {
         title: 'Self-host for data residency',
-        body: 'When identity data cannot go to a hosted service, run the open-source .NET verifier inside your own environment with managed trust updates. EU based, with EU data residency.',
+        body: 'When identity data cannot go to a hosted service, run the open source .NET verifier inside your own environment with managed trust updates. EU based, with EU data residency.',
       },
     ],
     checklist: [
@@ -135,14 +135,14 @@ export const ROLES: Role[] = [
       'A signed, auditable result you can keep as evidence of a real check.',
       'Aligned with the DSA principle that you should not collect extra data to check age.',
       'Built on the EU Digital Identity Wallet standards for the eIDAS mandate.',
-      'The verification core is open source under Apache-2.0, so teams that cannot send identity data to a third-party cloud can run it themselves.',
+      'The verification core is open source under Apache-2.0, so teams that cannot send identity data to a third party cloud can run it themselves.',
     ],
     checklistHeading: 'The compliance posture',
     primaryCta: { label: 'Request access', href: ACCESS_MAILTO },
     secondaryCta: { label: 'Read the DSA summary', href: '/dsa' },
     ctaTitle: 'Talk through your posture',
     ctaBody:
-      "Tell us your sector and the duties you're meeting, and we'll walk through how a wallet-based over-18 check with no stored data fits. Access is invite-only while we onboard design partners.",
+      "Tell us your sector and the duties you're meeting, and we'll walk through how a wallet based over-18 check with no stored data fits. Access is invite only while we onboard design partners.",
     faqs: [
       {
         q: 'Do you store any personal data?',
@@ -150,11 +150,11 @@ export const ROLES: Role[] = [
       },
       {
         q: 'Is it GDPR compliant?',
-        a: 'We check one claim and store no personal data, which is the data-minimisation posture GDPR and the EU Digital Identity framework are built for. You stay in control of your own processing, and if you need the check inside your own boundary you can self-host the open-source core.',
+        a: 'We check one claim and store no personal data, which is the data-minimisation posture GDPR and the EU Digital Identity framework are built for. You stay in control of your own processing, and if you need the check inside your own boundary you can self host the open source core.',
       },
       {
         q: 'Where is verification processed?',
-        a: 'Tessio is EU based with EU data residency. If your obligations mean identity data cannot leave your environment at all, you can self-host the .NET verifier and keep processing in your own boundary.',
+        a: 'Tessio is EU based with EU data residency. If your obligations mean identity data cannot leave your environment at all, you can self host the .NET verifier and keep processing in your own boundary.',
       },
     ],
     useCases: ['dating', 'adult', 'social'],
@@ -167,12 +167,12 @@ export const ROLES: Role[] = [
     category: 'Channel and partners',
     title: 'EUDI age verification for platform providers',
     description:
-      'Add wallet-native EUDI age verification to your platform once and offer it to every operator or merchant you serve. One integration, resell to many, managed trust layer, no PII stored.',
+      'Add wallet native EUDI age verification to your platform once and offer it to every operator or merchant you serve. One integration, resell to many, managed trust layer, no PII stored.',
     heading: 'Add EUDI age verification as a module',
-    lead: 'If you run a platform for operators or merchants, you can add wallet-native age verification once and offer it to all of them. One integration, resell to many, with a managed trust layer and no personal data stored.',
+    lead: 'If you run a platform for operators or merchants, you can add wallet native age verification once and offer it to all of them. One integration, resell to many, with a managed trust layer and no personal data stored.',
     intro: [
-      'Platform and channel providers have the best leverage in age assurance. Your operators and merchants all face the same age rules, and most of them do not want to build verification themselves. Add Tessio once and you can offer a wallet-native age check to your whole downstream, as a module of your platform.',
-      "Because the result is an over-18 yes or no with no personal data attached, you are not taking on a pile of your customers' customers' identity data. And because we keep the wallet trust layer current, you do not have to chase member-state and issuer changes as the rollout continues.",
+      'Platform and channel providers have the best leverage in age assurance. Your operators and merchants all face the same age rules, and most of them do not want to build verification themselves. Add Tessio once and you can offer a wallet native age check to your whole downstream, as a module of your platform.',
+      "Because the result is an over-18 yes or no with no personal data attached, you are not taking on a pile of your customers' customers' identity data. And because we keep the wallet trust layer current, you do not have to chase member state and issuer changes as the rollout continues.",
     ],
     pillars: [
       {
@@ -188,23 +188,23 @@ export const ROLES: Role[] = [
         body: 'Your operators get an over-18 yes or no, so you are not warehousing identity data for their customers. Less data risk across your whole platform.',
       },
       {
-        title: 'Hosted or self-hosted',
-        body: 'Run it hosted as part of your stack, or self-host the open-source .NET core inside your platform when you need full control of processing.',
+        title: 'Hosted or self hosted',
+        body: 'Run it hosted as part of your stack, or self host the open source .NET core inside your platform when you need full control of processing.',
       },
     ],
     primaryCta: { label: 'Talk to us', href: ACCESS_MAILTO },
     secondaryCta: { label: 'Read the docs', href: '/docs' },
     ctaTitle: 'Add age verification to your platform',
     ctaBody:
-      "Tell us about your platform and your downstream operators, and we'll talk through the channel model and partner terms. Access is invite-only while we onboard design partners.",
+      "Tell us about your platform and your downstream operators, and we'll talk through the channel model and partner terms. Access is invite only while we onboard design partners.",
     faqs: [
       {
         q: 'How does the channel model work?',
-        a: 'You integrate Tessio once into your platform and offer the age check to the operators or merchants you serve. They get wallet-native age assurance without building it, and you add a compliance feature to your product. Talk to us about partner terms.',
+        a: 'You integrate Tessio once into your platform and offer the age check to the operators or merchants you serve. They get wallet native age assurance without building it, and you add a compliance feature to your product. Talk to us about partner terms.',
       },
       {
-        q: 'Can we white-label it?',
-        a: 'The result is a signed over-18 boolean, so you can surface it in your own product flow however you like. If you need full control of processing, you can self-host the open-source .NET core inside your platform.',
+        q: 'Can we white label it?',
+        a: 'The result is a signed over-18 boolean, so you can surface it in your own product flow however you like. If you need full control of processing, you can self host the open source .NET core inside your platform.',
       },
       {
         q: 'Who keeps the wallet trust layer current?',
