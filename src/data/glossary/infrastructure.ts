@@ -1,69 +1,11 @@
-// glossary data — one record per term page (/glossary/[slug]).
+// EUDI and eIDAS trust plumbing: who is allowed to ask, and who is allowed to issue.
 //
-// Scope rule, so this system does not compete with the pages that already earn traffic: a term that
-// has its own landing page (EUDI Wallet, Online Safety Act, DSA) does NOT get a full glossary entry.
-// Two pages targeting one query split the signal and we lose to ourselves. Those belong in the
-// related links pointing at /eudi, /osa and /dsa instead.
-//
-// Every entry here is written from something we did rather than from a specification summary, and
-// where we have a Labs validator for the thing being defined, the entry links to it. That is the
-// difference between this and the dozen identikit EUDI glossaries: the reader can go and check one.
-//
-// Accuracy notes:
-//  - The WRPAC provider list, its seven pilot providers and the reference wallet's refusal are from
-//    our own run on 2026-08-05, recorded in TrustPlatform/docs/wrpac-access-certificate.md.
-//  - The thirteen age thresholds are copied from AgeCheckService.SupportedMinAges, which in turn
-//    tracks what eu.europa.ec.av.1 defines. Do not "tidy" that list.
-//  - The December 2026 register date is reported by secondary sources and is NOT confirmed against
-//    the implementing regulation. It is stated as unconfirmed on the page on purpose. Keep it that way
-//    until someone reads the primary text.
-import type { Faq } from '../lib/seo';
+// The WRPAC and trusted-list entries are written from our own runs against the EU reference wallet and
+// the live LOTL, not from a spec summary. Dates in them are load-bearing; check them against
+// TrustPlatform/docs/wrpac-access-certificate.md before editing.
+import type { GlossaryTerm } from './types';
 
-export interface TermFact {
-  label: string;
-  value: string;
-}
-export interface TermSection {
-  heading: string;
-  body: string[];
-}
-export interface TermTool {
-  label: string;
-  href: string;
-  note: string;
-}
-export interface TermSource {
-  label: string;
-  href: string;
-}
-export interface GlossaryTerm {
-  slug: string;
-  /** The heading and the DefinedTerm name. */
-  term: string;
-  /** Abbreviations and alternate names. Feeds DefinedTerm.alternateName and the "also called" line. */
-  aka: string[];
-  category: string;
-  title: string;
-  description: string;
-  /**
-   * The one-sentence plain-language definition. This is the sentence that gets quoted, by a person
-   * skimming and by an AI answer, so it has to stand alone without the paragraphs under it.
-   */
-  short: string;
-  sections: TermSection[];
-  facts: TermFact[];
-  whyItMatters: string[];
-  /** Labs validators for the thing being defined. The reason to read this glossary and not another. */
-  tools: TermTool[];
-  faqs: Faq[];
-  sources: TermSource[];
-  /** Sibling term slugs, for internal linking. */
-  related: string[];
-  /** Regulation slugs to link out to, for terms a compliance reader arrives at. */
-  regulations?: string[];
-}
-
-export const GLOSSARY: GlossaryTerm[] = [
+export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
   {
     slug: 'wrpac',
     term: 'Wallet-relying party access certificate (WRPAC)',
@@ -113,8 +55,8 @@ export const GLOSSARY: GlossaryTerm[] = [
       { label: 'Tessio status', value: 'Applied 5 August 2026, not yet held' },
     ],
     whyItMatters: [
-      'If you are comparing age verification vendors for the EU wallet, this is the question to put to all of them: do you hold an access certificate, and who issued it. Every relying party in Europe is behind this same gate, incumbents included, so a vendor claiming live production wallet verification today is worth a second look.',
-      'It does not block your integration work, though. The certificate changes which key signs the request, not the shape of what you build, so the integration you write against a sandbox now is the one you go live with.',
+      'If you\'re comparing age verification vendors for the EU wallet, this is the question to put to all of them: do you hold an access certificate, and who issued it. Every relying party in Europe is behind this same gate, incumbents included, so a vendor claiming live production wallet verification today is worth a second look.',
+      'It doesn\'t block your integration work, though. The certificate changes which key signs the request, not the shape of what you build, so the integration you write against a sandbox now is the one you go live with.',
     ],
     tools: [
       {
@@ -130,11 +72,11 @@ export const GLOSSARY: GlossaryTerm[] = [
       },
       {
         q: 'Can I build and test without one?',
-        a: 'Against a sandbox, yes, and that is most of the integration work. Against a real wallet, no. The wallet refuses the request before any data is released, so there is no partial or degraded mode to test in.',
+        a: 'Against a sandbox, yes, and that\'s most of the integration work. Against a real wallet, no. The wallet refuses the request before any data is released, so there is no partial or degraded mode to test in.',
       },
       {
         q: 'Do I need my own certificate, or does my verification vendor cover me?',
-        a: 'Technically the certificate binds to the host that sends the request, so with a hosted verifier that is your provider\'s host and their certificate. Whether the regulation also expects you to be registered as a relying party in your own right is a separate question, it may differ by member state, and it is one for your counsel rather than for a glossary.',
+        a: 'Technically the certificate binds to the host that sends the request, so with a hosted verifier that\'s your provider\'s host and their certificate. Whether the regulation also expects you to be registered as a relying party in your own right is a separate question, it may differ by member state, and it\'s one for your counsel rather than for a glossary.',
       },
       {
         q: 'Why does the wallet check this at all?',
@@ -200,7 +142,7 @@ export const GLOSSARY: GlossaryTerm[] = [
     ],
     whyItMatters: [
       'Validity and qualification are two different claims, and conflating them is how compliance positions end up resting on nothing. A signature can verify perfectly and still not be qualified. If your obligation is about qualified signatures, you have to resolve the certificate against the lists, at the right point in time, and say so.',
-      'If you are buying a validation tool, that is the question to ask it: does it tell you qualified, or only valid, and does it evaluate qualification at signing time or at today\'s date.',
+      'If you\'re buying a validation tool, that\'s the question to ask it: does it tell you qualified, or only valid, and does it evaluate qualification at signing time or at today\'s date.',
     ],
     tools: [
       {
@@ -221,7 +163,7 @@ export const GLOSSARY: GlossaryTerm[] = [
       },
       {
         q: 'Does being on a trusted list make a signature valid?',
-        a: 'No, these are independent. Cryptographic validity says the bytes were signed by that key and have not changed. The trusted list says whether the issuer behind that key was a qualified provider. You need both answers, and a tool that gives you only one is not telling you what you think it is.',
+        a: 'No, these are independent. Cryptographic validity says the bytes were signed by that key and have not changed. The trusted list says whether the issuer behind that key was a qualified provider. You need both answers, and a tool that gives you only one isn\'t telling you what you think it\'s.',
       },
       {
         q: 'How often do the lists change?',
@@ -237,92 +179,74 @@ export const GLOSSARY: GlossaryTerm[] = [
   },
 
   {
-    slug: 'age-verification-attestation',
-    term: 'EU age verification attestation (eu.europa.ec.av.1)',
-    aka: ['age attestation', 'AV attestation', 'eu.europa.ec.av.1', 'age_over_18 credential'],
-    category: 'Credentials',
-    title: 'EU age verification attestation (eu.europa.ec.av.1) explained',
+    slug: 'iaca',
+    term: 'IACA (Issuing Authority Certificate Authority)',
+    aka: ['IACA', 'issuing authority certificate authority', 'IACA root', 'Document Signer'],
+    category: 'EUDI infrastructure',
+    title: 'IACA explained: the trust root behind an mdoc or mDL',
     description:
-      'The EU age verification attestation carries nothing but age_over_N booleans. No name, no date of birth, no portrait. What is in it, the thirteen thresholds, and the mistake that makes an age check fail open.',
+      'An IACA is the certificate authority root behind an mdoc issuer. How mdoc trust anchors on it, and the certificate profile check that is commonly skipped.',
     short:
-      'The EU age verification attestation is a credential, doctype eu.europa.ec.av.1, that carries nothing but a set of age_over_N booleans. No name, no date of birth, no document number, no portrait. It exists so a service can check someone is old enough without learning anything else about them.',
+      'An IACA, or Issuing Authority Certificate Authority, is the root certificate authority an mdoc issuing authority operates. Trust in an mdoc is decided by whether its Document Signer certificate chains to an IACA root the verifier already holds, so the IACA list is the mdoc equivalent of a trusted list.',
     sections: [
       {
-        heading: 'What is actually in it',
+        heading: 'How mdoc trust is decided',
         body: [
-          'Thirteen booleans, and that is the entire payload: age_over_13, 15, 16, 18, 21, 23, 25, 27, 28, 40, 60, 65 and 67. Those numbers are not arbitrary and they are not ours. They are the thresholds the attestation defines, covering the ages that laws around Europe actually draw lines at, from social media minimums through alcohol and gambling to pensioner concessions.',
-          'Compare that with the PID, the person identification data credential, which is the wallet\'s identity document and carries a name, a birth date and more. You can work out whether someone is over 18 from a PID, but doing it means receiving their date of birth. The age attestation exists precisely so you do not have to, and as issued today it is the only EU credential that carries age_over_N without also carrying identity attributes.',
+          'Two certificates matter. The IACA is the root, held by the issuing authority, for example a member state or a licensing body. The Document Signer is the certificate that actually signs each credential\'s Mobile Security Object, and it chains to that root.',
+          'A verifier decides trust purely by chain anchoring: does this Document Signer chain to a root I already trust. Unlike a trust model keyed on an issuer string, the identifier inside the document is not consulted at all, so an attacker choosing what the document claims about itself cannot move the answer. That is a good property, and it means the whole question reduces to which roots you loaded.',
         ],
       },
       {
-        heading: 'Why this is a stronger privacy claim than a retention promise',
+        heading: 'The check most verifiers skip',
         body: [
-          'Most age verification vendors offer some version of "we delete it afterwards". That is a promise about behaviour, and the only way to audit it is to trust them. This is different in kind. The credential does not contain the data, so there is nothing to delete, nothing to breach, and nothing to produce when someone files a subject access request. You cannot leak what the protocol never sends you.',
-          'And because it is a property of the credential rather than of the vendor, you do not have to take anyone\'s word for it. The doctype is public, the contents are specified, and you can go and look.',
+          'Chaining is necessary and not sufficient. ISO/IEC 18013-5 Annex B specifies a profile for the Document Signer certificate: what extended key usage it must carry, what key usage, and how long it may live. A verifier that checks only the chain will accept a certificate that anchors correctly but is not a valid Document Signer under that profile.',
+          'It is worth asking any mdoc library whether it enforces the Annex B profile, because the answer is often no, and a library that does not should say so rather than let a green result imply it did.',
         ],
       },
       {
-        heading: 'The part that trips people up',
+        heading: 'Where the roots come from',
         body: [
-          'Asking for a claim is not the same as asking for a value. DCQL, the query language OpenID4VP uses, lets you request the age_over_18 attribute. It does not let you require that the attribute be true. A wallet holding age_over_18 = false can satisfy that request perfectly well, and the response it sends back will verify: the signature is good, the disclosure is genuine, the credential is authentic. The answer is simply no.',
-          'So a verifier that treats "verified successfully" as "over 18" is wrong, and it is wrong in the direction that fails open, which is the worst way for an age check to be wrong. You have to read the value that was actually disclosed. We know because we made this mistake in our own implementation and only caught it against a real wallet.',
-          'There is a third outcome worth designing for as well. If a credential verifies but did not disclose the boolean you asked for, you do not have a yes and you do not have a no. You have a check that cannot be answered. Folding that into "no" is tempting and it is also wrong: it is a different thing, and it deserves its own state in your data model and your retry logic.',
+          'That is the practical difficulty. Unlike the eIDAS world, which has a published list of lists, mdoc IACA distribution is still fragmented: roots come from the issuing authorities themselves, from national registries, or from the EU ecosystem\'s trusted entity lists as those fill out.',
+          'Until you have loaded real roots, every real mdoc will correctly report as untrusted, which is a configuration state rather than a verdict about the document, and a verifier should distinguish the two.',
         ],
       },
     ],
     facts: [
-      { label: 'Doctype', value: 'eu.europa.ec.av.1' },
-      { label: 'Format', value: 'mdoc (ISO 18013-5), as issued today' },
-      { label: 'Contains', value: 'Thirteen age_over_N booleans' },
-      { label: 'Does not contain', value: 'Name, date of birth, document number, portrait' },
-      { label: 'Thresholds', value: '13, 15, 16, 18, 21, 23, 25, 27, 28, 40, 60, 65, 67' },
-      { label: 'Requested with', value: 'DCQL, over OpenID4VP 1.0' },
+      { label: 'Stands for', value: 'Issuing Authority Certificate Authority' },
+      { label: 'Role', value: 'Root of trust for an mdoc issuing authority' },
+      { label: 'Signs credentials', value: 'No: the Document Signer does, and chains to the IACA' },
+      { label: 'Trust decided by', value: 'Chain anchoring; the issuer string is not consulted' },
+      { label: 'Certificate profile', value: 'ISO/IEC 18013-5 Annex B, commonly unenforced' },
     ],
     whyItMatters: [
-      'If you are writing the integration: read the disclosed boolean rather than trusting that verification succeeded, and give the unanswerable case its own state next to yes and no. Those two decisions are the difference between an age check and an age check that quietly lets everyone through.',
-      'If you are choosing a vendor: ask which credential they request. A vendor reading a birth date out of a PID is holding personal data about your users, whatever their retention policy says about it afterwards.',
+      'If every mdoc you test reports untrusted, check which roots you loaded before suspecting the documents. An empty root set produces a confident and meaningless no.',
+      'Ask your mdoc library whether it enforces the Annex B Document Signer profile. Chain anchoring alone accepts certificates the spec would not.',
     ],
     tools: [
       {
         label: 'mdoc / mDL Validator',
         href: '/mdoc',
-        note: 'Paste a real mdoc and see its Mobile Security Object, its IACA chain and the elements it actually discloses.',
+        note: 'Paste a DeviceResponse and see its Document Signer chain and whether it anchors on a trusted root.',
       },
     ],
     faqs: [
       {
-        q: 'Does the service learn my date of birth?',
-        a: 'Not from this credential, because it does not contain one. It holds a set of yes or no answers about age thresholds, and the service receives the one it asked for after you approve it in your wallet.',
+        q: 'Is an IACA the same as a trusted list?',
+        a: 'It plays the same role and is distributed differently. An eIDAS trusted list is a signed, published list you fetch; IACA roots are certificates you obtain and configure. The eIDAS side has a single root to start from, the mdoc side doesn\'t yet.',
       },
       {
-        q: 'Can I ask for a threshold other than 18?',
-        a: 'Yes, any of the thirteen the attestation defines. In practice, sandboxes and mock wallets tend to mint only age_over_18, so the other thresholds are meaningful against a real wallet rather than in a test environment.',
+        q: 'Can one issuing authority have several IACA roots?',
+        a: 'Yes, and rotation is normal, which is why a verifier holds a set rather than one certificate and why an expired root doesn\'t necessarily mean an invalid document.',
       },
       {
-        q: 'Is this the same as a mobile driving licence?',
-        a: 'No. An mDL is a driving licence and carries identity attributes including a name and usually a portrait. Both are mdocs, so they travel over the same protocol, but the age attestation is deliberately empty of everything except age answers.',
-      },
-      {
-        q: 'What about users who do not have a wallet?',
-        a: 'Then this credential cannot answer for them, and you need another route for that traffic. That is a real gap during the rollout rather than something a verifier can solve, and any vendor telling you the wallet covers all your users today is describing a future rather than the present.',
+        q: 'Does anchoring on an IACA prove the document is genuine?',
+        a: 'It proves the Document Signer chains to an authority you trust. You still need the Mobile Security Object signature to verify and the disclosed elements to match its digests, otherwise you have trusted a signer without checking what they signed.',
       },
     ],
     sources: [
-      {
-        label: 'EUDI Architecture and Reference Framework',
-        href: 'https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework',
-      },
-      {
-        label: 'OpenID for Verifiable Presentations 1.0, including DCQL',
-        href: 'https://openid.net/specs/openid-4-verifiable-presentations-1_0.html',
-      },
-      { label: 'Regulation (EU) 2024/1183, the EUDI framework', href: 'https://eur-lex.europa.eu/eli/reg/2024/1183/oj' },
+      { label: 'ISO/IEC 18013-5', href: 'https://www.iso.org/standard/69084.html' },
+      { label: 'EUDI Architecture and Reference Framework', href: 'https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework' },
     ],
-    related: ['wrpac', 'trusted-list'],
-    regulations: ['osa', 'dsa'],
+    related: ['mdoc', 'trusted-list', 'wrpac'],
   },
 ];
-
-export function getTerm(slug: string): GlossaryTerm | undefined {
-  return GLOSSARY.find((t) => t.slug === slug);
-}
