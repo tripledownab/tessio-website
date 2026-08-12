@@ -24,7 +24,7 @@ const products = [
   {
     name: 'Tessio.Verifier',
     tag: 'Open source · Apache-2.0',
-    body: 'The ASP.NET Core verifier that Tessio Cloud runs on. It does OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), with four run modes so you can build before wallets ship. It is on NuGet for .NET 8 to 10, so you can run it yourself.',
+    body: 'The ASP.NET Core verifier that Tessio Cloud runs on. It does OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), and it passes the OpenID Foundation conformance suite for HAIP verifiers in both formats. Four run modes let you build before wallets ship. It is on NuGet for .NET 8 to 10, so you can run it yourself.',
     cta: { label: 'Get it on NuGet', href: nugetUrl },
     secondary: { label: 'View on GitHub', href: verifierRepo },
     highlight: false,
@@ -38,7 +38,7 @@ const steps = [
 ];
 
 const timeline = [
-  { date: 'Now', body: 'Tessio Cloud is live and Tessio.Verifier 0.3 is out. It verifies SD-JWT VC and mdoc (mDL) and passes the specification\'s own test vectors. You can build against the sandbox today.' },
+  { date: 'Now', body: 'Tessio Cloud is live and Tessio.Verifier 0.4 is out. It passes the OpenID Foundation conformance suite for OpenID4VP 1.0 HAIP verifiers, in both SD-JWT VC and mdoc formats. You can build against the sandbox today.' },
   { date: 'Dec 2026', body: 'Member states have to make the EUDI Wallet available under Regulation (EU) 2024/1183. Real wallets, real credentials to verify.' },
   { date: 'Dec 2027', body: 'Acceptance becomes mandatory. Regulated relying parties need a verifier in production.' },
 ];
@@ -63,6 +63,10 @@ const faqs = [
   {
     q: 'Is there an open source or self hosted option?',
     a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open source ASP.NET Core verifier for OpenID4VP, SD-JWT VC and mdoc. It is on NuGet under Apache-2.0, so you can build and run it on your own .NET stack.',
+  },
+  {
+    q: 'Does Tessio pass the OpenID Foundation conformance tests?',
+    a: 'Yes. Tessio.Verifier passes every applicable module of the OpenID Foundation conformance suite for OpenID4VP 1.0 verifiers under the High Assurance Interoperability Profile (HAIP), in both SD-JWT VC and mdoc formats. The suite plays the wallet and attacks the verifier: tampered credentials, replayed proofs, stale keys and broken session bindings all have to be rejected for the right reason. Passing it is our bar for a verifier release. We have not yet submitted for the official OpenID certification listing.',
   },
   {
     q: 'When must businesses accept the EU Digital Identity Wallet?',
@@ -95,7 +99,7 @@ const jsonLd = {
       operatingSystem: '.NET 8 to 10',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
       description:
-        'Open-source, ASP.NET Core-native EUDI verifier for OpenID4VP, SD-JWT VC and mdoc. Apache-2.0, on NuGet.',
+        'Open-source, ASP.NET Core-native EUDI verifier for OpenID4VP, SD-JWT VC and mdoc. Passes the OpenID Foundation HAIP conformance suite in both formats. Apache-2.0, on NuGet.',
     },
     {
       '@type': 'SoftwareApplication',
@@ -167,7 +171,7 @@ const labsTools = [
           Tessio Cloud is a hosted verification API. You ask whether someone is over 18, they confirm it from their
           wallet, and you get back a signed yes or no.
           <span style="color: var(--color-text-muted);">No documents, no selfies, and no personal data kept.</span>
-          It runs on our open source .NET verifier.
+          It runs on our open source .NET verifier, which passes the OpenID Foundation HAIP conformance tests.
         </p>
         <div class="flex flex-wrap gap-3">
           <a
