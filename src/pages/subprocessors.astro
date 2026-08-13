@@ -14,11 +14,19 @@ const subprocessors = [
     name: 'Hetzner Online GmbH',
     where: 'Germany (servers in Helsinki, Finland)',
     what: 'Hosting of the entire service, including databases and backups. All customer and account data lives here, inside the EU.',
+    links: [
+      { label: 'Their DPA (PDF)', href: 'https://www.hetzner.com/AV/DPA_en.pdf' },
+      { label: 'Their security measures (PDF)', href: 'https://www.hetzner.com/AV/TOM_en.pdf' },
+    ],
   },
   {
     name: 'Resend, Inc.',
     where: 'United States',
-    what: 'Transactional email (account invitations) only, and only when email sending is enabled. Processes recipient email addresses. Transfers are covered by the EU standard contractual clauses.',
+    what: 'Transactional email (account invitations) only, and only when email sending is enabled. Processes recipient email addresses. Transfers are covered by their EU-US Data Privacy Framework certification, with the EU standard contractual clauses in their DPA.',
+    links: [
+      { label: 'Their DPA', href: 'https://resend.com/legal/dpa' },
+      { label: 'Their subprocessors', href: 'https://resend.com/legal/subprocessors' },
+    ],
   },
 ];
 ---
@@ -60,6 +68,16 @@ const subprocessors = [
                 </td>
                 <td class="border-b py-3 align-top" style="border-color: var(--color-border);">
                   {s.what}
+                  <span class="block mt-2">
+                    {s.links.map((l, i) => (
+                      <>
+                        {i > 0 && ' · '}
+                        <a href={l.href} class="underline" target="_blank" rel="noopener" style="color: var(--color-accent);">
+                          {l.label}
+                        </a>
+                      </>
+                    ))}
+                  </span>
                 </td>
               </tr>
             ))
