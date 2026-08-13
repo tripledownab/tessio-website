@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { CONTACT_EMAIL, VERIFIER_REPO, LABS_URL } from '../consts';
+
+const title = 'Security';
+const description =
+  'How Tessio handles security and data protection: what we never receive, what we store, where it runs, and what is externally verifiable. Written plainly, including what we do not have yet.';
+
+// Every claim on this page is checked against the code or the infrastructure before publishing.
+// If you change the platform, change this page in the same PR.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Tessio security and data protection',
+  description,
+  url: 'https://tessio.eu/security',
+};
+
+const sections: { heading: string; paras: string[] }[] = [
+  {
+    heading: 'What we never receive',
+    paras: [
+      'Most age verification means an ID document or a selfie, so the vendor ends up holding identity data. Tessio asks the EU Digital Identity Wallet for one claim, such as being over 18. The credential behind that answer, the EU age verification attestation, contains age booleans and nothing else: no name, no date of birth, no document number, no portrait.',
+      'That is the security model. There is no document store to breach and no retention policy to audit, because the identity data never crosses the wire. This is a property of the protocol, not a promise about our behaviour, which means you can verify it yourself instead of trusting us.',
+    ],
+  },
+  {
+    heading: 'What we do store',
+    paras: [
+      'Check outcomes: a yes or no per check, with your reference and timestamps. No personal data of the person being checked.',
+      'Your account: dashboard user emails and passwords. Passwords are hashed with Argon2id. Session tokens are stored only as SHA-256 hashes.',
+      'API keys: shown to you once, then only a SHA-256 hash and a short prefix are stored. Keys are revocable from the dashboard.',
+      'An audit log of administrative actions in your account.',
+    ],
+  },
+  {
+    heading: 'Where it runs',
+    paras: [
+      'Production runs on dedicated infrastructure in Helsinki, Finland (Hetzner), inside the EU. All traffic is TLS. Data does not leave the EU.',
+      'Every tenant is isolated at the query level: each data access is scoped by tenant id, and cross-tenant isolation is covered by automated tests that run on every change.',
+    ],
+  },
+  {
+    heading: 'Webhooks you can verify',
+    paras: [
+      'Webhook deliveries are signed with HMAC-SHA256 using your endpoint secret, with a timestamp in the signed payload so replays are detectable. The verification snippet is in the developer docs.',
+    ],
+  },
+  {
+    heading: 'Availability and backups',
+    paras: [
+      'Deploys are health gated with automatic rollback: a release that fails its health check never stays live. The server is snapshotted daily (Hetzner, EU), and the database is also dumped nightly with a 14 day retention.',
+    ],
+  },
+  {
+    heading: 'Externally verifiable',
+    paras: [
+      'The verifier underneath Tessio Cloud is open source (Apache-2.0, on NuGet), so you can read exactly what it does. It passes the OpenID Foundation conformance suite for OpenID4VP 1.0 HAIP verifiers in both credential formats the EU wallet uses. We also run free validators for the EU identity ecosystem at labs.tessio.eu.',
+    ],
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-3xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <p class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-accent);">
+        Security
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-6">
+        The architecture is the security model.
+      </h1>
+      <p class="text-lg leading-relaxed" style="color: var(--color-text-muted);">
+        This page says what we actually do, in plain terms, including what we do not have yet. Every claim
+        here is checked against the running system before it is published.
+      </p>
+    </section>
+
+    {
+      sections.map((s) => (
+        <section class="max-w-3xl mx-auto px-6 py-6">
+          <h2 class="text-2xl font-bold tracking-tight mb-4">{s.heading}</h2>
+          {s.paras.map((p) => (
+            <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+              {p}
+            </p>
+          ))}
+        </section>
+      ))
+    }
+
+    <section class="max-w-3xl mx-auto px-6 py-6">
+      <h2 class="text-2xl font-bold tracking-tight mb-4">What we do not have yet</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        Stated here because you would find out anyway, and it is better coming from us.
+      </p>
+      <ul class="leading-relaxed mb-3 list-disc pl-5" style="color: var(--color-text);">
+        <li class="mb-2">
+          <strong>No SOC 2 or ISO 27001 certification.</strong> We are early, and we will certify when a
+          customer's procurement requires it. Until then, this page and the open source code are offered in
+          place of a report: most of what those audits cover does not exist here to audit, because we do not
+          hold identity data.
+        </li>
+        <li class="mb-2">
+          <strong>Production wallet verification is pending an access certificate.</strong> Wallets check who
+          is asking before releasing anything. We have applied for the relying party access certificate and do
+          not yet hold it, which is true of every relying party in Europe right now.
+        </li>
+        <li class="mb-2">
+          <strong>Access is invite only.</strong> There is no self serve signup in production.
+        </li>
+      </ul>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-6 pb-20">
+      <h2 class="text-2xl font-bold tracking-tight mb-4">Reporting a vulnerability</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        Found something? Write to
+        <a href={`mailto:${CONTACT_EMAIL}`} class="underline" style="color: var(--color-accent);">
+          {CONTACT_EMAIL}</a
+        >
+        and we will respond quickly. The verifier is open source, so issues in it can also be reported on
+        <a href={VERIFIER_REPO} class="underline" style="color: var(--color-accent);">GitHub</a>. We are a
+        small team; you will be talking to the people who wrote the code.
+      </p>
+      <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+        Free validators for the EU identity ecosystem:
+        <a href={LABS_URL} class="underline" style="color: var(--color-accent);">labs.tessio.eu</a>
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
