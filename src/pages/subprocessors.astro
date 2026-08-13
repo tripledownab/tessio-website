@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { CONTACT_EMAIL } from '../consts';
+
+const title = 'Subprocessors';
+const description =
+  'The external services Tessio uses to run the product, what each one processes, and how we notify customers before adding one.';
+const updated = '2026-08-13';
+
+const subprocessors = [
+  {
+    name: 'Hetzner Online GmbH',
+    where: 'Germany (servers in Helsinki, Finland)',
+    what: 'Hosting of the entire service, including databases and backups. All customer and account data lives here, inside the EU.',
+  },
+  {
+    name: 'Resend, Inc.',
+    where: 'United States',
+    what: 'Transactional email (account invitations) only, and only when email sending is enabled. Processes recipient email addresses. Transfers are covered by the EU standard contractual clauses.',
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-3xl mx-auto px-6 pt-16 pb-8 md:pt-24">
+      <p class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-accent);">
+        Legal
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">Subprocessors</h1>
+      <p class="text-sm" style="color: var(--color-text-muted);">Last updated {updated}</p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5">
+      <p class="leading-relaxed mb-6" style="color: var(--color-text);">
+        The list is short on purpose. Because age checks carry no identity data, very little personal data
+        exists to hand to anyone. These are the external services that process personal data on our behalf:
+      </p>
+      <table class="w-full text-sm border-collapse mb-6">
+        <thead>
+          <tr>
+            <th class="text-left border-b py-2 pr-4" style="border-color: var(--color-border);">Provider</th>
+            <th class="text-left border-b py-2 pr-4" style="border-color: var(--color-border);">Location</th>
+            <th class="text-left border-b py-2" style="border-color: var(--color-border);">What it processes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            subprocessors.map((s) => (
+              <tr>
+                <td class="border-b py-3 pr-4 align-top font-medium" style="border-color: var(--color-border);">
+                  {s.name}
+                </td>
+                <td class="border-b py-3 pr-4 align-top" style="border-color: var(--color-border);">
+                  {s.where}
+                </td>
+                <td class="border-b py-3 align-top" style="border-color: var(--color-border);">
+                  {s.what}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5">
+      <h2 class="text-2xl font-bold tracking-tight mb-3">Run by us, not subprocessors</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        Website analytics (Umami) and error monitoring run on our own infrastructure in the EU. They involve
+        no third party.
+      </p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5 pb-20">
+      <h2 class="text-2xl font-bold tracking-tight mb-3">Changes</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        Before adding or replacing a subprocessor we update this page and email customers at least 14 days in
+        advance, so there is time to object. Questions to
+        <a href={`mailto:${CONTACT_EMAIL}`} class="underline" style="color: var(--color-accent);">{CONTACT_EMAIL}</a>.
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

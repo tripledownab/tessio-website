@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { CONTACT_EMAIL } from '../consts';
+
+const title = 'Terms of service';
+const description =
+  'The terms for using Tessio Cloud during early access: what the service is, what each side is responsible for, and the honest limits of an invite only product.';
+const updated = '2026-08-13';
+
+const clauses: { heading: string; paras: string[] }[] = [
+  {
+    heading: '1. Who these terms are between',
+    paras: [
+      'These terms apply between Triple Down AB (org. no. 559333-6091, VAT no. SE559333609101, Skeppargatan 55, 114 59 Stockholm, Sweden, "Tessio", "we") and the organisation that opens a Tessio Cloud account ("you"). If we sign a separate agreement with you, for example a design partner agreement, that agreement wins where they differ.',
+    ],
+  },
+  {
+    heading: '2. What the service is',
+    paras: [
+      'Tessio Cloud is an API and dashboard for age and identity verification built on the EU Digital Identity Wallet. You start a check, the person confirms a claim such as being over 18 in their wallet, and you receive a signed yes or no. The service is designed so that neither you nor we receive identity documents or identity attributes from the person being checked.',
+    ],
+  },
+  {
+    heading: '3. Early access, stated plainly',
+    paras: [
+      'Access is invite only. Checks complete against our sandbox today; verification against production wallets requires a relying party access certificate, which we have applied for and do not yet hold. Until then the service is for building and testing integrations. We do not promise a date for production wallet coverage, because that date is not ours to promise.',
+      'During early access the service is provided as is, without an availability commitment. We deploy carefully (health gated releases with automatic rollback) and we publish how the platform is run on the security page, but we do not yet offer an SLA.',
+    ],
+  },
+  {
+    heading: '4. Your account and keys',
+    paras: [
+      'You are responsible for what happens under your account and API keys. Keep keys secret; rotate them from the dashboard if you suspect exposure. We store keys only as hashes and cannot recover a lost key, only issue a new one.',
+    ],
+  },
+  {
+    heading: '5. Acceptable use',
+    paras: [
+      'Use the service only for lawful age and identity verification of people who interact with your own products. Do not attempt to access other tenants’ data, probe or overload the infrastructure, resell the service without our agreement, or use it to harass, surveil or discriminate. We may suspend accounts that do.',
+    ],
+  },
+  {
+    heading: '6. Your regulatory responsibility',
+    paras: [
+      'An age check gives you a cryptographically verified answer to one question. What that answer means for your obligations, under gambling licences, the UK Online Safety Act, the EU Digital Services Act or any other rule, remains your decision and your responsibility. Tessio is a tool in your compliance process, not the process itself.',
+    ],
+  },
+  {
+    heading: '7. Data protection',
+    paras: [
+      'For personal data processed in checks we act as your processor under a data processing agreement, available on request from hello@tessio.eu. The privacy policy describes our own processing as controller. The subprocessors page lists the external services involved.',
+    ],
+  },
+  {
+    heading: '8. Fees',
+    paras: [
+      'Early access pricing is agreed individually, in writing. There are no published prices yet. We will not start charging an account without an agreement that says what for and how much.',
+    ],
+  },
+  {
+    heading: '9. Intellectual property',
+    paras: [
+      'We own the service. You own your data and your integration. The verifier library underneath is separately available as open source under Apache-2.0; nothing in these terms limits your rights under that licence.',
+    ],
+  },
+  {
+    heading: '10. Liability',
+    paras: [
+      'Neither side is liable to the other for indirect or consequential loss. Our total liability under these terms is capped at the fees you paid us in the twelve months before the claim or, if you have paid nothing, EUR 1,000. Nothing here limits liability that cannot lawfully be limited.',
+    ],
+  },
+  {
+    heading: '11. Ending it',
+    paras: [
+      'You can stop using the service and ask us to close the account at any time. We can terminate with 30 days notice, or immediately for breach of these terms. On closure we delete your data as described in the privacy policy, and backup copies expire within 14 days.',
+    ],
+  },
+  {
+    heading: '12. Changes and law',
+    paras: [
+      'We may update these terms; material changes are announced by email to account holders at least 14 days before they apply. Swedish law governs these terms, and disputes go to the Swedish courts, with the Stockholm District Court (Stockholms tingsrätt) as first instance.',
+    ],
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-3xl mx-auto px-6 pt-16 pb-8 md:pt-24">
+      <p class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-accent);">
+        Legal
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">Terms of service</h1>
+      <p class="text-sm" style="color: var(--color-text-muted);">Last updated {updated}</p>
+    </section>
+
+    {
+      clauses.map((c) => (
+        <section class="max-w-3xl mx-auto px-6 py-4">
+          <h2 class="text-xl font-bold tracking-tight mb-3">{c.heading}</h2>
+          {c.paras.map((p) => (
+            <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+              {p}
+            </p>
+          ))}
+        </section>
+      ))
+    }
+
+    <section class="max-w-3xl mx-auto px-6 py-5 pb-20">
+      <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+        Related: <a href="/privacy" class="underline">privacy</a> ·
+        <a href="/security" class="underline">security</a> ·
+        <a href="/subprocessors" class="underline">subprocessors</a> · questions to
+        <a href={`mailto:${CONTACT_EMAIL}`} class="underline" style="color: var(--color-accent);">{CONTACT_EMAIL}</a>
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

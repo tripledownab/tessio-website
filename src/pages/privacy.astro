@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { CONTACT_EMAIL } from '../consts';
+
+const title = 'Privacy policy';
+const description =
+  'How Tessio processes personal data: what we collect on the website and in Tessio Cloud, what we never receive from age checks, where data lives and your rights under the GDPR.';
+
+const updated = '2026-08-13';
+
+const sections: { heading: string; paras: string[] }[] = [
+  {
+    heading: 'Who we are',
+    paras: [
+      'Tessio is operated by Triple Down AB, a Swedish company (org. no. 559333-6091, VAT no. SE559333609101, registered address Skeppargatan 55, 114 59 Stockholm). We are the data controller for the processing described on this page. You can reach us at hello@tessio.eu.',
+      'This policy covers tessio.eu, labs.tessio.eu and the Tessio Cloud dashboard and API at cloud.tessio.eu and api.tessio.eu.',
+    ],
+  },
+  {
+    heading: 'The short version',
+    paras: [
+      'The product is built so that identity data never reaches us. An age check returns a yes or no proved from the EU Digital Identity Wallet, and the credential involved carries no name, no date of birth, no document number and no portrait. What remains is ordinary operational data: your account email, our correspondence and aggregate website statistics.',
+    ],
+  },
+  {
+    heading: 'Website visitors',
+    paras: [
+      'Our websites use self hosted, cookieless analytics (Umami, running on our own EU infrastructure). It records aggregate page statistics and does not build visitor profiles, use cookies or share data with third parties. Legal basis: our legitimate interest in understanding how the sites are used.',
+      'If you email us, we keep the correspondence for as long as the conversation is relevant. Legal basis: legitimate interest.',
+    ],
+  },
+  {
+    heading: 'Tessio Cloud accounts',
+    paras: [
+      'If you have a dashboard account we process your email address and password (stored as an Argon2id hash; we never see the plaintext), plus an audit log of administrative actions in your organisation. Legal basis: performance of the contract with you or your employer. We keep this data for as long as the account exists.',
+    ],
+  },
+  {
+    heading: 'People who complete an age check',
+    paras: [
+      'If you proved your age to one of our customers through Tessio: we received no name, no date of birth, no document number and no photo. The credential your wallet presented contains age booleans and nothing else, and you approved exactly what was disclosed on your own device.',
+      'What we hold afterwards is the outcome (a yes or no), a reference chosen by the customer and timestamps. We process this on the customer’s behalf as their processor, under a data processing agreement. For questions about a specific check, the customer you verified with is the controller and your first point of contact.',
+    ],
+  },
+  {
+    heading: 'Where data lives, and who else touches it',
+    paras: [
+      'Everything runs on servers in Helsinki, Finland (Hetzner), inside the EU, over TLS. We list the few external services we use, and the conditions, on the subprocessors page. We do not sell or share personal data with anyone for their own purposes.',
+    ],
+  },
+  {
+    heading: 'How long we keep things',
+    paras: [
+      'Account data lives as long as the account. Check outcomes belong to the customer and follow their account. Backup copies expire within 14 days. If you ask us to delete your data, we do, and the deletion reaches backups as they expire.',
+    ],
+  },
+  {
+    heading: 'Your rights',
+    paras: [
+      'Under the GDPR you can ask for access, correction, deletion, restriction and portability, and you can object to processing based on legitimate interest. Write to hello@tessio.eu and we will answer within a month. You can also complain to the Swedish supervisory authority, Integritetsskyddsmyndigheten (imy.se), or to your local authority.',
+      'We do not use automated decision making or profiling in our own processing. An age check itself is automated, but it happens on the instructions of the customer you verified with, and its only output is the yes or no you approved in your wallet.',
+    ],
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-3xl mx-auto px-6 pt-16 pb-8 md:pt-24">
+      <p class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-accent);">
+        Legal
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">Privacy policy</h1>
+      <p class="text-sm" style="color: var(--color-text-muted);">Last updated {updated}</p>
+    </section>
+
+    {
+      sections.map((s) => (
+        <section class="max-w-3xl mx-auto px-6 py-5">
+          <h2 class="text-2xl font-bold tracking-tight mb-3">{s.heading}</h2>
+          {s.paras.map((p) => (
+            <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+              {p}
+            </p>
+          ))}
+        </section>
+      ))
+    }
+
+    <section class="max-w-3xl mx-auto px-6 py-5 pb-20">
+      <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+        Related: <a href="/cookies" class="underline">cookies</a> ·
+        <a href="/subprocessors" class="underline">subprocessors</a> ·
+        <a href="/security" class="underline">security</a> ·
+        <a href="/terms" class="underline">terms</a> · questions to
+        <a href={`mailto:${CONTACT_EMAIL}`} class="underline" style="color: var(--color-accent);">{CONTACT_EMAIL}</a>
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

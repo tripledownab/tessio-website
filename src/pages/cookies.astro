@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Cookie policy';
+const description =
+  'Tessio uses no tracking cookies anywhere. The marketing sites are cookieless, and the dashboard sets only the strictly necessary session cookie that keeps you signed in.';
+const updated = '2026-08-13';
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-3xl mx-auto px-6 pt-16 pb-8 md:pt-24">
+      <p class="text-sm font-medium uppercase tracking-widest mb-6" style="color: var(--color-accent);">
+        Legal
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">Cookie policy</h1>
+      <p class="text-sm" style="color: var(--color-text-muted);">Last updated {updated}</p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5">
+      <h2 class="text-2xl font-bold tracking-tight mb-3">tessio.eu and labs.tessio.eu</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        No cookies at all. Analytics run on our own EU servers (Umami), which works without cookies, does not
+        follow you across sites and keeps only aggregate statistics.
+      </p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5">
+      <h2 class="text-2xl font-bold tracking-tight mb-3">cloud.tessio.eu</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        One strictly necessary session cookie that keeps you signed in to the dashboard. It exists only while
+        you use the service, carries an opaque token (stored on our side only as a SHA-256 hash) and is not
+        used for tracking. There are no third party cookies and no advertising or analytics cookies.
+      </p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5 pb-20">
+      <h2 class="text-2xl font-bold tracking-tight mb-3">Why there is no cookie banner</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        Consent banners are required for cookies that are not strictly necessary. We do not set any, so there
+        is nothing to ask consent for. If that ever changes, this page changes first.
+      </p>
+      <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+        Related: <a href="/privacy" class="underline">privacy policy</a> ·
+        <a href="/security" class="underline">security</a>
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
