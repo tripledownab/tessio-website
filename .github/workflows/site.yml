@@ -42,6 +42,9 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+          # The action drops dotpaths by default, which silently excluded /.well-known/security.txt
+          # from the deployed artifact. dist is generated output; .git/.github stay excluded regardless.
+          include-hidden-files: true
 
   deploy:
     needs: build
