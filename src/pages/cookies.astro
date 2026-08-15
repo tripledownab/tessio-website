@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 const title = 'Cookie policy';
 const description =
   'Tessio uses no tracking cookies anywhere. The marketing sites are cookieless, and the dashboard sets only the strictly necessary session cookie that keeps you signed in.';
-const updated = '2026-08-13';
+const updated = '2026-08-15';
 ---
 
 <Base title={title} description={description}>
@@ -38,11 +38,22 @@ const updated = '2026-08-13';
       </p>
     </section>
 
-    <section class="max-w-3xl mx-auto px-6 py-5 pb-20">
+    <section class="max-w-3xl mx-auto px-6 py-5">
       <h2 class="text-2xl font-bold tracking-tight mb-3">Why there is no cookie banner</h2>
       <p class="leading-relaxed mb-3" style="color: var(--color-text);">
         Consent banners are required for cookies that are not strictly necessary. We do not set any, so there
         is nothing to ask consent for. If that ever changes, this page changes first.
+      </p>
+    </section>
+
+    <section class="max-w-3xl mx-auto px-6 py-5 pb-20">
+      <h2 class="text-2xl font-bold tracking-tight mb-3">Independently inspected</h2>
+      <p class="leading-relaxed mb-3" style="color: var(--color-text);">
+        On 15 August 2026 we ran the Website Evidence Collector, the inspection tool published by the
+        European Data Protection Supervisor, against this site. It recorded zero cookies, zero local
+        storage, zero tracker beacons and no third party hosts contacted: every request a visitor's
+        browser makes goes to our own EU infrastructure, fonts and analytics included. We keep the
+        evidence file and share it on request.
       </p>
       <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
         Related: <a href="/privacy" class="underline">privacy policy</a> ·
