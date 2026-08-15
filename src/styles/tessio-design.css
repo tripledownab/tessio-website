@@ -29,6 +29,9 @@
   --color-border: #e5e5e5;
   --color-accent: #0033a0;            /* EU blue */
   --color-accent-hover: #002280;
+  /* Text ON an accent-coloured surface. White passes on the light-mode navy (10.6:1) but fails
+     on the dark-mode light blue, so button text must follow the scheme, not be hardcoded white. */
+  --color-accent-contrast: #ffffff;
   --color-code-bg: #f5f5f5;
   --color-code-border: #e5e5e5;
 }
@@ -42,6 +45,7 @@
     --color-border: #262626;
     --color-accent: #60a5fa;
     --color-accent-hover: #93c5fd;
+    --color-accent-contrast: #0a1628; /* dark text, 8.2:1 on the light-blue accent */
     --color-code-bg: #161616;
     --color-code-border: #262626;
   }

@@ -8,7 +8,9 @@ import { CLOUD_URL, LABS_URL, ACCESS_MAILTO } from '../consts';
   style="background-color: color-mix(in srgb, var(--color-bg) 85%, transparent); border-color: var(--color-border);"
 >
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+    {/* aria-label because on mobile the text span is display:none and the mark is aria-hidden,
+        which would leave the link with no accessible name. */}
+    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight" aria-label="Tessio, home">
       <svg
         class="ts-mark"
         width="42"
@@ -44,8 +46,8 @@ import { CLOUD_URL, LABS_URL, ACCESS_MAILTO } from '../consts';
       <a href={CLOUD_URL} class="hidden sm:inline hover:opacity-70 transition-opacity">Sign in</a>
       <a
         href={ACCESS_MAILTO}
-        class="px-3 py-1.5 rounded-md text-white text-xs font-medium"
-        style="background-color: var(--color-accent);"
+        class="px-3 py-1.5 rounded-md text-xs font-medium"
+        style="background-color: var(--color-accent); color: var(--color-accent-contrast);"
       >
         Request access
       </a>
