@@ -1,5 +1,15 @@
 ---
 import '../styles/global.css';
+// Self-hosted fonts (Fontsource): bundled into our own assets so no visitor IP ever reaches
+// Google's font CDN. Found by the EDPS Website Evidence Collector run 2026-08-15; the German
+// remote-Google-Fonts case law makes this a compliance point, not just a preference.
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/inter/800.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
 import { LINKEDIN_URL } from '../consts';
 
 interface Props {
@@ -71,12 +81,6 @@ const orgJsonLd = {
     <meta name="generator" content={Astro.generator} />
     <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} is:inline />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
     <slot name="head" />
     <script defer src="https://analytics.tessio.eu/script.js" data-website-id="a4075622-7115-4bb5-bc15-17b62a02408e"></script>
   </head>
