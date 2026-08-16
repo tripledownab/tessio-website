@@ -300,22 +300,32 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
     category: 'Credentials',
     title: 'EU age verification attestation (eu.europa.ec.av.1) explained',
     description:
-      'The EU age verification attestation carries nothing but age_over_N booleans. No name, no date of birth, no portrait. What is in it, the thirteen thresholds, and the mistake that makes an age check fail open.',
+      'The EU age verification attestation carries nothing but age_over_N booleans. No name, no date of birth, no portrait. What is in it, which thresholds you can actually rely on, and the mistake that makes an age check fail open.',
     short:
       'The EU age verification attestation is a credential, doctype eu.europa.ec.av.1, that carries nothing but a set of age_over_N booleans. No name, no date of birth, no document number, no portrait. It exists so a service can check someone is old enough without learning anything else about them.',
     sections: [
       {
         heading: 'What is actually in it',
         body: [
-          'Thirteen booleans, and that is the entire payload: age_over_13, 15, 16, 18, 21, 23, 25, 27, 28, 40, 60, 65 and 67. Those numbers are not arbitrary and they are not ours. They are the thresholds the attestation defines, covering the ages that laws around Europe actually draw lines at, from social media minimums through alcohol and gambling to pensioner concessions.',
+          'One boolean is guaranteed: age_over_18. The technical specification makes it mandatory in every attestation, allows any number of further age_over_NN booleans as optional extras, and then forbids everything else outright, in the words of Annex A, "a Proof of Age Attestation SHALL NOT include any other attribute". No name, no date of birth, no document number, no portrait, because there is nowhere to put one.',
+          'Which extra thresholds you get is therefore up to the issuer. The Commission\'s test issuer mints thirteen: 13, 15, 16, 18, 21, 23, 25, 27, 28, 40, 60, 65 and 67. That is a useful example and it is not a definition, which is the distinction worth holding on to. We have seen a different set from a different issuer, including thresholds absent from that thirteen. Anyone quoting you a fixed list of age booleans as though the specification defined one has read an issuer, not the spec.',
+          'The practical consequence is worth designing around. Build for 18, which every conforming issuer must carry, and treat any other threshold as best effort. Asking for one the holder\'s credential does not have does not give you a no. It gives you a check that cannot be answered, which is a third outcome and is covered below.',
           'Compare that with the PID, the person identification data credential, which is the wallet\'s identity document and carries a name, a birth date and more. You can work out whether someone is over 18 from a PID, but doing it means receiving their date of birth. The age attestation exists precisely so you do not have to, and as issued today it is the only EU credential that carries age_over_N without also carrying identity attributes.',
+        ],
+      },
+      {
+        heading: 'Which thresholds you can actually ask for, and where the sources disagree',
+        body: [
+          'This is genuinely unsettled, so here is the state of it rather than a tidy answer. The age verification specification mandates age_over_18 and makes the rest optional. ISO/IEC 18013-5, the standard the credential is built on, says in clause 7.2.5 that when you request a threshold the credential does not carry, the wallet should answer with the nearest true attestation above it or the nearest false attestation below it. Both directions are sound: if age_over_18 is true then age_over_16 is certainly true, and if age_over_18 is false then age_over_21 is certainly false.',
+          'That would mean a credential carrying one boolean could answer many questions. In practice it does not yet. An open issue against the EU reference wallet reports exactly this case: ask for age_over_16 from an mDL carrying only age_over_18 and you get nothing back rather than the inference the standard describes. So the specification says one thing, an issuer chooses another, and a wallet implements a third.',
+          'What we do about it. We accept any threshold from 1 to 99, because the claim identifier is age_over_NN and refusing a number for being absent from a list of ours would reject one a wallet can genuinely answer. We treat 18 as guaranteed and everything else as dependent on the holder\'s issuer and wallet. If a threshold cannot be answered you get a check marked failed with a null result, never a guess in either direction. And if you need a specific threshold for a specific market, tell us and we will find out what actually answers it rather than quoting you a list.',
         ],
       },
       {
         heading: 'Why this is a stronger privacy claim than a retention promise',
         body: [
           'Most age verification vendors offer some version of "we delete it afterwards". That is a promise about behaviour, and the only way to audit it is to trust them. This is different in kind. The credential does not contain the data, so there is nothing to delete, nothing to breach, and nothing to produce when someone files a subject access request. You cannot leak what the protocol never sends you.',
-          'And because the credential has this property and the vendor does not need to promise it, you do not have to take anyone\'s word for it. The doctype is public, the contents are specified, and you can go and look.',
+          'And because the credential has this property and the vendor does not need to promise it, you do not have to take anyone\'s word for it. The doctype is public and the specification is published. Which age thresholds an issuer includes is up to the issuer, but what the credential may never contain is not: identity attributes are ruled out by the specification itself, so the privacy property holds no matter who issued it.',
         ],
       },
       {
@@ -330,9 +340,9 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
     facts: [
       { label: 'Doctype', value: 'eu.europa.ec.av.1' },
       { label: 'Format', value: 'mdoc (ISO 18013-5), as issued today' },
-      { label: 'Contains', value: 'Thirteen age_over_N booleans' },
+      { label: 'Contains', value: 'age_over_18, plus any optional age_over_NN the issuer chose' },
       { label: 'Does not contain', value: 'Name, date of birth, document number, portrait' },
-      { label: 'Thresholds', value: '13, 15, 16, 18, 21, 23, 25, 27, 28, 40, 60, 65, 67' },
+      { label: 'Thresholds', value: '18 guaranteed; any others are the issuer\'s choice' },
       { label: 'Requested with', value: 'DCQL, over OpenID4VP 1.0' },
     ],
     whyItMatters: [
@@ -353,7 +363,7 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'Can I ask for a threshold other than 18?',
-        a: 'Yes, any of the thirteen the attestation defines. In practice, sandboxes and mock wallets tend to mint only age_over_18, so the other thresholds are meaningful against a real wallet rather than in a test environment.',
+        a: 'Yes. The protocol lets you request any age_over_NN, and whether it can be answered depends on the holder\'s issuer, because the specification only makes age_over_18 mandatory. Ask for 18 and it works everywhere. Ask for 21 or 65 and it works wherever that issuer chose to include it, and returns an unanswerable check where it did not. Sandboxes and mock wallets tend to mint only age_over_18, so other thresholds are meaningful against a real wallet rather than in a test environment.',
       },
       {
         q: 'Is this the same as a mobile driving licence?',
@@ -372,6 +382,14 @@ export const CREDENTIAL_TERMS: GlossaryTerm[] = [
       {
         label: 'OpenID for Verifiable Presentations 1.0, including DCQL',
         href: 'https://openid.net/specs/openid-4-verifiable-presentations-1_0.html',
+      },
+      {
+        label: 'AV technical specification, Annex A: the Proof of Age attribute table',
+        href: 'https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-A/annex-A-av-profile/',
+      },
+      {
+        label: 'EU reference wallet, issue 152: age_over_16 unanswered from an mDL carrying age_over_18',
+        href: 'https://github.com/eu-digital-identity-wallet/eudi-lib-android-wallet-core/issues/152',
       },
       { label: 'Regulation (EU) 2024/1183, the EUDI framework', href: 'https://eur-lex.europa.eu/eli/reg/2024/1183/oj' },
     ],
