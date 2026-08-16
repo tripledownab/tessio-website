@@ -33,6 +33,7 @@ const sections: { heading: string; paras: string[] }[] = [
       'Your account: dashboard user emails and passwords. Passwords are hashed with Argon2id. Session tokens are stored only as SHA-256 hashes.',
       'API keys: shown to you once, then only a SHA-256 hash and a short prefix are stored. Keys are revocable from the dashboard.',
       'An audit log of administrative actions in your account.',
+      'Two-step verification is available on every dashboard account (TOTP, RFC 6238, with single-use recovery codes). It is a gate rather than a prompt: until the second factor is presented, a correct password produces a session that authenticates nothing. Codes cannot be reused, and attempts are rate limited per account as well as per source address, so guessing cannot be widened by changing address.',
     ],
   },
   {
@@ -46,12 +47,15 @@ const sections: { heading: string; paras: string[] }[] = [
     heading: 'Webhooks you can verify',
     paras: [
       'Webhook deliveries are signed with HMAC-SHA256 using your endpoint secret, with a timestamp in the signed payload so replays are detectable. The verification snippet is in the developer docs.',
+      'Endpoints must be HTTPS. A signature proves a delivery is genuine and unaltered, which is not the same as keeping it private, so we refuse plain HTTP endpoints rather than leaving that choice to you.',
     ],
   },
   {
     heading: 'Availability and backups',
     paras: [
-      'Deploys are health gated with automatic rollback: a release that fails its health check never stays live. The server is snapshotted daily (Hetzner, EU), and the database is also dumped nightly with a 14 day retention.',
+      'Deploys are health gated with automatic rollback: a release that fails its health check never stays live.',
+      'Backups run in three independent layers, all inside the EU: a daily whole-server snapshot, a nightly database dump kept on the server for 14 days, and an encrypted copy of every dump on separate storage that takes its own daily snapshots.',
+      'The dumps are encrypted before they are written, and the key that decrypts them is deliberately not on the servers, so a backup cannot be read by anyone who compromises the machine that produced it. The restore path is not a theory: a production dump has been retrieved from the off-site copy without involving the production server, decrypted, and restored, with the result checked against expected contents.',
     ],
   },
   {
