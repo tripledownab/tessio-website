@@ -39,18 +39,19 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
     <!-- Capped rather than left to fill: this component sits in a max-w-3xl page and a max-w-6xl home page
          section, and at the wider one an uncapped column runs to well over 100 characters a line. -->
     <div class="max-w-2xl">
-      <h3 class="font-semibold mb-1">Waiting for a wallet</h3>
+      <h3 class="font-semibold mb-1">The request</h3>
       <p class="text-sm leading-relaxed mb-4" style="color: var(--color-text-muted);">
-        That code is a genuine OpenID4VP request, signed and served by reference, exactly as a customer
-        integration would receive it. An EU Digital Identity Wallet holding an age attestation can answer it
-        right now and be verified against the live trust list.
+        That code is a real OpenID4VP request, built by the same code a customer integration calls and
+        carrying the same DCQL query: one claim, <code>age_over_18</code>, and nothing else. Request signing
+        needs a reader certificate under eIDAS, which this deployment does not hold yet, so a production
+        wallet will refuse to answer it. Use the buttons instead.
       </p>
       <div class="rounded-md border p-4" style="border-color: var(--color-border);">
-        <p class="text-sm font-medium mb-1">Don't have a wallet yet?</p>
+        <p class="text-sm font-medium mb-1">Stand in for the wallet</p>
         <p class="text-xs leading-relaxed mb-3" style="color: var(--color-text-muted);">
-          Almost nobody does, so these buttons stand in for one. They skip the verification step rather than
-          fake it: no credential is involved, and the answer you pick is simply recorded. It is marked
-          <code>simulated</code>, never <code>eudi</code>.
+          These skip the verification step rather than fake it: no credential is involved, and the answer you
+          pick is simply recorded. It is marked <code>simulated</code>, never <code>eudi</code>, so it can
+          never be mistaken for a verified result.
         </p>
         <div class="flex flex-wrap gap-2">
           <button
