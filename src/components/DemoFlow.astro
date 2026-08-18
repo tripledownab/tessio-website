@@ -134,7 +134,9 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
     type Result = { minAge: number; meetsMinAge: boolean | null; method: string | null } | null;
     type Status = { id: string; status: string; result: Result };
 
-    let checkId: string | null = null;
+    // The threshold travels with the check rather than being written down a second time. The API owns it,
+    // and a literal here would keep saying 18 after the server started asking for something else.
+    let current: { id: string; minAge: number } | null = null;
     let poll: number | undefined;
 
     const show = (name: keyof typeof steps) => {
@@ -186,12 +188,16 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
     async function start() {
       busy(true);
       errorEl.hidden = true;
+      // Stop the previous check's poll before starting another. Without this, pressing "Run another
+      // check" while one is still pending leaves the old timer running: it holds the old check in its
+      // closure, and when that one expires it renders "Expired" over the new check's result.
+      window.clearInterval(poll);
       try {
         // Loaded on demand. This component sits on the home page, where most visitors never press the
         // button, and the QR encoder is the bulk of the weight here.
         const { default: QRCode } = await import('qrcode');
         const created = await call<{ id: string; url: string; minAge: number }>('/v1/demo/checks', { method: 'POST' });
-        checkId = created.id;
+        current = { id: created.id, minAge: created.minAge };
         endpoint.textContent = `POST /v1/demo/checks -> ${created.id}`;
         footer.hidden = false;
         qr.src = await QRCode.toDataURL(created.url, { margin: 1, width: 220 });
@@ -218,15 +224,15 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
 
     for (const button of root.querySelectorAll<HTMLButtonElement>('[data-simulate]')) {
       button.addEventListener('click', async () => {
-        if (!checkId) return;
+        if (!current) return;
         busy(true);
         errorEl.hidden = true;
         try {
-          await call(`/v1/demo/checks/${checkId}/simulate`, {
+          await call(`/v1/demo/checks/${current.id}/simulate`, {
             method: 'POST',
             body: JSON.stringify({ meetsMinAge: button.dataset.simulate === 'true' }),
           });
-          render(await call<Status>(`/v1/demo/checks/${checkId}`), 18);
+          render(await call<Status>(`/v1/demo/checks/${current.id}`), current.minAge);
         } catch {
           fail('That check is no longer waiting for an answer. Start a new one.');
         } finally {
