@@ -170,6 +170,20 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
       return [`Under age ${minAge}`, 'error', `The response disclosed that the holder is not over ${minAge}. A genuine credential can say no, and a signature proving the credential is authentic does not make the answer yes.`] as const;
     }
 
+    // What answered, which is a separate question from what the answer was. An absent method is its own
+    // state and must not read as a wallet: an expired check carries no result at all, and defaulting that
+    // absence to "answered by a wallet and verified" printed a verification claim directly underneath
+    // "nobody answered within the request's lifetime".
+    function methodLine(result: Result) {
+      if (result?.method === 'simulated')
+        return 'Answered by the simulator, not a wallet. No credential was verified: the answer was recorded as method=simulated so it stays distinguishable from a real presentation.';
+      if (result?.method === 'eudi')
+        return 'Answered by a wallet. The presentation was verified and recorded as method=eudi.';
+      if (result?.method == null)
+        return 'No method recorded, because nothing answered this check.';
+      return `Recorded as method=${result.method}, a value this page has no description for.`;
+    }
+
     function render(s: Status, minAge: number) {
       window.clearInterval(poll);
       const [heading, tone, body] = describe(s, minAge);
@@ -177,10 +191,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
       box.style.borderLeftColor = `var(--color-outcome-${tone})`;
       root!.querySelector<HTMLElement>('[data-outcome-title]')!.textContent = heading;
       root!.querySelector<HTMLElement>('[data-outcome-body]')!.textContent = body;
-      root!.querySelector<HTMLElement>('[data-method]')!.textContent =
-        s.result?.method === 'simulated'
-          ? 'Answered by the simulator, not a wallet. No credential was verified: the answer was recorded as method=simulated so it stays distinguishable from a real presentation.'
-          : `Answered by a wallet and verified against the trust list. Recorded as method=${s.result?.method ?? 'unknown'}.`;
+      root!.querySelector<HTMLElement>('[data-method]')!.textContent = methodLine(s.result);
       root!.querySelector<HTMLElement>('[data-json]')!.textContent = JSON.stringify(
         { status: s.status, result: s.result }, null, 2);
       show('result');
