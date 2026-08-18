@@ -25,7 +25,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
     >
       Start an age check
     </button>
-    <p class="text-sm mt-4" style="color: var(--color-text-muted);">
+    <p class="text-sm mt-4 max-w-2xl" style="color: var(--color-text-muted);">
       Nothing is stored about you. A check records the yes or no answer and nothing else: no name, no date
       of birth, no document image.
     </p>
@@ -36,7 +36,9 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
     <div class="rounded-lg bg-white p-3 self-start">
       <img data-qr alt="OpenID4VP request for this age check" width="220" height="220" class="w-full" />
     </div>
-    <div>
+    <!-- Capped rather than left to fill: this component sits in a max-w-3xl page and a max-w-6xl home page
+         section, and at the wider one an uncapped column runs to well over 100 characters a line. -->
+    <div class="max-w-2xl">
       <h3 class="font-semibold mb-1">Waiting for a wallet</h3>
       <p class="text-sm leading-relaxed mb-4" style="color: var(--color-text-muted);">
         That code is a genuine OpenID4VP request, signed and served by reference, exactly as a customer
@@ -67,7 +69,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
   </div>
 
   <!-- Outcome -->
-  <div data-step="result" hidden>
+  <div data-step="result" hidden class="max-w-2xl">
     <div data-outcome class="rounded-lg border-l-4 p-4 mb-3">
       <p data-outcome-title class="font-semibold"></p>
       <p data-outcome-body class="text-sm mt-1" style="color: var(--color-text-muted);"></p>
