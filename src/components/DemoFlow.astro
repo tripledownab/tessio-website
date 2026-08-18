@@ -1,0 +1,236 @@
+---
+// The live age check, used by /demo and by the home page. One component rather than two copies: the
+// honesty of the wording here is the whole point of the feature, and two copies of it would drift.
+import { API_URL } from '../consts';
+
+// Overridable so the demo can be pointed at a local API while developing. Without it the page can only
+// ever talk to production, which means it cannot be exercised before it ships. Read at build time, so the
+// deployed site carries the real value rather than reading anything at runtime.
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
+---
+
+<section
+  class="rounded-xl border p-6 md:p-8"
+  style="border-color: var(--color-border); background-color: var(--color-bg-elevated);"
+  data-demo
+  data-api={apiUrl}
+>
+  <!-- Idle -->
+  <div data-step="idle">
+    <button
+      type="button"
+      data-start
+      class="px-5 py-3 rounded-md font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
+      style="background-color: var(--color-accent); color: var(--color-accent-contrast);"
+    >
+      Start an age check
+    </button>
+    <p class="text-sm mt-4" style="color: var(--color-text-muted);">
+      Nothing is stored about you. A check records the yes or no answer and nothing else: no name, no date
+      of birth, no document image.
+    </p>
+  </div>
+
+  <!-- Waiting for a wallet -->
+  <div data-step="pending" hidden class="grid gap-6 sm:grid-cols-[240px_1fr]">
+    <div class="rounded-lg bg-white p-3 self-start">
+      <img data-qr alt="OpenID4VP request for this age check" width="220" height="220" class="w-full" />
+    </div>
+    <div>
+      <h3 class="font-semibold mb-1">Waiting for a wallet</h3>
+      <p class="text-sm leading-relaxed mb-4" style="color: var(--color-text-muted);">
+        That code is a genuine OpenID4VP request, signed and served by reference, exactly as a customer
+        integration would receive it. An EU Digital Identity Wallet holding an age attestation can answer it
+        right now and be verified against the live trust list.
+      </p>
+      <div class="rounded-md border p-4" style="border-color: var(--color-border);">
+        <p class="text-sm font-medium mb-1">Don't have a wallet yet?</p>
+        <p class="text-xs leading-relaxed mb-3" style="color: var(--color-text-muted);">
+          Almost nobody does, so these buttons stand in for one. They skip the verification step rather than
+          fake it: no credential is involved, and the answer you pick is simply recorded. It is marked
+          <code>simulated</code>, never <code>eudi</code>.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            type="button"
+            data-simulate="true"
+            class="px-4 py-2 rounded-md text-sm font-medium border transition-colors disabled:opacity-50"
+            style="border-color: var(--color-border);">Simulate an adult</button>
+          <button
+            type="button"
+            data-simulate="false"
+            class="px-4 py-2 rounded-md text-sm font-medium border transition-colors disabled:opacity-50"
+            style="border-color: var(--color-border);">Simulate someone under 18</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outcome -->
+  <div data-step="result" hidden>
+    <div data-outcome class="rounded-lg border-l-4 p-4 mb-3">
+      <p data-outcome-title class="font-semibold"></p>
+      <p data-outcome-body class="text-sm mt-1" style="color: var(--color-text-muted);"></p>
+    </div>
+    <p data-method class="text-xs mb-3" style="color: var(--color-text-muted);"></p>
+    <pre
+      data-json
+      class="overflow-x-auto rounded-md border p-3 text-xs"
+      style="border-color: var(--color-code-border); background-color: var(--color-code-bg);"></pre>
+  </div>
+
+  <p data-error class="text-sm mt-4" hidden style="color: var(--color-outcome-error);"></p>
+
+  <div
+    data-footer
+    hidden
+    class="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t"
+    style="border-color: var(--color-border);"
+  >
+    <button
+      type="button"
+      data-restart
+      class="px-4 py-2 rounded-md text-sm font-medium border transition-colors"
+      style="border-color: var(--color-border);">Run another check</button>
+    <code data-endpoint class="text-xs truncate" style="color: var(--color-text-muted);"></code>
+  </div>
+</section>
+
+<style>
+  /* Outcome colours are local to this component: the shared design tokens have no success/error pair, and
+     adding one to a stylesheet every Tessio site loads is a bigger change than this should make. Both
+     values are chosen to pass contrast on their own scheme's background. */
+  :root {
+    --color-outcome-success: #16a34a;
+    --color-outcome-error: #dc2626;
+    --color-outcome-warning: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-outcome-success: #4ade80;
+      --color-outcome-error: #f87171;
+      --color-outcome-warning: #fbbf24;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-demo]');
+  if (root) {
+    const api = root.dataset.api!;
+    const steps = {
+      idle: root.querySelector<HTMLElement>('[data-step="idle"]')!,
+      pending: root.querySelector<HTMLElement>('[data-step="pending"]')!,
+      result: root.querySelector<HTMLElement>('[data-step="result"]')!,
+    };
+    const qr = root.querySelector<HTMLImageElement>('[data-qr]')!;
+    const errorEl = root.querySelector<HTMLElement>('[data-error]')!;
+    const footer = root.querySelector<HTMLElement>('[data-footer]')!;
+    const endpoint = root.querySelector<HTMLElement>('[data-endpoint]')!;
+    const buttons = root.querySelectorAll<HTMLButtonElement>('button');
+
+    type Result = { minAge: number; meetsMinAge: boolean | null; method: string | null } | null;
+    type Status = { id: string; status: string; result: Result };
+
+    let checkId: string | null = null;
+    let poll: number | undefined;
+
+    const show = (name: keyof typeof steps) => {
+      for (const [key, el] of Object.entries(steps)) el.hidden = key !== name;
+    };
+    const fail = (message: string) => {
+      errorEl.textContent = message;
+      errorEl.hidden = false;
+    };
+    const busy = (on: boolean) => buttons.forEach((b) => (b.disabled = on));
+
+    async function call<T>(path: string, init?: RequestInit): Promise<T> {
+      const res = await fetch(`${api}${path}`, {
+        ...init,
+        headers: { 'content-type': 'application/json', ...(init?.headers ?? {}) },
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      return (await res.json()) as T;
+    }
+
+    // Four outcomes. "No answer" is deliberately not folded into a refusal: a check nobody could answer
+    // is a different thing from one answered no, and saying otherwise would be the product guessing.
+    function describe(s: Status, minAge: number) {
+      if (s.status === 'expired')
+        return ['Expired', 'warning', "Nobody answered within the request's lifetime. The check ends here rather than guessing."] as const;
+      if (s.status === 'failed' || s.result?.meetsMinAge == null)
+        return ['No answer', 'warning', 'A presentation arrived but it did not carry the claim being asked for, so there is no answer to give. This is not the same as failing the check.'] as const;
+      if (s.result.meetsMinAge)
+        return [`Meets age ${minAge}`, 'success', `The response disclosed that the holder is over ${minAge}. That single boolean is all that was asked for and all that was returned.`] as const;
+      return [`Under age ${minAge}`, 'error', `The response disclosed that the holder is not over ${minAge}. A genuine credential can say no, and a signature proving the credential is authentic does not make the answer yes.`] as const;
+    }
+
+    function render(s: Status, minAge: number) {
+      window.clearInterval(poll);
+      const [heading, tone, body] = describe(s, minAge);
+      const box = root!.querySelector<HTMLElement>('[data-outcome]')!;
+      box.style.borderLeftColor = `var(--color-outcome-${tone})`;
+      root!.querySelector<HTMLElement>('[data-outcome-title]')!.textContent = heading;
+      root!.querySelector<HTMLElement>('[data-outcome-body]')!.textContent = body;
+      root!.querySelector<HTMLElement>('[data-method]')!.textContent =
+        s.result?.method === 'simulated'
+          ? 'Answered by the simulator, not a wallet. No credential was verified: the answer was recorded as method=simulated so it stays distinguishable from a real presentation.'
+          : `Answered by a wallet and verified against the trust list. Recorded as method=${s.result?.method ?? 'unknown'}.`;
+      root!.querySelector<HTMLElement>('[data-json]')!.textContent = JSON.stringify(
+        { status: s.status, result: s.result }, null, 2);
+      show('result');
+    }
+
+    async function start() {
+      busy(true);
+      errorEl.hidden = true;
+      try {
+        // Loaded on demand. This component sits on the home page, where most visitors never press the
+        // button, and the QR encoder is the bulk of the weight here.
+        const { default: QRCode } = await import('qrcode');
+        const created = await call<{ id: string; url: string; minAge: number }>('/v1/demo/checks', { method: 'POST' });
+        checkId = created.id;
+        endpoint.textContent = `POST /v1/demo/checks -> ${created.id}`;
+        footer.hidden = false;
+        qr.src = await QRCode.toDataURL(created.url, { margin: 1, width: 220 });
+        show('pending');
+
+        // A real wallet answering the QR lands here too, so there is no separate path for it.
+        poll = window.setInterval(async () => {
+          try {
+            const s = await call<Status>(`/v1/demo/checks/${created.id}`);
+            if (s.status !== 'pending') render(s, created.minAge);
+          } catch {
+            /* transient: the next tick retries */
+          }
+        }, 1000);
+      } catch {
+        fail('Could not start a check. If you have run several just now, wait a moment and try again.');
+      } finally {
+        busy(false);
+      }
+    }
+
+    root.querySelector('[data-start]')!.addEventListener('click', () => void start());
+    root.querySelector('[data-restart]')!.addEventListener('click', () => void start());
+
+    for (const button of root.querySelectorAll<HTMLButtonElement>('[data-simulate]')) {
+      button.addEventListener('click', async () => {
+        if (!checkId) return;
+        busy(true);
+        errorEl.hidden = true;
+        try {
+          await call(`/v1/demo/checks/${checkId}/simulate`, {
+            method: 'POST',
+            body: JSON.stringify({ meetsMinAge: button.dataset.simulate === 'true' }),
+          });
+          render(await call<Status>(`/v1/demo/checks/${checkId}`), 18);
+        } catch {
+          fail('That check is no longer waiting for an answer. Start a new one.');
+        } finally {
+          busy(false);
+        }
+      });
+    }
+  }
+</script>
