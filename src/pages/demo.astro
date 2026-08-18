@@ -2,20 +2,29 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Cta from '../components/Cta.astro';
 import DemoFlow from '../components/DemoFlow.astro';
-import { CLOUD_URL } from '../consts';
+import { breadcrumbLd, graph, serviceLd } from '../lib/seo';
+import { ACCESS_MAILTO, VERIFIER_REPO } from '../consts';
 
 const title = 'Live demo';
 const description =
   'Run an EU Digital Identity Wallet age check in your browser. No account, no personal data stored, and the request is the same one a customer integration receives.';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Tessio live age verification demo',
-  description,
-  url: 'https://tessio.eu/demo',
-};
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Demo', path: '/demo' },
+];
+const jsonLd = graph(
+  breadcrumbLd(crumbs),
+  serviceLd({
+    name: 'Tessio Cloud age verification demo',
+    description,
+    url: '/demo',
+    category: 'Age verification',
+  }),
+);
 
 const points: { heading: string; body: string }[] = [
   {
@@ -34,33 +43,53 @@ const points: { heading: string; body: string }[] = [
 ---
 
 <Base title={title} description={description}>
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
   <Header />
 
-  <main class="max-w-3xl mx-auto px-6 py-16">
-    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">See an age check run</h1>
-    <p class="text-lg leading-relaxed mb-10" style="color: var(--color-text-muted);">
-      Starting a check builds the same signed OpenID4VP request a customer integration receives. Scan it
-      with an EU Digital Identity Wallet and it is verified for real, against the live trust list. Almost
-      nobody holds one yet, so there are buttons that stand in for the wallet. Those skip the verification
-      step rather than fake it, and the result says which one answered. No account either way.
-    </p>
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        Live demo
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        See an age check run
+      </h1>
+      <p class="text-lg leading-relaxed max-w-2xl mb-10" style="color: var(--color-text-muted);">
+        Starting a check builds the same signed OpenID4VP request a customer integration receives. Scan it
+        with an EU Digital Identity Wallet and it is verified for real, against the live trust list. Almost
+        nobody holds one yet, so there are buttons that stand in for the wallet. Those skip the verification
+        step rather than fake it, and the result says which one answered. No account either way.
+      </p>
 
-    <DemoFlow />
-
-    <section class="grid gap-6 sm:grid-cols-3 mt-12">
-      {points.map((p) => (
-        <div>
-          <h2 class="text-sm font-semibold mb-1">{p.heading}</h2>
-          <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{p.body}</p>
-        </div>
-      ))}
+      <DemoFlow />
     </section>
 
-    <p class="text-sm mt-12 pt-6 border-t" style="border-color: var(--color-border); color: var(--color-text-muted);">
-      Want this in your checkout or sign-up?{' '}
-      <a href={CLOUD_URL} class="underline" style="color: var(--color-accent);">Get in touch</a>.
-    </p>
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <div class="grid gap-8 sm:grid-cols-3">
+        {
+          points.map((p) => (
+            <div>
+              <h2 class="text-sm font-semibold mb-1">{p.heading}</h2>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                {p.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <Cta
+      eyebrow="Ready when you are"
+      title="Put this in your checkout or sign-up"
+      body="The same check, behind your own API key. Tell us what you are building and we will get you access."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the verifier source"
+      secondaryHref={VERIFIER_REPO}
+    />
   </main>
 
   <Footer />
