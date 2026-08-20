@@ -1,0 +1,248 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Cta from '../components/Cta.astro';
+import { abs, breadcrumbLd, graph } from '../lib/seo';
+import { ACCESS_MAILTO, CLOUD_URL, CONTACT_EMAIL, LABS_URL, NUGET_URL, VERIFIER_REPO } from '../consts';
+
+const title = 'About';
+const description =
+  'How Tessio started: a client in Sweden needed age verification on a .NET stack, so we built the open source verifier that was missing and turned it into a product. Built by Triple Down AB in Stockholm.';
+
+// Every claim here is checked against the running system or the company record before publishing.
+// The stage claims (invite only, sandbox, no access certificate) are the ones that go stale first.
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+];
+const jsonLd = graph(breadcrumbLd(crumbs), {
+  '@type': 'AboutPage',
+  name: 'About Tessio',
+  description,
+  url: abs('/about'),
+  mainEntity: { '@type': 'Organization', name: 'Tessio', url: 'https://tessio.eu' },
+});
+
+const products = [
+  {
+    name: 'Tessio Cloud',
+    tag: 'Hosted · live now',
+    body: 'The hosted API and dashboard. You start a check, the person answers it from their wallet, and a signed result lands on your webhook. Keys, webhooks, usage analytics and an audit log are in production today.',
+    label: 'Sign in',
+    href: CLOUD_URL,
+  },
+  {
+    name: 'Tessio.Verifier',
+    tag: 'Open source · Apache-2.0',
+    body: 'The ASP.NET Core verifier underneath, and the package this all started as. Five packages on NuGet for .NET 8 to 10, covering OpenID4VP 1.0 with DCQL, SD-JWT VC and ISO 18013-5 mdoc. It passes the OpenID Foundation conformance suite for HAIP verifiers in both formats.',
+    label: 'Get it on NuGet',
+    href: NUGET_URL,
+  },
+  {
+    name: 'Tessio Labs',
+    tag: 'Free · no signup',
+    body: 'Five validators for the EU identity ecosystem: SD-JWT VC, mdoc, eIDAS signatures, the EU trusted lists and the wallet trust anchors. Nothing you paste is stored.',
+    label: 'Open Tessio Labs',
+    href: LABS_URL,
+  },
+];
+
+const principles = [
+  {
+    heading: 'Prove the claim, not the person',
+    body: 'We ask a wallet for one boolean and take nothing else. There is no document store to breach, because the identity data never crosses the wire.',
+  },
+  {
+    heading: 'Unanswerable is its own state',
+    body: 'A check that cannot be answered says so, rather than guessing. The worst thing a verification product can do is invent a pass.',
+  },
+  {
+    heading: 'Publish what is not ready',
+    body: 'Our security page carries a section listing what we do not have yet. A prospect who finds out later is worse than one who knew up front.',
+  },
+  {
+    heading: 'Read the code, not the promise',
+    body: 'The verifier is open source and tested against an external conformance suite that plays the wallet and attacks us. You can check our work.',
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <Header />
+
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-10 md:pt-24">
+      <Breadcrumbs items={crumbs} />
+      <p class="text-sm font-medium uppercase tracking-widest mb-4" style="color: var(--color-accent);">
+        About
+      </p>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-5">
+        We built the verifier we could not find.
+      </h1>
+      <p class="text-lg leading-relaxed max-w-2xl" style="color: var(--color-text-muted);">
+        Tessio is age and identity verification for the EU Digital Identity Wallet, built in Stockholm. It
+        started as one client's problem, became an open source .NET package, and grew into a product.
+      </p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <h2 class="text-3xl font-bold tracking-tight mb-6">How it started</h2>
+      <div class="max-w-2xl">
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          A client came to us with an ordinary requirement: verify age in Sweden, inside the .NET stack they
+          already ran. We went looking for something to integrate.
+        </p>
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          There was a hole where that component should have been. The open source verifier tooling is
+          Kotlin, Rust and TypeScript, so a .NET team either ports it or runs a service in another language
+          beside everything else they own. The hosted vendors solved a different problem,
+          and solved it by collecting a passport scan or a selfie. Either route left our client holding
+          identity data they never asked for.
+        </p>
+        <p class="text-base leading-relaxed" style="color: var(--color-text);">
+          So we wrote the verifier ourselves, and we open sourced it. Tessio.Verifier went on NuGet in July
+          2026 under Apache-2.0: five packages covering OpenID4VP 1.0 with DCQL, SD-JWT VC and ISO 18013-5
+          mdoc, with the COSE, CBOR and X.509 chain work underneath.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+      <h2 class="text-3xl font-bold tracking-tight mb-6">Why it became a product</h2>
+      <div class="max-w-2xl">
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          While we were building it, the wallet stopped looking like a distant problem. Regulation
+          <a
+            href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj"
+            target="_blank"
+            rel="noopener"
+            class="underline"
+            style="color: var(--color-accent);">(EU) 2024/1183</a
+          > makes all 27 member states issue a Digital Identity Wallet, and makes relying parties in regulated
+          sectors accept it by December 2027. Every operator running an age gate in Europe has the same piece
+          of work ahead of it: iGaming, age restricted retail, dating, adult platforms.
+        </p>
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          Most of them do not want to run a verifier. They want an API call. The age verification products
+          already on the market were still asking people for documents and selfies, which was the model we
+          had just built our way around.
+        </p>
+        <p class="text-base leading-relaxed" style="color: var(--color-text);">
+          So we spun the library out into a product of its own. Tessio Cloud went live at the end of July
+          2026: the same open source verifier underneath, hosted by us, with API keys, webhooks, a dashboard
+          and an audit log around it. Taking the package and running it yourself stays a first class option.
+          It is how Tessio started.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-20">
+      <h2 class="text-3xl font-bold tracking-tight mb-3">What we build</h2>
+      <p class="mb-10 text-lg max-w-2xl" style="color: var(--color-text-muted);">
+        One core, three ways to use it.
+      </p>
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          products.map((p) => (
+            <div
+              class="rounded-xl border p-6 flex flex-col"
+              style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
+            >
+              <p class="text-xs font-medium uppercase tracking-widest mb-3" style="color: var(--color-accent);">
+                {p.tag}
+              </p>
+              <h3 class="text-base font-semibold tracking-tight mb-2">{p.name}</h3>
+              <p class="text-sm leading-relaxed mb-5 flex-1" style="color: var(--color-text-muted);">
+                {p.body}
+              </p>
+              <a href={p.href} class="text-sm font-medium hover:opacity-70 transition-opacity" style="color: var(--color-accent);">
+                {p.label} →
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-20">
+      <h2 class="text-3xl font-bold tracking-tight mb-3">How we work</h2>
+      <p class="mb-10 text-lg max-w-2xl" style="color: var(--color-text-muted);">
+        Four rules we hold ourselves to, in the product and on this site.
+      </p>
+      <div class="grid gap-8 sm:grid-cols-2">
+        {
+          principles.map((p) => (
+            <div>
+              <h3 class="text-base font-semibold tracking-tight mb-2">{p.heading}</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-muted);">
+                {p.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-20">
+      <h2 class="text-3xl font-bold tracking-tight mb-6">Where we are today</h2>
+      <div class="max-w-2xl">
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          Tessio Cloud runs in production and access is invite only while we onboard design partners. You
+          can integrate and test end to end against our sandbox now.
+        </p>
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          Verification against a production wallet needs a relying party access certificate, which we have
+          applied for and do not yet hold. Wallets check who is asking before releasing anything, so every
+          relying party in Europe sits behind that same gate, incumbents included.
+        </p>
+        <p class="text-base leading-relaxed" style="color: var(--color-text);">
+          So we are not asking you to move your age checks over this afternoon. Build the integration now,
+          against an API that is stable, and go live as the rollout lands. The full list of what we do not
+          have yet is on the
+          <a href="/security" class="underline" style="color: var(--color-accent);">security page</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-20">
+      <h2 class="text-3xl font-bold tracking-tight mb-6">Built in Sweden</h2>
+      <div class="max-w-2xl">
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          Tessio is built and maintained by
+          <a href="https://3dwn.se" target="_blank" rel="noopener" class="underline" style="color: var(--color-accent);"
+            >Triple Down AB</a
+          >, a small software company in Stockholm, Sweden (org. no. 559333-6091, Skeppargatan 55, 114 59
+          Stockholm). We build our own products and take on client work, which is where this one came from.
+        </p>
+        <p class="text-base leading-relaxed mb-4" style="color: var(--color-text);">
+          Sweden is not decoration on this page. It is the market whose rules we had to satisfy first, and
+          the reason the product reads the way it does. Production runs on dedicated hardware in Helsinki,
+          Finland. EU built, EU hosted, and the data stays in the EU.
+        </p>
+        <p class="text-base leading-relaxed" style="color: var(--color-text);">
+          We are a lean team, so an email to
+          <a href={`mailto:${CONTACT_EMAIL}`} class="underline" style="color: var(--color-accent);">
+            {CONTACT_EMAIL}</a
+          > reaches the people who wrote the code. Tell us what you are building and we will tell you plainly
+          whether Tessio fits it yet.
+        </p>
+      </div>
+    </section>
+
+    <Cta
+      eyebrow="Working on age or identity verification?"
+      title="Let's talk"
+      body="We are talking to operators running age assurance pilots, integrators planning their 2027 rollout, and member state teams looking for an EU aligned reference stack. If that is you, get in touch."
+      buttonLabel="Request access"
+      buttonHref={ACCESS_MAILTO}
+      secondaryLabel="Read the verifier source"
+      secondaryHref={VERIFIER_REPO}
+    />
+  </main>
+
+  <Footer />
+</Base>
