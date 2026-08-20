@@ -42,9 +42,8 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? API_URL;
       <h3 class="font-semibold mb-1">The request</h3>
       <p class="text-sm leading-relaxed mb-4" style="color: var(--color-text-muted);">
         That code is a real OpenID4VP request, built by the same code a customer integration calls and
-        carrying the same DCQL query: one claim, <code>age_over_18</code>, and nothing else. Request signing
-        needs a reader certificate under eIDAS, which this deployment does not hold yet, so a production
-        wallet will refuse to answer it. Use the buttons instead.
+        carrying the same DCQL query: one claim, <code>age_over_18</code>, and nothing else. No wallet
+        answers this deployment yet, so use the buttons instead.
       </p>
       <div class="rounded-md border p-4" style="border-color: var(--color-border);">
         <p class="text-sm font-medium mb-1">Stand in for the wallet</p>

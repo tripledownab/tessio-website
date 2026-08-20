@@ -58,9 +58,9 @@ const points: { heading: string; body: string }[] = [
       </h1>
       <p class="text-lg leading-relaxed max-w-2xl mb-10" style="color: var(--color-text-muted);">
         Starting a check runs the product's own code and returns a real OpenID4VP request, asking a wallet
-        for one claim and nothing else. Answering it from a wallet needs a reader certificate we have not
-        been issued yet, so buttons stand in for that step. They skip verification rather than fake it, and
-        the result says which one answered. No account, and nothing recorded about you either way.
+        for one claim and nothing else. No wallet answers this deployment yet, so buttons stand in for that
+        step. They skip verification rather than fake it, and the result says which one answered. No
+        account, and nothing recorded about you either way.
       </p>
 
       <DemoFlow />
