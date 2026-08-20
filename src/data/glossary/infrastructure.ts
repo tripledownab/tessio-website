@@ -3,7 +3,14 @@
 // The WRPAC and trusted-list entries are written from our own runs against the EU reference wallet and
 // the live LOTL, not from a spec summary. Dates in them are load-bearing; check them against
 // TrustPlatform/docs/wrpac-access-certificate.md before editing.
+//
+// Name the wallet in every sentence about the certificate. The original entry was wrong because one
+// observation of the EU reference wallet was generalised into a rule about every wallet, a step at a
+// time, and each step read like a summary of the last. The certificate gates the EUDI wallet profile,
+// so PID and mDL. It does not gate the EU age verification app, whose profile puts reader and client
+// authentication out of scope. Source: TrustPlatform/docs/findings-av-profile.md.
 import type { GlossaryTerm } from './types';
+import { AV_PROFILE_EXCEPTION } from './wallet-scope';
 
 export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
   {
@@ -15,7 +22,8 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
     description:
       'A WRPAC is the certificate that proves to an EU Digital Identity Wallet that you are a registered relying party. What it does, who issues one, and what a wallet does when you do not have it.',
     short:
-      'A wallet relying party access certificate, or WRPAC, is the certificate that proves to an EU Digital Identity Wallet that you are a registered relying party. Without one the wallet refuses your request outright, before any data is shared and before the user is even asked.',
+      'A wallet relying party access certificate, or WRPAC, is the certificate that proves to an EU Digital Identity Wallet that you are a registered relying party. Without one that wallet refuses your request outright, before any data is shared and before the user is even asked. ' +
+      AV_PROFILE_EXCEPTION,
     sections: [
       {
         heading: 'What it actually does',
@@ -28,7 +36,8 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
         heading: 'What happens without one',
         body: [
           'Nothing degrades gracefully, which is the useful thing to know. We ran this against the EU reference wallet on 5 August 2026. It fetched our signed request, parsed it, reached its reader-authentication decision and refused, logging InvalidJarJwt with the cause "Untrusted x5c". What the user saw was: "Presentation blocked. This presentation request has been blocked because the relying party could not be verified by your Wallet."',
-          'It is worth being precise about the consequence, because it is usually described as a production concern. It is not. No data is released, so no check can complete against a real wallet in any environment, including testing. We recorded it as a production-only gate ourselves at first, and that was wrong.',
+          'It is worth being precise about the consequence, because it is usually described as a production concern. For an EU Digital Identity Wallet it is not: no data is released, so no check can complete against that wallet in any environment, including testing. We recorded it as a production only gate ourselves at first, and that was wrong. ' +
+            AV_PROFILE_EXCEPTION,
         ],
       },
       {
@@ -51,11 +60,11 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
       { label: 'Proves', value: 'That the requester is a registered relying party' },
       { label: 'Travels in', value: 'The x5c header of the signed OpenID4VP request object' },
       { label: 'Bound to', value: 'A DNS name that must match the client_id (x509_san_dns)' },
-      { label: 'Without one', value: 'The wallet refuses before any data is released, in every environment' },
+      { label: 'Without one', value: 'An EUDI wallet refuses before any data is released. The EU age verification app does not require one.' },
       { label: 'Tessio status', value: 'Applied 5 August 2026, not yet held' },
     ],
     whyItMatters: [
-      'If you\'re comparing age verification vendors for the EU wallet, this is the question to put to all of them: do you hold an access certificate, and who issued it. Every relying party in Europe is behind this same gate, incumbents included, so a vendor claiming live production wallet verification today is worth a second look.',
+      'If you\'re comparing age verification vendors for the EU wallet, this is the question to put to all of them: do you hold an access certificate, and who issued it. It gates the EU Digital Identity Wallet, incumbents included. It does not gate the EU age verification app, whose profile puts reader authentication out of scope, so a vendor working only against that app can be live without one. Ask which of the two they mean.',
       'It doesn\'t block your integration work, though. The certificate changes which key signs the request, not the shape of what you build, so the integration you write against a sandbox now is the one you go live with.',
     ],
     tools: [
@@ -72,7 +81,8 @@ export const INFRASTRUCTURE_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'Can I build and test without one?',
-        a: 'Against a sandbox, yes, and that\'s most of the integration work. Against a real wallet, no. The wallet refuses the request before any data is released, so there is no partial or degraded mode to test in.',
+        a: 'Against a sandbox, yes, and that\'s most of the integration work. Against an EU Digital Identity Wallet, no: it refuses the request before any data is released, so there is no partial or degraded mode to test in. ' +
+          AV_PROFILE_EXCEPTION,
       },
       {
         q: 'Do I need my own certificate, or does my verification vendor cover me?',

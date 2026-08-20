@@ -2,6 +2,7 @@
 // implement OpenID4VP 1.0 with DCQL in Tessio.Verifier, and the DCQL warning below is a bug we shipped
 // and fixed rather than a hazard we read about.
 import type { GlossaryTerm } from './types';
+import { AV_PROFILE_EXCEPTION } from './wallet-scope';
 
 export const PROTOCOL_TERMS: GlossaryTerm[] = [
   {
@@ -25,8 +26,9 @@ export const PROTOCOL_TERMS: GlossaryTerm[] = [
       {
         heading: 'What the wallet checks before it answers',
         body: [
-          'A production wallet does not release data to whoever asks politely. It reads the signing chain from the request, checks it against the access-certificate providers it trusts, and confirms the certificate covers the hostname the request came from. If any of that fails, it refuses before the user is involved at all.',
-          'This is the step that surprises people building against a sandbox. The protocol works end to end, the request parses, and then a real wallet says no, because the development certificate is not one it trusts. That refusal is the wallet behaving correctly.',
+          'An EU Digital Identity Wallet does not release data to whoever asks politely. It reads the signing chain from the request, checks it against the access-certificate providers it trusts, and confirms the certificate covers the hostname the request came from. If any of that fails, it refuses before the user is involved at all. ' +
+            AV_PROFILE_EXCEPTION,
+          'This is the step that surprises people building against a sandbox. The protocol works end to end, the request parses, and then that wallet says no, because the development certificate is not one it trusts. That refusal is the wallet behaving correctly.',
         ],
       },
       {
@@ -45,7 +47,7 @@ export const PROTOCOL_TERMS: GlossaryTerm[] = [
       { label: 'Wallet checks first', value: 'Reader authentication happens before the consent screen' },
     ],
     whyItMatters: [
-      'If a real wallet refuses your request while your sandbox accepts it, look at reader authentication before looking at your code. The usual answer is that your signing certificate isn\'t one the wallet trusts.',
+      'If an EU Digital Identity Wallet refuses your request while your sandbox accepts it, look at reader authentication before looking at your code. The usual answer is that your signing certificate isn\'t one the wallet trusts. The age verification app does not run that check, so look elsewhere there.',
       'The nonce and the response endpoint are what stop a presentation being replayed elsewhere. Treat them as security parameters rather than plumbing.',
     ],
     tools: [],
@@ -60,7 +62,8 @@ export const PROTOCOL_TERMS: GlossaryTerm[] = [
       },
       {
         q: 'Can I test without a real wallet?',
-        a: 'Yes, against a sandbox or a reference wallet, and most integration work can be done that way. What you can\'t test without a trusted access certificate is a real wallet completing the exchange.',
+        a: 'Yes, against a sandbox or a reference wallet, and most integration work can be done that way. What you can\'t test without a trusted access certificate is an EU Digital Identity Wallet completing the exchange. ' +
+          AV_PROFILE_EXCEPTION,
       },
     ],
     sources: [

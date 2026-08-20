@@ -4,6 +4,7 @@
 // Accuracy notes: the OSA facts here must match src/data/regulations.ts, which was verified against Ofcom
 // and the Act. If one changes, change both.
 import type { GlossaryTerm } from './types';
+import { AV_PROFILE_EXCEPTION } from './wallet-scope';
 
 export const COMPLIANCE_TERMS: GlossaryTerm[] = [
   {
@@ -163,7 +164,8 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
         heading: 'Registration is not paperwork for its own sake',
         body: [
           'The point of registering relying parties is that a wallet can show its user who is asking and what they are entitled to ask for. Without it, "the user consented" means very little, because the user cannot tell a legitimate request from a convincing one.',
-          'This is why the technical and the legal sides meet at the access certificate: registration produces a certificate, the wallet checks the certificate, and only then does the consent screen name you. Without one, a production wallet refuses before the user is asked anything at all.',
+          'This is why the technical and the legal sides meet at the access certificate: registration produces a certificate, the wallet checks the certificate, and only then does the consent screen name you. Without one, an EU Digital Identity Wallet refuses before the user is asked anything at all. ' +
+            AV_PROFILE_EXCEPTION,
         ],
       },
       {
@@ -183,7 +185,7 @@ export const COMPLIANCE_TERMS: GlossaryTerm[] = [
     ],
     whyItMatters: [
       'The role sits with you, not with your verification vendor. When you write your compliance position, write it as the relying party, because that\'s how the regulation reads it.',
-      'If a vendor can\'t tell you who holds the registration and the access certificate in their model, that\'s the question to keep asking, since it determines whether a production wallet will complete a check at all.',
+      'If a vendor can\'t tell you who holds the registration and the access certificate in their model, that\'s the question to keep asking, since it determines whether an EU Digital Identity Wallet will complete a check at all. The age verification app is the exception, so ask which of the two they mean.',
     ],
     tools: [
       {
