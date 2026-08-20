@@ -15,7 +15,7 @@ import {
 
 const products = [
   {
-    name: 'Tessio Cloud',
+    name: 'Tessio.Cloud',
     tag: 'Hosted · live now',
     body: 'A hosted API and dashboard for age and identity checks on the EU Digital Identity Wallet. You get API keys, webhooks and usage analytics. You can start building today against the sandbox.',
     cta: { label: 'Request access', href: accessMailto },
@@ -25,7 +25,7 @@ const products = [
   {
     name: 'Tessio.Verifier',
     tag: 'Open source · Apache-2.0',
-    body: 'The ASP.NET Core verifier that Tessio Cloud runs on. It does OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), and it passes the OpenID Foundation conformance suite for HAIP verifiers in both formats. Four run modes let you build before wallets ship. It is on NuGet for .NET 8 to 10, so you can run it yourself.',
+    body: 'The ASP.NET Core verifier that Tessio.Cloud runs on. It does OpenID4VP 1.0, SD-JWT VC and mdoc (mDL), and it passes the OpenID Foundation conformance suite for HAIP verifiers in both formats. Four run modes let you build before wallets ship. It is on NuGet for .NET 8 to 10, so you can run it yourself.',
     cta: { label: 'Get it on NuGet', href: nugetUrl },
     secondary: { label: 'View on GitHub', href: verifierRepo },
     highlight: false,
@@ -39,14 +39,14 @@ const steps = [
 ];
 
 const timeline = [
-  { date: 'Now', body: 'Tessio Cloud is live and Tessio.Verifier 0.4 is out. It passes the OpenID Foundation conformance suite for OpenID4VP 1.0 HAIP verifiers, in both SD-JWT VC and mdoc formats. You can build against the sandbox today.' },
+  { date: 'Now', body: 'Tessio.Cloud is live and Tessio.Verifier 0.4 is out. It passes the OpenID Foundation conformance suite for OpenID4VP 1.0 HAIP verifiers, in both SD-JWT VC and mdoc formats. You can build against the sandbox today.' },
   { date: 'Dec 2026', body: 'Member states have to make the EUDI Wallet available under Regulation (EU) 2024/1183. Real wallets, real credentials to verify.' },
   { date: 'Dec 2027', body: 'Acceptance becomes mandatory. Regulated relying parties need a verifier in production.' },
 ];
 
 const faqs = [
   {
-    q: 'What is Tessio Cloud?',
+    q: 'What is Tessio.Cloud?',
     a: 'A hosted API for age and identity checks on the EU Digital Identity Wallet. You send a check, the person proves a claim such as being over 18 from their wallet, and you get a signed yes or no back. You never handle documents, and we keep no personal data.',
   },
   {
@@ -63,7 +63,7 @@ const faqs = [
   },
   {
     q: 'Is there an open source or self hosted option?',
-    a: 'Yes. Tessio Cloud runs on Tessio.Verifier, our open source ASP.NET Core verifier for OpenID4VP, SD-JWT VC and mdoc. It is on NuGet under Apache-2.0, so you can build and run it on your own .NET stack.',
+    a: 'Yes. Tessio.Cloud runs on Tessio.Verifier, our open source ASP.NET Core verifier for OpenID4VP, SD-JWT VC and mdoc. It is on NuGet under Apache-2.0, so you can build and run it on your own .NET stack.',
   },
   {
     q: 'Does Tessio pass the OpenID Foundation conformance tests?',
@@ -81,10 +81,10 @@ const jsonLd = {
     { '@type': 'WebSite', name: 'Tessio', url: 'https://tessio.eu' },
     {
       // Service, not Product: Google requires Product to carry offers, review or aggregateRating,
-      // and we can honestly supply none of them. Tessio.Verifier and Tessio Labs below stay
+      // and we can honestly supply none of them. Tessio.Verifier and Tessio.Labs below stay
       // SoftwareApplication with price 0, because those genuinely are free.
       '@type': 'Service',
-      name: 'Tessio Cloud',
+      name: 'Tessio.Cloud',
       url: cloudUrl,
       provider: { '@type': 'Organization', name: 'Tessio', url: 'https://tessio.eu' },
       serviceType: 'Age and identity verification API',
@@ -104,7 +104,7 @@ const jsonLd = {
     },
     {
       '@type': 'SoftwareApplication',
-      name: 'Tessio Labs',
+      name: 'Tessio.Labs',
       url: labsUrl,
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Any (web)',
@@ -169,7 +169,7 @@ const labsTools = [
           <span style="color: var(--color-text-muted);">on the EU Digital Identity Wallet.</span>
         </h1>
         <p class="text-lg md:text-xl leading-relaxed max-w-2xl mb-8" style="color: var(--color-text);">
-          Tessio Cloud is a hosted verification API. You ask whether someone is over 18, they confirm it from their
+          Tessio.Cloud is a hosted verification API. You ask whether someone is over 18, they confirm it from their
           wallet, and you get back a signed yes or no.
           <span style="color: var(--color-text-muted);">No documents, no selfies, and no personal data kept.</span>
           It runs on our open source .NET verifier, which passes the OpenID Foundation HAIP conformance tests.
@@ -218,14 +218,14 @@ const labsTools = [
           src="/screenshots/checks-dark.jpg"
           width="1920"
           height="1200"
-          alt="The Tessio Cloud dashboard: verification outcomes over the last 30 days and every age check with its status, result, method and reference."
+          alt="The Tessio.Cloud dashboard: verification outcomes over the last 30 days and every age check with its status, result, method and reference."
           class="block w-full h-auto"
           loading="lazy"
           decoding="async"
         />
       </div>
       <p class="text-sm mt-4 text-center" style="color: var(--color-text-muted);">
-        The Tessio Cloud dashboard: verification outcomes over time and every age check, with no personal data stored.
+        The Tessio.Cloud dashboard: verification outcomes over time and every age check, with no personal data stored.
       </p>
     </section>
 
@@ -278,7 +278,7 @@ const labsTools = [
           src="/screenshots/developer-dark.jpg"
           width="1920"
           height="1200"
-          alt="The Tessio Cloud developer page: base URL, API key authentication and copy and paste request examples."
+          alt="The Tessio.Cloud developer page: base URL, API key authentication and copy and paste request examples."
           class="block w-full h-auto"
           loading="lazy"
           decoding="async"
@@ -289,11 +289,11 @@ const labsTools = [
       </p>
     </section>
 
-    <!-- Tessio Labs -->
+    <!-- Tessio.Labs -->
     <section class="max-w-6xl mx-auto px-6 pb-24" id="labs">
-      <h2 class="text-3xl font-bold tracking-tight mb-3">Free tools in Tessio Labs</h2>
+      <h2 class="text-3xl font-bold tracking-tight mb-3">Free tools in Tessio.Labs</h2>
       <p class="mb-12 text-lg max-w-2xl" style="color: var(--color-text-muted);">
-        Five free validators for EU digital identity and trust, on the same engine as Tessio Cloud.
+        Five free validators for EU digital identity and trust, on the same engine as Tessio.Cloud.
         Nothing you paste is stored.
       </p>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -316,7 +316,7 @@ const labsTools = [
         class="inline-block mt-8 text-sm font-medium hover:opacity-70 transition-opacity"
         style="color: var(--color-accent);"
       >
-        Open Tessio Labs →
+        Open Tessio.Labs →
       </a>
     </section>
 
@@ -391,7 +391,7 @@ const labsTools = [
         style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
       >
         <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
-          Tessio Cloud is usage based. You pay a platform subscription for the dashboard, API keys and support, plus a
+          Tessio.Cloud is usage based. You pay a platform subscription for the dashboard, API keys and support, plus a
           per check rate on top. The rate drops as your volume grows, and age checks are priced for high volume.
         </p>
         <p class="text-base leading-relaxed mb-6" style="color: var(--color-text-muted);">
@@ -434,7 +434,7 @@ const labsTools = [
         </p>
         <h3 class="text-2xl font-bold tracking-tight mb-3">Let's talk.</h3>
         <p class="text-base leading-relaxed mb-6 max-w-2xl" style="color: var(--color-text-muted);">
-          Tessio Cloud is invite only while we onboard design partners. We are talking to operators running
+          Tessio.Cloud is invite only while we onboard design partners. We are talking to operators running
           age assurance pilots, integrators planning their 2027 rollout and member state teams looking for an
           EU aligned reference stack. If that is you, get in touch.
         </p>

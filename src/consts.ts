@@ -7,4 +7,4 @@ export const VERIFIER_REPO = 'https://github.com/tripledownab/tessio-verifier';
 export const NUGET_URL = 'https://www.nuget.org/packages/Tessio.Verifier.AspNetCore';
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/tessio-eu/';
 export const CONTACT_EMAIL = 'hello@tessio.eu';
-export const ACCESS_MAILTO = `mailto:${CONTACT_EMAIL}?subject=Tessio%20Cloud%20access`;
+export const ACCESS_MAILTO = `mailto:${CONTACT_EMAIL}?subject=Tessio.Cloud%20access`;

@@ -61,11 +61,11 @@ export function itemListLd(name: string, items: { name: string; path: string }[]
 }
 
 /**
- * schema.org Service for a page positioning Tessio Cloud against a query.
+ * schema.org Service for a page positioning Tessio.Cloud against a query.
  *
  * Service, not Product. Google requires a Product to carry offers, review or aggregateRating, and
  * Search Console reported ours as a critical error for lacking all three. We cannot honestly supply
- * any of them: Tessio Cloud is not free, its pricing is not published, and it has no reviews. The
+ * any of them: Tessio.Cloud is not free, its pricing is not published, and it has no reviews. The
  * fix is to describe what it actually is, a hosted API, rather than to invent a price. Service has
  * no such requirement. Revisit if pricing goes public: a real Offer would make Product valid.
  */

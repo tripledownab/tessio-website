@@ -71,7 +71,7 @@ export const ROLES: Role[] = [
       },
       {
         title: 'Open source and self hostable',
-        body: 'The core is Tessio.Verifier, ASP.NET Core, Apache-2.0, on NuGet for .NET 8 to 10. Run it hosted as Tessio Cloud, or self host it on your own stack.',
+        body: 'The core is Tessio.Verifier, ASP.NET Core, Apache-2.0, on NuGet for .NET 8 to 10. Run it hosted as Tessio.Cloud, or self host it on your own stack.',
       },
     ],
     snippet: devSnippet,
@@ -91,7 +91,7 @@ export const ROLES: Role[] = [
       },
       {
         q: 'Can I self host it?',
-        a: 'Yes. Tessio Cloud runs on the open source Tessio.Verifier, an ASP.NET Core library on NuGet under Apache-2.0 for .NET 8 to 10. You can run the verifier inside your own environment.',
+        a: 'Yes. Tessio.Cloud runs on the open source Tessio.Verifier, an ASP.NET Core library on NuGet under Apache-2.0 for .NET 8 to 10. You can run the verifier inside your own environment.',
       },
     ],
     useCases: ['igaming', 'retail'],
