@@ -33,14 +33,14 @@ const sections: { heading: string; paras: string[] }[] = [
       'Your account: dashboard user emails and passwords. Passwords are hashed with Argon2id. Session tokens are stored only as SHA-256 hashes.',
       'API keys: shown to you once, then only a SHA-256 hash and a short prefix are stored. Keys are revocable from the dashboard.',
       'An audit log of administrative actions in your account.',
-      'Two-step verification is available on every dashboard account (TOTP, RFC 6238, with single-use recovery codes). It is a gate rather than a prompt: until the second factor is presented, a correct password produces a session that authenticates nothing. Codes cannot be reused, and attempts are rate limited per account as well as per source address, so guessing cannot be widened by changing address.',
+      'Two step verification is available on every dashboard account (TOTP, RFC 6238, with single use recovery codes). It is a gate rather than a prompt: until the second factor is presented, a correct password produces a session that authenticates nothing. Codes cannot be reused, and attempts are rate limited per account as well as per source address, so guessing cannot be widened by changing address.',
     ],
   },
   {
     heading: 'Where it runs',
     paras: [
       'Production runs on dedicated infrastructure in Helsinki, Finland (Hetzner), inside the EU. All traffic is TLS. Data does not leave the EU.',
-      'Every tenant is isolated at the query level: each data access is scoped by tenant id, and cross-tenant isolation is covered by automated tests that run on every change.',
+      'Every tenant is isolated at the query level: each data access is scoped by tenant id, and cross tenant isolation is covered by automated tests that run on every change.',
     ],
   },
   {
@@ -54,8 +54,8 @@ const sections: { heading: string; paras: string[] }[] = [
     heading: 'Availability and backups',
     paras: [
       'Deploys are health gated with automatic rollback: a release that fails its health check never stays live.',
-      'Backups run in three independent layers, all inside the EU: a daily whole-server snapshot, a nightly database dump kept on the server for 14 days, and an encrypted copy of every dump on separate storage that takes its own daily snapshots.',
-      'The dumps are encrypted before they are written, and the key that decrypts them is deliberately not on the servers, so a backup cannot be read by anyone who compromises the machine that produced it. The restore path is not a theory: a production dump has been retrieved from the off-site copy without involving the production server, decrypted, and restored, with the result checked against expected contents.',
+      'Backups run in three independent layers, all inside the EU: a daily whole server snapshot, a nightly database dump kept on the server for 14 days, and an encrypted copy of every dump on separate storage that takes its own daily snapshots.',
+      'The dumps are encrypted before they are written, and the key that decrypts them is deliberately not on the servers, so a backup cannot be read by anyone who compromises the machine that produced it. The restore path is not a theory: a production dump has been retrieved from the off site copy without involving the production server, decrypted, and restored, with the result checked against expected contents.',
     ],
   },
   {

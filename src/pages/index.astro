@@ -55,7 +55,7 @@ const faqs = [
   },
   {
     q: 'Do you store personal data?',
-    a: 'No. The result is an over-18 yes or no, not a date of birth or an ID document. There is no selfie and no ID scan, and we keep no personal data. You get the answer your compliance needs and nothing more.',
+    a: 'No. The result is an over 18 yes or no, not a date of birth or an ID document. There is no selfie and no ID scan, and we keep no personal data. You get the answer your compliance needs and nothing more.',
   },
   {
     q: 'Is it GDPR compliant?',
@@ -90,7 +90,7 @@ const jsonLd = {
       serviceType: 'Age and identity verification API',
       areaServed: { '@type': 'Place', name: 'European Union' },
       description:
-        'Hosted age and identity verification API for the EU Digital Identity Wallet. Over-18 checks that keep no personal data.',
+        'Hosted age and identity verification API for the EU Digital Identity Wallet. Over 18 checks that keep no personal data.',
     },
     {
       '@type': 'SoftwareApplication',
@@ -100,7 +100,7 @@ const jsonLd = {
       operatingSystem: '.NET 8 to 10',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
       description:
-        'Open-source, ASP.NET Core-native EUDI verifier for OpenID4VP, SD-JWT VC and mdoc. Passes the OpenID Foundation HAIP conformance suite in both formats. Apache-2.0, on NuGet.',
+        'Open source EUDI verifier native to ASP.NET Core, for OpenID4VP, SD-JWT VC and mdoc. Passes the OpenID Foundation HAIP conformance suite in both formats. Apache-2.0, on NuGet.',
     },
     {
       '@type': 'SoftwareApplication',
@@ -136,7 +136,7 @@ const labsTools = [
   {
     slug: 'ades',
     name: 'eIDAS Signature Validator',
-    body: 'Check a PAdES, CAdES or JAdES signature, its timestamp, and its EU trusted-list qualification.',
+    body: 'Check a PAdES, CAdES or JAdES signature, its timestamp and its EU trusted list qualification.',
   },
   {
     slug: 'trusted-list',
@@ -192,7 +192,7 @@ const labsTools = [
         </div>
         <p class="text-sm mt-6" style="color: var(--color-text-muted);">
           Live at <a href={cloudUrl} class="underline" style="color: var(--color-accent);">cloud.tessio.eu</a>.
-          Built for iGaming, age-restricted retail, dating and adult platforms that have to meet UK OSA and EU DSA age rules.
+          Built for iGaming, age restricted retail, dating and adult platforms that have to meet UK OSA and EU DSA age rules.
         </p>
       </div>
     </section>
@@ -278,14 +278,14 @@ const labsTools = [
           src="/screenshots/developer-dark.jpg"
           width="1920"
           height="1200"
-          alt="The Tessio Cloud developer page: base URL, API-key authentication, and copy-paste request examples."
+          alt="The Tessio Cloud developer page: base URL, API key authentication and copy and paste request examples."
           class="block w-full h-auto"
           loading="lazy"
           decoding="async"
         />
       </div>
       <p class="text-sm mt-4 text-center" style="color: var(--color-text-muted);">
-        A small REST API with keys, webhooks and copy-paste examples in your language.
+        A small REST API with keys, webhooks and copy and paste examples in your language.
       </p>
     </section>
 
@@ -355,7 +355,7 @@ const labsTools = [
           </p>
           <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">
             The open source verifier tooling is Kotlin, Rust and TypeScript, so .NET teams end up porting it. There are a lot
-            of those teams in EU public sector and finance. Tessio gives them a verifier that fits, hosted or self-run.
+            of those teams in EU public sector and finance. Tessio gives them a verifier that fits, hosted or self run.
           </p>
         </div>
         <div id="developers">
@@ -391,8 +391,8 @@ const labsTools = [
         style="background-color: var(--color-bg-elevated); border-color: var(--color-border);"
       >
         <p class="text-base leading-relaxed mb-4" style="color: var(--color-text-muted);">
-          Tessio Cloud is usage-based. You pay a platform subscription for the dashboard, API keys and support, plus a
-          per-check rate on top. The rate drops as your volume grows, and age checks are priced for high volume.
+          Tessio Cloud is usage based. You pay a platform subscription for the dashboard, API keys and support, plus a
+          per check rate on top. The rate drops as your volume grows, and age checks are priced for high volume.
         </p>
         <p class="text-base leading-relaxed mb-6" style="color: var(--color-text-muted);">
           Early access is invite only, and design partners get preferential pricing while we build out. Tell us the
@@ -435,8 +435,8 @@ const labsTools = [
         <h3 class="text-2xl font-bold tracking-tight mb-3">Let's talk.</h3>
         <p class="text-base leading-relaxed mb-6 max-w-2xl" style="color: var(--color-text-muted);">
           Tessio Cloud is invite only while we onboard design partners. We are talking to operators running
-          age-assurance pilots, integrators planning their 2027 rollout, and member state teams looking for an
-          EU-aligned reference stack. If that is you, get in touch.
+          age assurance pilots, integrators planning their 2027 rollout and member state teams looking for an
+          EU aligned reference stack. If that is you, get in touch.
         </p>
         <a
           href={accessMailto}

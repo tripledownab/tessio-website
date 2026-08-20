@@ -7,7 +7,7 @@ import { API_URL, ACCESS_MAILTO, CLOUD_URL } from '../consts';
 
 const title = 'Developer docs';
 const description =
-  'Integrate the Tessio Cloud age verification API. Start a check, get a signed over-18 result over a webhook, and store no personal data. Built on the EU Digital Identity Wallet.';
+  'Integrate the Tessio Cloud age verification API. Start a check, get a signed over 18 result over a webhook, and store no personal data. Built on the EU Digital Identity Wallet.';
 
 // Shiki dual theme: light inline, dark applied via the media query in the style block below.
 const codeThemes = { light: 'github-light', dark: 'github-dark' };
@@ -84,7 +84,7 @@ const jsonLd = {
       The age verification API
     </h1>
     <p class="text-lg leading-relaxed mb-6" style="color: var(--color-text-muted);">
-      Start a check, send the user to their EU Digital Identity Wallet, and get a signed over-18 result back.
+      Start a check, send the user to their EU Digital Identity Wallet, and get a signed over 18 result back.
       You never handle a document, and we store no personal data. Everything below works today against the sandbox.
     </p>
     <p class="text-sm mb-12" style="color: var(--color-text-muted);">
@@ -97,7 +97,7 @@ const jsonLd = {
     <section class="mb-12">
       <h2 class="text-xl font-semibold tracking-tight mb-3">Base URL and auth</h2>
       <p class="text-base leading-relaxed mb-3" style="color: var(--color-text-muted);">
-        All requests go to <code class="doc-code">{API_URL}</code> over HTTPS. The machine-to-machine
+        All requests go to <code class="doc-code">{API_URL}</code> over HTTPS. The machine to machine
         endpoints authenticate with a project API key (<code class="doc-code">tk_…</code>) as a Bearer token:
       </p>
       <Code code="Authorization: Bearer tk_live_your_key" lang="http" themes={codeThemes} />
@@ -170,10 +170,10 @@ const jsonLd = {
     <section class="mb-12">
       <h2 class="text-xl font-semibold tracking-tight mb-3">No personal data</h2>
       <p class="text-base leading-relaxed" style="color: var(--color-text-muted);">
-        A check returns an over-18 boolean, not a date of birth or an identity document. There is no selfie
+        A check returns an over 18 boolean, not a date of birth or an identity document. There is no selfie
         and no ID scan, and we keep no personal data. If you need the verifier inside your own boundary, the
-        open-source <a href="https://verifier.tessio.eu" class="underline" style="color: var(--color-accent);">Tessio.Verifier</a>
-        self-hosts on your own .NET stack.
+        open source <a href="https://verifier.tessio.eu" class="underline" style="color: var(--color-accent);">Tessio.Verifier</a>
+        self hosts on your own .NET stack.
       </p>
     </section>
 
